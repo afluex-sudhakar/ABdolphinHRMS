@@ -1,0 +1,894 @@
+﻿@model ABdolphin.Models.Farmer
+
+@{
+    ViewBag.Title = "Farmerlist";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Farmerlist", "Farmers", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
+{
+    <div class="contents">
+        <div class="container-fluid py-5">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card mt-30">
+                        <div class="card-body">
+                            <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table">
+                                <div class="table-responsive">
+                                    <div class="adv-table-table__header">
+                                        <h4>Data Table</h4>
+                                        <div class="adv-table-table__button">
+                                            <div class="dropdown">
+                                                <a class="btn btn-primary dropdown-toggle atbd-select" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    Export
+                                                </a>
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="#">copy</a>
+                                                    <a class="dropdown-item" href="#">csv</a>
+                                                    <a class="dropdown-item" href="#">print</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="filter-form-container" class="footable-filtering-external footable-filtering-right">
+                                        <form class="form-inline">
+                                            <div class="form-group atbd-select d-flex align-items-center adv-table-searchs__status my-md-25 mt-15 mb-0 mr-sm-30 mr-0">
+                                                <label class="d-flex align-items-center mb-sm-0 mb-2">Status</label>
+                                                <select class="form-control ml-sm-10 ml-0">
+                                                    <option>All</option>
+                                                    <option>Active</option>
+                                                    <option>deactivate</option>
+                                                    <option>Blocked</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group atbd-select d-flex align-items-center adv-table-searchs__position my-md-25 my-15 mr-sm-20 mr-0 ">
+                                                <label class="d-flex align-items-center mb-sm-0 mb-2">position</label>
+                                                <select class="form-control ml-sm-10 ml-0">
+                                                    <option>All</option>
+                                                    <option>Web Developer</option>
+                                                    <option>Senior Manager</option>
+                                                    <option>UX/UI Desogner</option>
+                                                    <option>Content Writer</option>
+                                                    <option>Graphic Designer</option>
+                                                    <option>Marketer</option>
+                                                    <option>Project Manager</option>
+                                                    <option>UI Designer</option>
+                                                    <option>Business Development</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group footable-filtering-search">
+                                                <label class="sr-only">Search</label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" placeholder="Search">
+                                                    <div class="input-group-btn">
+                                                        <button type="button" class="btn btn-primary"><span class="fooicon fooicon-search"></span></button><button type="button" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
+                                                        <ul class="dropdown-menu dropdown-menu-right">
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">id</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">user</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">emaill</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">company</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">position</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">join date</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title">status</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a class="checkbox">
+                                                                    <label>
+                                                                        <input type="checkbox" checked="checked">
+                                                                        <span class="userDatatable-title float-right">action</span>
+                                                                    </label>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <table class="table mb-0 table-borderless adv-table footable footable-1 footable-filtering footable-filtering-right footable-paging footable-paging-right breakpoint-lg" data-sorting="true" data-filter-container="#filter-form-container" data-paging-current="1" data-paging-position="right" data-paging-size="10" style="">
+                                        <thead>
+                                            <tr class="userDatatable-header footable-header">
+                                                <th class="footable-sortable footable-first-visible" style="display: table-cell;">
+                                                    <span class="userDatatable-title">id</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">user</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">emaill</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">company</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th data-type="html" data-name="position" class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">position</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">join date</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th data-type="html" data-name="status" class="footable-sortable" style="display: table-cell;">
+                                                    <span class="userDatatable-title">status</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                                <th class="footable-sortable footable-last-visible" style="display: table-cell;">
+                                                    <span class="userDatatable-title float-right">action</span>
+                                                    <span class="fooicon fooicon-sort"></span>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">01</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Kellie Marquot </h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        john-keller@gmail.com
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Business Development
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Web Developer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        January 20, 2020
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">02</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Robert Clinton</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Japan
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Vehicle Master
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Senior Manager
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        January 25, 2020
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-warning  color-warning rounded-pill userDatatable-content-status active">deactivate</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">03</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Chris Joe</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        South Korea
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Smart Collection
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        UX/UI Designer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        June 20, 2020
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-danger  color-danger rounded-pill userDatatable-content-status active">blocked</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">04</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Jack Kalis</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        South Africa
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Business Development
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Content writer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        July 30, 2020
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">05</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Black Smith</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        United Kingdom
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Print Media
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Graphic Designer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        August 20, 2020
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">06</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Aftab Ahmed</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Bangladesh
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Online Super Shop
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Marketer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        January 15, 2021
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">07</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Daniel White</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Australia
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Business Development
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Project Manager
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        January 20, 2021
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">08</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Chris john</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Japan
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Boss IT Farm
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Web Developer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        February 20, 2021
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">09</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>David Manal</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Russia
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Business Development
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        UI Designer
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        March 20, 2021
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="footable-first-visible" style="display: table-cell;">
+                                                    <div class="userDatatable-content">10</div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="d-flex">
+                                                        <div class="userDatatable-inline-title">
+                                                            <a href="#" class="text-dark fw-500">
+                                                                <h6>Kapil Deb</h6>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        India
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Business Development
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        Manager
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content">
+                                                        March 31, 2021
+                                                    </div>
+                                                </td>
+                                                <td style="display: table-cell;">
+                                                    <div class="userDatatable-content d-inline-block">
+                                                        <span class="bg-opacity-success  color-success rounded-pill userDatatable-content-status active">active</span>
+                                                    </div>
+                                                </td>
+                                                <td class="footable-last-visible" style="display: table-cell;">
+                                                    <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
+                                                        <li>
+                                                            <a href="#" class="view">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye">
+                                                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                                                    <circle cx="12" cy="12" r="3"></circle>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="edit">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit">
+                                                                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                                                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" class="remove">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash-2">
+                                                                    <polyline points="3 6 5 6 21 6"></polyline>
+                                                                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                                                    <line x1="10" y1="11" x2="10" y2="17"></line>
+                                                                    <line x1="14" y1="11" x2="14" y2="17"></line>
+                                                                </svg>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr class="footable-paging">
+                                                <td colspan="8">
+                                                    <div class="footable-pagination-wrapper">
+                                                        <ul class="pagination">
+                                                            <li class="footable-page-nav disabled" data-page="first"><a class="footable-page-link" href="#">«</a></li>
+                                                            <li class="footable-page-nav disabled" data-page="prev"><a class="footable-page-link" href="#">‹</a></li>
+                                                            <li class="footable-page visible active" data-page="1"><a class="footable-page-link" href="#">1</a></li>
+                                                            <li class="footable-page visible" data-page="2"><a class="footable-page-link" href="#">2</a></li>
+                                                            <li class="footable-page visible" data-page="3"><a class="footable-page-link" href="#">3</a></li>
+                                                            <li class="footable-page-nav" data-page="next"><a class="footable-page-link" href="#">›</a></li>
+                                                            <li class="footable-page-nav" data-page="last"><a class="footable-page-link" href="#">»</a></li>
+                                                        </ul>
+                                                        <div class="divider"></div>
+                                                        <span class="label label-default">1 of 3</span>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}

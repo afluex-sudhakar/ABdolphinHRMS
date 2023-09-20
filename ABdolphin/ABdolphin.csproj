@@ -135,6 +135,7 @@
     <Content Include="assets\css\images\marker-icon.html" />
     <Content Include="assets\css\mCSB_buttons.html" />
     <Content Include="assets\css\plugin.min.css" />
+    <Content Include="assets\css\style.css" />
     <Content Include="assets\fonts\fontawesome\fa-brands-400.html" />
     <Content Include="assets\fonts\fontawesome\fa-regular-400.html" />
     <Content Include="assets\fonts\fontawesome\fa-solid-900.html" />
@@ -464,6 +465,7 @@
     <Compile Include="Models\Farmer.cs" />
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\Master.cs" />
+    <Compile Include="Models\Reports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -475,6 +477,8 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Admin\AdminDashBoard.cshtml" />
+    <Content Include="Views\Farmers\AddFarmers.cshtml" />
+    <Content Include="Views\Farmers\Farmerlist.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
