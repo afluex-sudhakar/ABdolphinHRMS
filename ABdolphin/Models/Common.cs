@@ -190,7 +190,14 @@ namespace ABdolphin.Models
 
             return RequestStatus;
         }
-
+        public static List<SelectListItem> EntryType()
+        {
+            List<SelectListItem> EntryType = new List<SelectListItem>();
+            EntryType.Add(new SelectListItem { Text = "Type", Value = null });
+            EntryType.Add(new SelectListItem { Text = "Cr", Value = "Cr" });
+            EntryType.Add(new SelectListItem { Text = "Dr", Value = "Dr" });
+            return EntryType;
+        }
         public static List<SelectListItem> AvailabilityStatus()
         {
             List<SelectListItem> ddlAvailabilityStatus = new List<SelectListItem>();
