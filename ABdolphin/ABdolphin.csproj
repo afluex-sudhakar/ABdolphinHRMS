@@ -451,6 +451,7 @@
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\FarmersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MasterController.cs" />
     <Compile Include="Filters\SimpleAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -465,6 +466,7 @@
     <Compile Include="Models\Farmer.cs" />
     <Compile Include="Models\Home.cs" />
     <Compile Include="Models\Master.cs" />
+    <Compile Include="Models\Plot.cs" />
     <Compile Include="Models\Reports.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -491,6 +493,7 @@
     <Folder Include="Views\AssociateDashboard\" />
     <Folder Include="Views\CustomerDashboard\" />
     <Folder Include="Views\Customer\" />
+    <Folder Include="Views\Master\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
