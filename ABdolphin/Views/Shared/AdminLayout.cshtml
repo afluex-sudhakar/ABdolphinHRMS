@@ -3,71 +3,203 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="en" dir="ltr">
 <head>
-    <title>Admin Dashboard</title>
-    
-    <style>
-        .footer-bottom {
-            background-color: black;
-            color: #dddddd;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AdminDashBoard</title>
 
-        p.copy {
-            font-size: 14px;
-            font-weight: 500;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- inject:css-->
+
+    <link href="~/assets/css/plugin.min.css" rel="stylesheet" />
+    <link href="~/assets/css/style.css" rel="stylesheet" />
+
+    <!-- endinject -->
+
+    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon.png">
 </head>
-<!-- Menu horizontal static layout -->
-
-
-<body>
-    <!-- [ Pre-loader ] start -->
-    <div class="loader-bg">
-        <div class="loader-bar"></div>
+@RenderBody();
+<body class="layout-dark side-menu overlayScroll">
+    <div class="mobile-search">
+        <form class="search-form">
+            <span data-feather="search"></span>
+            <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
+        </form>
     </div>
-    <!-- [ Pre-loader ] end -->
-    <div id="pcoded" class="pcoded">
-        <div class="pcoded-overlay-box"></div>
-        <div class="pcoded-container navbar-wrapper">
-            <!-- [ Header ] start -->
-            <nav class="navbar header-navbar pcoded-header">
-                <div class="navbar-wrapper">
-                    <div class="navbar-logo">
-                        <a class="mobile-menu waves-effect waves-light" id="mobile-collapse" href="#!">
-                            <i class="feather icon-toggle-right"></i>
-                        </a>
-                        <a href="/Admin/AdminDashBoard">
 
+    <div class="mobile-author-actions"></div>
+    <header class="header-top">
+        <nav class="navbar navbar-light">
+            <div class="navbar-left">
+                <a href="#" class="sidebar-toggle">
+                    <img class="svg" src="~/assets/img/svg/bars.svg" alt="img">
+                </a>
+                <a class="navbar-brand" href="/Admin/AdminDashBoard"><img class="dark" src="~/assets/Images/logo.png" alt="svg"><img class="light" src="~/assets/Images/logo.png" alt="img"></a>
 
-                            <img class="img-fluid" src="~/assets/img/dolphin.png" style="height:50px" alt="Theme-Logo" />
-                        </a>
+                <form action="https://demo.jsnorm.com/" class="search-form">
+                    <span data-feather="search"></span>
+                    <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
+                </form>
+            </div>
+            <!-- ends: navbar-left -->
 
-                        <a class="mobile-options waves-effect waves-light">
-                            <i class="feather icon-more-horizontal"></i>
+            <div class="navbar-right">
+                <ul class="navbar-right__menu">
+                    <li class="nav-search d-none">
+                        <a href="#" class="search-toggle">
+                            <i class="la la-search"></i>
+                            <i class="la la-times"></i>
                         </a>
-                    </div>
+                        <form action="https://demo.jsnorm.com/" class="search-form-topMenu">
+                            <span class="search-icon" data-feather="search"></span>
+                            <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
+                        </form>
+                    </li>
                    
-                </div>
-            </nav>
-          
-           
-            @RenderBody()
-            <div class="footer-bottom">
-                <div class="container text-center">
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <p class="copy pt-2"> © Copyright 2022 ABdolphin All Rights Reserved.</p>
+                    <li class="nav-settings">
+                        <div class="dropdown-custom">
+                            <a href="javascript:;" class="nav-item-toggle">
+                                <span data-feather="settings"></span>
+                            </a>
+                            <div class="dropdown-wrapper dropdown-wrapper--large">
+                                <ul class="list-settings">
+                                   
+                                    <li class="d-flex">
+                                        <div class="mr-3"><img src="~/assets/img/video-camera.png" alt=""></div>
+                                        <div class="flex-grow-1">
+                                            <h6>
+                                                <a href="#" class="stretched-link">Change Password</a>
+                                            </h6>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex">
+                                        <div class="mr-3"><img src="~/assets/img/document.png" alt=""></div>
+                                        <div class="flex-grow-1">
+                                            <h6>
+                                                <a href="#" class="stretched-link">Logout</a>
+                                            </h6>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                    </div>
+                    </li>
+                    
+                </ul>
+                <!-- ends: .navbar-right__menu -->
+                <div class="navbar-right__mobileAction d-md-none">
+                    <a href="#" class="btn-search">
+                        <span data-feather="search"></span>
+                        <span data-feather="x"></span>
+                    </a>
+                    <a href="#" class="btn-author-action">
+                        <span data-feather="more-vertical"></span>
+                    </a>
                 </div>
             </div>
-        </div>
-    </div>
+            <!-- ends: .navbar-right -->
+        </nav>
+    </header>
+    <main class="main-content">
 
-   
+        <aside class="sidebar-wrapper">
+            <div class="sidebar sidebar-collapse" id="sidebar">
+                <div class="sidebar__menu-group">
+                    <ul class="sidebar_nav">
+                        <li>
+                            <a href="/Admin/AdminDashBoard">Dashboard</a>
+                        </li>
+                        @*<li class="has-child open">
+                            <a href="/Admin/AdminDashBoard" >
+                                <span data-feather="home" class="nav-icon"></span>
+                                <span class="menu-text">Dashboard</span>
+                            </a>
+                        </li>*@
+                        <li class="has-child open">
+                            <a href="#">
+                                <span data-feather="home" class="nav-icon"></span>
+                                <span class="menu-text">Farmer Management</span>
+                                <span class="toggle-icon"></span>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a class="active" href="/Farmers/AddFarmers">Add Farmer</a>
+                                </li>
+                                <li>
+                                    <a class="active" href="/Farmers/Farmerlist">View Farmer</a>
+                                </li>
+                                <li>
+                                    <a class="active" href="#">Farmer Plot Registry</a>
+                                </li>
+                                <li>
+                                    <a class="active" href="#">Farmer Payment List</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="has-child">
+                            <a href="#" class="">
+                                <span data-feather="layout" class="nav-icon"></span>
+                                <span class="menu-text">Expense Management</span>
+                                <span class="toggle-icon"></span>
+                            </a>
+                            <ul>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">View Account</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">Expense Type</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">View Expense</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">Credit Income</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">Dr Expense</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">Expense Ledger</a>
+                                </li>
+                                <li class="l_sidebar">
+                                    <a href="#" data-layout="light">Expense Category</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </aside>
+
+
+
+    </main>
+    <div id="overlayer">
+        <span class="loader-overlay">
+            <div class="atbd-spin-dots spin-lg">
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+                <span class="spin-dot badge-dot dot-primary"></span>
+            </div>
+        </span>
+    </div>
+    <div class="overlay-dark-sidebar"></div>
+    <div class="customizer-overlay"></div>
+
+    <script src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDduF2tLXicDEPDMAtC6-NLOekX0A5vlnY"></script>
+    <!-- inject:js-->
+    <script src="~/assets/js/plugins.min.js"></script>
+    <script src="~/assets/js/script.min.js"></script>
+    <!-- endinject-->
 </body>
 
 </html>
