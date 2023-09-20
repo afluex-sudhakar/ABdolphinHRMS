@@ -65,6 +65,10 @@ namespace ABdolphin.Models
         public string PaymentMode { get; set; }
         public string PaymentMode2 { get; set; }
         public List<Expenses> BounceListItem { get; set; }
+        public string FK_ExpenseDetailsId { get; set; }
+        public string ExpenseIDD { get; set; }
+        public string ExpenseName1 { get; set; }
+        public string Status { get; set; }
 
 
 
@@ -319,6 +323,125 @@ namespace ABdolphin.Models
                  new SqlParameter("@Fk_EmployeeId",Fk_EmployeeId)
             };
             DataSet ds = Connection.ExecuteQuery("GetExpenselistByType", para);
+            return ds;
+        }
+        public DataSet GetCrExpenselist()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@ExpenseType",ExpenseID),
+                new SqlParameter("@FromDate",FromDate),
+                new SqlParameter("@LedgerType",ChequeStatus),
+                new SqlParameter("@ToDate",ToDate),
+                new SqlParameter("@Fk_CompanyId",Fk_CompanyId),
+                new SqlParameter("@Fk_ExpenseNameId",ExpenseName),
+                new SqlParameter("@FK_ExpenseHeadId",FK_ExpenseHead),
+                 new SqlParameter("@EntryFromDate",EntryFromDate),
+               new SqlParameter("@EntryToDate",EntryToDate),
+               new SqlParameter("@Fk_ExpenseCategoryId",Fk_ExpenseCategoryId),
+                new SqlParameter("@Fk_Transactiontype",TransactionID),
+                new SqlParameter("@Fk_TeamId",Fk_Teamid),
+                new SqlParameter("@Fk_EmployeeId",Fk_EmployeeId)
+
+            };
+            DataSet ds = Connection.ExecuteQuery("GetExpenselistByType", para);
+            return ds;
+        }
+        public DataSet UpdateCheckStatus()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@FK_ExpenseDetailsId",FK_ExpenseDetailsId),
+                                new SqlParameter("@ChequeDate",ChequeStatusUpdateDate),
+                                new SqlParameter("@ChequeStaus",ChequeStatus),
+                                new SqlParameter("@UpdatedBy",AddedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("UpdateExpenseCheckStatus", para);
+            return ds;
+        }
+        public DataSet UpdateCompany()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@FK_ExpenseDetailsId",FK_ExpenseDetailsId),
+                                new SqlParameter("@Fk_CompanyId",Fk_CompanyId),
+                                new SqlParameter("@UpdatedBy",AddedBy),
+                                new SqlParameter("@FK_ExpenseHead",FK_ExpenseHead),
+                                 new SqlParameter("@ExpenseTyIDD",ExpenseIDD),
+                                  new SqlParameter("@FK_ExpenseID",ExpenseName1),
+                                  new SqlParameter("@Fk_ExpenseCategoryId",Fk_ExpenseCategoryId),
+                                  new SqlParameter("@Fk_TeamId",Fk_Teamid),
+                                  new SqlParameter("@Remarks",Remarks)
+                            };
+            DataSet ds = Connection.ExecuteQuery("UpdateCompany", para);
+            return ds;
+        }
+        public DataSet updateRemarks()
+        {
+            SqlParameter[] para =
+                            {
+                                        new SqlParameter("@Pk_ExpenseDetailsId ",Pk_ExpenseDetailsId),
+                                        new SqlParameter("@UpdatedBy ",UpdatedBy),
+                                        new SqlParameter("@ExpenseRemarks ", Remarks)
+
+                            };
+            DataSet ds = Connection.ExecuteQuery("UpdateExpenseRemarks", para);
+            return ds;
+        }
+        public DataSet DeleteExpenseDetails()
+        {
+            SqlParameter[] para =
+                            {
+                                        new SqlParameter("@Pk_ExpenseDetailsId ",Pk_ExpenseDetailsId),
+                                        new SqlParameter("@UpdatedBy ",UpdatedBy),
+                                        new SqlParameter("@Status",Status)
+
+                            };
+            DataSet ds = Connection.ExecuteQuery("DeleteExpenseDetails", para);
+            return ds;
+        }
+        public DataSet GetDrExpenselist1()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@ExpenseType",ExpenseID),
+                new SqlParameter("@FromDate",NFromDate),
+                  new SqlParameter("@LedgerType",ChequeStatus),
+                new SqlParameter("@ToDate",NToDate),
+                new SqlParameter("@Fk_EmployeeId",Fk_EmployeeId)
+            };
+            DataSet ds = Connection.ExecuteQuery("GetExpenselistByType", para);
+            return ds;
+        }
+        public DataSet GetDrExpenselist()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@ExpenseType",ExpenseID),
+                new SqlParameter("@FromDate",FromDate),
+                  new SqlParameter("@LedgerType",ChequeStatus),
+                new SqlParameter("@ToDate",ToDate),
+                new SqlParameter("@Fk_CompanyId",Fk_CompanyId),
+                new SqlParameter("@Fk_ExpenseNameId",ExpenseName),
+                new SqlParameter("@FK_ExpenseHeadId",FK_ExpenseHead),
+                new SqlParameter("@EntryFromDate",EntryFromDate),
+               new SqlParameter("@EntryToDate",EntryToDate),
+                new SqlParameter("@Fk_ExpenseCategoryId",Fk_ExpenseCategoryId),
+                 new SqlParameter("@Fk_Transactiontype",TransactionID),
+                  new SqlParameter("@Fk_EmployeeId",AddedBy)
+            };
+            DataSet ds = Connection.ExecuteQuery("GetExpenselistByType", para);
+            return ds;
+        }
+        public DataSet DeleteExpenseDetailsDr()
+        {
+            SqlParameter[] para =
+                            {
+                                        new SqlParameter("@Pk_ExpenseDetailsId ",Pk_ExpenseDetailsId),
+                                          new SqlParameter("@Status",Status),
+                                        new SqlParameter("@UpdatedBy ",UpdatedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("DeleteExpenseDetailsDR", para);
             return ds;
         }
     }

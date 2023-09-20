@@ -1249,5 +1249,969 @@ namespace ABdolphin.Controllers
             //ViewBag.ExpenseType = ExpenseType;
             //return View(model);
         }
+        [HttpPost]
+        [ActionName("ViewCrExpense")]
+        [OnAction(ButtonName = "btnSearch")]
+        public ActionResult ViewCrExpens(Expenses model)
+        {
+            List<SelectListItem> CheckStatus = Common.CheckStatus();
+            ViewBag.CheckStatus = CheckStatus;
+            //List<SelectListItem> ExpenseType = Common.ExpenseType();
+            //ViewBag.ExpenseType = ExpenseType;
+            #region ddlExpensetype
+            int ccount = 0;
+            int ecount = 0;
+            List<SelectListItem> ddlexpensetype = new List<SelectListItem>();
+            DataSet dsexpensetype = model.GetExpenseTypeList();
+            if (dsexpensetype != null && dsexpensetype.Tables.Count > 0 && dsexpensetype.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dsexpensetype.Tables[0].Rows)
+                {
+                    if (ecount == 0)
+                    {
+                        ddlexpensetype.Add(new SelectListItem { Text = "Expense Type", Value = "0" });
+                    }
+                    ddlexpensetype.Add(new SelectListItem { Text = r["ExpenseTypeName"].ToString(), Value = r["Pk_ExpenseTypeId"].ToString() });
+                    ecount = ecount + 1;
+                }
+            }
+            ViewBag.ExpenseType = ddlexpensetype;
+            #endregion
+            #region ddlExpenseHead
+            int ccount12 = 0;
+            Master master = new Master();
+            List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
+            DataSet ds1 = master.GetExpenseHeadList();
+            if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds1.Tables[0].Rows)
+                {
+                    if (ccount12 == 0)
+                    {
+                        ddlExpenseHead.Add(new SelectListItem { Text = "Select Expense Head", Value = "0" });
+                    }
+                    ddlExpenseHead.Add(new SelectListItem { Text = r["ExpenseHeadName"].ToString(), Value = r["PK_ExpenseHead"].ToString() });
+                    ccount12 = ccount12 + 1;
+                }
+            }
+            ViewBag.ddlExpenseHead = ddlExpenseHead;
+            #endregion
+            #region ddlExpenseCategory
+            int Category = 0;
+            List<SelectListItem> ddlexpensecategory = new List<SelectListItem>();
+            DataSet dscat = model.GetExpenseCategory();
+            if (dscat != null && dscat.Tables.Count > 0 && dscat.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dscat.Tables[0].Rows)
+                {
+                    if (Category == 0)
+                    {
+                        ddlexpensecategory.Add(new SelectListItem { Text = "Expense Category", Value = "0" });
+                    }
+                    ddlexpensecategory.Add(new SelectListItem { Text = r["ExpenseCategory"].ToString(), Value = r["Pk_ExpenseCategoryId"].ToString() });
+                    Category = Category + 1;
+                }
+            }
+            ViewBag.ExpenseCategory = ddlexpensecategory;
+            #endregion
+            #region transactiontype
+            int count = 0;
+            List<SelectListItem> ddlTransactionType = new List<SelectListItem>();
+            DataSet ddlTransaction = model.GetTransactionList();
+            if (ddlTransaction != null && ddlTransaction.Tables.Count > 0 && ddlTransaction.Tables[0].Rows.Count > 0)
+            {
+                //ddlTransactionType.Add(new SelectListItem { Text = "Cash", Value = "Cash" });
+                foreach (DataRow r in ddlTransaction.Tables[0].Rows)
+                {
+                    if (count == 0)
+                    {
+                        ddlTransactionType.Add(new SelectListItem { Text = "Select TransactionType", Value = "0" });
+                    }
+                    ddlTransactionType.Add(new SelectListItem { Text = r["BankName"].ToString(), Value = r["Pk_BankId"].ToString() });
+                    count = count + 1;
+
+                }
+            }
+            ViewBag.ddlTransactionType = ddlTransactionType;
+            #endregion
+            #region bindTeam
+            Master team = new Master();
+            int teamcount = 0;
+            List<SelectListItem> ddlteam = new List<SelectListItem>();
+            DataSet teamds = team.Teamlist();
+            if (teamds != null && teamds.Tables.Count > 0 && teamds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in teamds.Tables[0].Rows)
+                {
+                    if (teamcount == 0)
+                    {
+                        ddlteam.Add(new SelectListItem { Text = "Select Team", Value = "0" });
+                    }
+                    ddlteam.Add(new SelectListItem { Text = r["TeamName"].ToString(), Value = r["PK_TeamId"].ToString() });
+                    teamcount = teamcount = 1;
+                }
+            }
+            ViewBag.ddlTeam = ddlteam;
+            #endregion
+            //List<Expenses> Crlst = new List<Expenses>();
+            List<Expenses> Clearedlst = new List<Expenses>();
+            List<Expenses> Pendinglst = new List<Expenses>();
+            List<Expenses> Bouncelst = new List<Expenses>();
+            model.ChequeStatus = "Cr";
+            model.ExpenseID = model.ExpenseID == "0" ? null : model.ExpenseID;
+            model.ExpenseName = model.ExpenseName == "0" ? null : model.ExpenseName;
+            model.Fk_CompanyId = model.Fk_CompanyId == "0" ? null : model.Fk_CompanyId;
+            model.FK_ExpenseHead = model.FK_ExpenseHead == "0" ? null : model.FK_ExpenseHead;
+            model.TransactionID = model.TransactionID == "0" ? null : model.TransactionID;
+            model.Fk_ExpenseCategoryId = model.Fk_ExpenseCategoryId == "0" ? null : model.Fk_ExpenseCategoryId;
+            model.Fk_Teamid = model.Fk_Teamid == "0" ? null : model.Fk_Teamid;
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
+            model.EntryFromDate = string.IsNullOrEmpty(model.EntryFromDate) ? null : Common.ConvertToSystemDate(model.EntryFromDate, "dd/MM/yyyy");
+            model.EntryToDate = string.IsNullOrEmpty(model.EntryToDate) ? null : Common.ConvertToSystemDate(model.EntryToDate, "dd/MM/yyyy");
+            model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            DataSet ds = model.GetCrExpenselist();
+            ViewBag.TotalCleredPaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds.Tables[0].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.TeamName = r["TeamName"].ToString();
+                    obj.CompanyName = r["CompanyName"].ToString();
+                    obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                    obj.PlotInfo = r["PlotInfo"].ToString();
+                    obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = r["ExpenseName"].ToString();
+                    obj.ExpenseID = r["ExpenseType"].ToString();
+                    obj.Remarks = r["Remarks"].ToString();
+                    obj.ChequeStatus = r["TransactionStatus"].ToString();
+                    obj.TransactionTy = r["TransactionType"].ToString();
+                    obj.Transanction = r["TransactionStatus"].ToString();
+                    obj.ChequeNo = r["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString();
+                    obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                    obj.Date = r["CheckDate"].ToString();
+                    obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+                    obj.PaymentMode = r["PaymentMode1"].ToString();
+                    Clearedlst.Add(obj);
+                    ViewBag.TotalCleredPaid = Convert.ToDecimal(ViewBag.TotalCleredPaid) + Convert.ToDecimal(r["CrAmount"].ToString());
+                }
+                model.ClearedListItem = Clearedlst;
+
+            }
+            ViewBag.TotalPendingPaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[1].Rows.Count > 0)
+            {
+                foreach (DataRow pr in ds.Tables[1].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.TeamName = pr["TeamName"].ToString();
+                    obj.CompanyName = pr["CompanyName"].ToString();
+                    obj.ExpenseHeadName = pr["ExpenseHeadName"].ToString();
+                    obj.PlotInfo = pr["PlotInfo"].ToString();
+                    obj.Pk_ExpenseDetailsId = pr["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = pr["ExpenseName"].ToString();
+                    obj.ExpenseID = pr["ExpenseType"].ToString();
+                    obj.Remarks = pr["Remarks"].ToString();
+                    obj.ChequeStatus = pr["TransactionStatus"].ToString();
+                    obj.TransactionTy = pr["TransactionType"].ToString();
+                    obj.Transanction = pr["TransactionStatus"].ToString();
+                    obj.ChequeNo = pr["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = pr["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(pr["CrAmount"].ToString()).ToString("n2");
+                    obj.DrAmount = double.Parse(pr["DrAmount"].ToString()).ToString("n2");
+                    obj.Date = pr["CheckDate"].ToString();
+                    obj.ExpenseCategoryName = pr["ExpenseCategoryName"].ToString();
+                    obj.PaymentMode1 = pr["PaymentMode"].ToString();
+                    Pendinglst.Add(obj);
+                    ViewBag.TotalPendingPaid = Convert.ToDecimal(ViewBag.TotalPendingPaid) + Convert.ToDecimal(pr["CrAmount"].ToString());
+                }
+                model.PendingListItem = Pendinglst;
+
+
+            }
+            ViewBag.TotalBouncePaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[2].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds.Tables[2].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.CompanyName = r["CompanyName"].ToString();
+                    obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                    obj.PlotInfo = r["PlotInfo"].ToString();
+                    obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = r["ExpenseName"].ToString();
+                    obj.ExpenseID = r["ExpenseType"].ToString();
+                    obj.Remarks = r["Remarks"].ToString();
+                    obj.ChequeStatus = r["TransactionStatus"].ToString();
+                    obj.TransactionTy = r["TransactionType"].ToString();
+                    obj.Transanction = r["TransactionStatus"].ToString();
+                    obj.ChequeNo = r["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString("n2");
+                    obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                    obj.Date = r["CheckDate"].ToString();
+                    obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+                    obj.PaymentMode2 = r["PaymentMode"].ToString();
+                    Bouncelst.Add(obj);
+                    ViewBag.TotalBouncePaid = Convert.ToDecimal(ViewBag.TotalBouncePaid) + Convert.ToDecimal(r["CrAmount"].ToString());
+                }
+                model.BounceListItem = Bouncelst;
+                //ViewBag.TotalBouncePaid = double.Parse(ds.Tables[2].Compute("sum(CrAmount)", "").ToString()).ToString("n2");
+            }
+            #region ddlcompany
+            Master obj1 = new Master();
+            List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            obj1.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            DataSet dscompany = master.GetCompanyList();
+            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dscompany.Tables[0].Rows)
+                {
+                    if (ccount == 0)
+                    {
+                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+                    }
+                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+                    ccount = ccount + 1;
+                }
+            }
+            ViewBag.ddlcompany = ddlcompany;
+            //List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            //ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+            //ViewBag.ddlexpensename = ddlexpensename;
+            #endregion
+            #region GetExpenseName
+            List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            model.Result = "yes";
+            int ExpenseCount = 0;
+            DataSet ds11 = model.GetExpenseNameList();
+            if (ds11 != null && ds11.Tables.Count > 0)
+            {
+                foreach (DataRow r in ds11.Tables[0].Rows)
+                {
+                    if (ExpenseCount == 0)
+                    {
+                        ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+                    }
+                    ddlexpensename.Add(new SelectListItem { Text = r["ExpenseName"].ToString(), Value = r["FK_ExpenseId"].ToString() });
+                    ExpenseCount = ExpenseCount + 1;
+                }
+            }
+            ViewBag.ddlexpensename = ddlexpensename;
+            #endregion
+            //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in ds.Tables[0].Rows)
+            //    {
+            //        Expenses obj = new Expenses();
+            //        obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+            //        obj.ExpenseName = r["ExpenseName"].ToString();
+            //        obj.ExpenseID = r["ExpenseType"].ToString();
+            //        obj.Remarks = r["Remarks"].ToString();
+            //        obj.ChequeStatus = r["TransactionStatus"].ToString();
+            //        obj.TransactionTy = r["TransactionType"].ToString();
+            //        obj.Transanction = r["TransactionStatus"].ToString();
+            //        obj.CrAmount = r["CrAmount"].ToString();
+            //        obj.DrAmount = r["DrAmount"].ToString();
+            //        obj.Date = r["CheckDate"].ToString();   
+            //        Crlst.Add(obj);
+            //    }
+            //    model.CrExpenseList = Crlst;
+            //}
+
+            return View(model);
+        }
+        public ActionResult UpdateExpenseCheckStaus(string CheqStatus, string ExpenseDetailsId, string CheckDate)
+        {
+            string FormName = "";
+            string Controller = "";
+            Expenses obj = new Expenses();
+            try
+            {
+                obj.FK_ExpenseDetailsId = ExpenseDetailsId;
+                obj.ChequeStatus = CheqStatus;
+                obj.ChequeStatusUpdateDate = string.IsNullOrEmpty(CheckDate) ? null : Common.ConvertToSystemDate(CheckDate, "dd/MM/yyyy");
+                obj.AddedBy = Session["Pk_AdminId"].ToString();
+                DataSet ds = obj.UpdateCheckStatus();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        obj.Result = "Yes";
+                        FormName = "ViewCrExpense";
+                        Controller = "Expense";
+                    }
+                    else
+                    {
+                        obj.Result = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                        FormName = "ViewCrExpense";
+                        Controller = "Expense";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.Result = ex.Message;
+                FormName = "ViewCrExpense";
+                Controller = "Expense";
+            }
+            //return RedirectToAction(FormName); 
+            var uid = (ExpenseDetailsId);
+            return RedirectToAction(FormName, new { fid = uid });
+            // return RedirectToAction((FormName+"?id="+UserId).Trim(),Controller);
+        }
+        public ActionResult UpdateCompany(string CompanyId, string ExpenseDetailsId, string ExpenseheadId, string expenseTypeId, string expenseName, string expensecategoryId, string Fk_Teamid, string Remarks)
+        {
+
+            Expenses obj = new Expenses();
+            try
+            {
+                obj.FK_ExpenseDetailsId = ExpenseDetailsId;
+                if (CompanyId != "0")
+                {
+                    obj.Fk_CompanyId = CompanyId;
+                }
+                else
+                {
+                    obj.Fk_CompanyId = CompanyId == "0" ? null : CompanyId;
+                }
+                if (ExpenseheadId != "0")
+                {
+                    obj.FK_ExpenseHead = ExpenseheadId;
+                }
+                else
+                {
+                    obj.FK_ExpenseHead = ExpenseheadId == "0" ? null : ExpenseheadId;
+
+                }
+                if (expenseTypeId != "0")
+                {
+                    obj.ExpenseIDD = expenseTypeId;
+                }
+                else
+                {
+                    obj.ExpenseIDD = expenseTypeId == "0" ? null : expenseTypeId;
+
+                }
+                if (expenseName != "0")
+                {
+                    obj.ExpenseName1 = expenseName;
+                }
+                else
+                {
+                    obj.ExpenseName1 = expenseName == "0" ? null : expenseName;
+
+                }
+                if (expensecategoryId != "0")
+                {
+                    obj.Fk_ExpenseCategoryId = expensecategoryId;
+                }
+                else
+                {
+                    obj.Fk_ExpenseCategoryId = expensecategoryId == "0" ? null : expensecategoryId;
+                }
+                if (Fk_Teamid != "0")
+                {
+                    obj.Fk_Teamid = Fk_Teamid;
+                }
+                else
+                {
+                    obj.Fk_Teamid = Fk_Teamid == "0" ? null : Fk_Teamid;
+                }
+                if (Remarks != "")
+                {
+                    obj.Remarks = Remarks;
+                }
+
+                obj.AddedBy = Session["Pk_AdminId"].ToString();
+                DataSet ds = obj.UpdateCompany();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        obj.Result = "Yes";
+                    }
+                    else
+                    {
+                        obj.Result = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                obj.Result = ex.Message;
+            }
+            return Json(obj, JsonRequestBehavior.AllowGet);
+            //return RedirectToAction(FormName); 
+            //var uid = (ExpenseDetailsId);
+            //return RedirectToAction(FormName, new { fid = uid });
+            // return RedirectToAction((FormName+"?id="+UserId).Trim(),Controller);
+        }
+        public ActionResult UpdateRemarks(string ExpenseDetailsId, string Remark)
+        {
+            string FormName = "";
+            string Controller = "";
+            try
+            {
+                Expenses model = new Expenses();
+
+                model.Pk_ExpenseDetailsId = ExpenseDetailsId;
+                model.Remarks = Remark;
+                model.UpdatedBy = Session["Pk_AdminId"].ToString();
+                DataSet ds = model.updateRemarks();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        TempData["CrExpenseList"] = "Remarks Updated!";
+                    }
+                    else
+                    {
+                        TempData["CrExpenseList"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["CrExpenseList"] = ex.Message;
+            }
+            FormName = "ViewCrExpense";
+            Controller = "Expense";
+            return RedirectToAction(FormName, Controller);
+        }
+        public ActionResult DeleteExpenseDetails(string ExpenseDetailsId, string status)
+        {
+            string FormName = "";
+            string Controller = "";
+            try
+            {
+                Expenses model = new Expenses();
+                model.Status = status;
+                model.Pk_ExpenseDetailsId = ExpenseDetailsId;
+                model.UpdatedBy = Session["Pk_AdminId"].ToString();
+                DataSet ds = model.DeleteExpenseDetails();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+
+                        TempData["CrExpenseList"] = "Expense Details Deleted!";
+                    }
+                    else
+                    {
+                        TempData["CrExpenseList"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["CrExpenseList"] = ex.Message;
+            }
+            FormName = "ViewCrExpense";
+            Controller = "Expense";
+
+            return RedirectToAction(FormName, Controller);
+        }
+
+        #region ViewDrExpense
+        public ActionResult ViewDrExpense(Expenses model)
+        {
+            #region ddlcompany
+            int ccount = 0;
+            Master master = new Master();
+            List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            DataSet dscompany = master.GetCompanyList();
+            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dscompany.Tables[0].Rows)
+                {
+                    if (ccount == 0)
+                    {
+                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+                    }
+                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+                    ccount = ccount + 1;
+                }
+            }
+            ViewBag.ddlcompany = ddlcompany;
+            #endregion
+            #region transactiontype
+            int count = 0;
+            List<SelectListItem> ddlTransactionType = new List<SelectListItem>();
+            DataSet ddlTransaction = model.GetTransactionList();
+            if (ddlTransaction != null && ddlTransaction.Tables.Count > 0 && ddlTransaction.Tables[0].Rows.Count > 0)
+            {
+                //ddlTransactionType.Add(new SelectListItem { Text = "Cash", Value = "Cash" });
+                foreach (DataRow r in ddlTransaction.Tables[0].Rows)
+                {
+                    if (count == 0)
+                    {
+                        ddlTransactionType.Add(new SelectListItem { Text = "Select TransactionType", Value = "0" });
+                    }
+                    ddlTransactionType.Add(new SelectListItem { Text = r["BankName"].ToString(), Value = r["Pk_BankId"].ToString() });
+                    count = count + 1;
+
+                }
+            }
+            ViewBag.ddlTransactionType = ddlTransactionType;
+            #endregion
+            #region ddlExpenseHead
+            int ccount12 = 0;
+            //Master master = new Master();
+            List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
+            DataSet ds1 = master.GetExpenseHeadList();
+            if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds1.Tables[0].Rows)
+                {
+                    if (ccount12 == 0)
+                    {
+                        ddlExpenseHead.Add(new SelectListItem { Text = "Select Expense Head", Value = "0" });
+                    }
+                    ddlExpenseHead.Add(new SelectListItem { Text = r["ExpenseHeadName"].ToString(), Value = r["PK_ExpenseHead"].ToString() });
+                    ccount12 = ccount12 + 1;
+                }
+            }
+            ViewBag.ddlExpenseHead = ddlExpenseHead;
+            #endregion
+            List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+            ViewBag.ddlexpensename = ddlexpensename;
+            List<SelectListItem> CheckStatus = Common.CheckStatus();
+            ViewBag.CheckStatus = CheckStatus;
+            #region ddlExpensetype
+            int ecount = 0;
+            List<SelectListItem> ddlexpensetype = new List<SelectListItem>();
+            DataSet dsexpensetype = model.GetExpenseTypeList();
+            if (dsexpensetype != null && dsexpensetype.Tables.Count > 0 && dsexpensetype.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dsexpensetype.Tables[0].Rows)
+                {
+                    if (ecount == 0)
+                    {
+                        ddlexpensetype.Add(new SelectListItem { Text = "Expense Type", Value = "0" });
+                    }
+                    ddlexpensetype.Add(new SelectListItem { Text = r["ExpenseTypeName"].ToString(), Value = r["Pk_ExpenseTypeId"].ToString() });
+                    ecount = ecount + 1;
+                }
+            }
+            ViewBag.ExpenseType = ddlexpensetype;
+            #endregion
+            #region ddlExpenseCategory
+            int Category = 0;
+            List<SelectListItem> ddlexpensecategory = new List<SelectListItem>();
+            DataSet dscat = model.GetExpenseCategory();
+            if (dscat != null && dscat.Tables.Count > 0 && dscat.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dscat.Tables[0].Rows)
+                {
+                    if (Category == 0)
+                    {
+                        ddlexpensecategory.Add(new SelectListItem { Text = "Expense Category", Value = "0" });
+                    }
+                    ddlexpensecategory.Add(new SelectListItem { Text = r["ExpenseCategory"].ToString(), Value = r["Pk_ExpenseCategoryId"].ToString() });
+                    Category = Category + 1;
+                }
+            }
+            ViewBag.ExpenseCategory = ddlexpensecategory;
+            #endregion
+            List<Expenses> Clearedlst = new List<Expenses>();
+            List<Expenses> Pendinglst = new List<Expenses>();
+            List<Expenses> Bouncelst = new List<Expenses>();
+
+            List<Expenses> CancelledPendinglst = new List<Expenses>();
+            model.ChequeStatus = "Dr";
+            model.ExpenseID = model.ExpenseID == "0" ? null : model.ExpenseID;
+            model.FK_ExpenseHead = model.FK_ExpenseHead == "0" ? null : model.FK_ExpenseHead;
+            model.Fk_ExpenseCategoryId = model.Fk_ExpenseCategoryId == "0" ? null : model.Fk_ExpenseCategoryId;
+            model.TransactionID = model.TransactionID == "0" ? null : model.TransactionID;
+            DateTime now = DateTime.Now;
+            DateTime currentDate = DateTime.Now;
+            currentDate = currentDate.AddDays(-7);
+            model.FromDate = currentDate.ToString("dd/MM/yyyy");
+            model.ToDate = DateTime.Now.ToString("dd/MM/yyyy");
+            model.NFromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.NToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
+            model.EntryFromDate = string.IsNullOrEmpty(model.EntryFromDate) ? null : Common.ConvertToSystemDate(model.EntryFromDate, "dd/MM/yyyy");
+            model.EntryToDate = string.IsNullOrEmpty(model.EntryToDate) ? null : Common.ConvertToSystemDate(model.EntryToDate, "dd/MM/yyyy");
+
+            //model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            //model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
+            model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            DataSet ds = model.GetDrExpenselist1();
+            ViewBag.TotalCleredPaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                var i = 0;
+                foreach (DataRow r in ds.Tables[0].Rows)
+                {
+                    if (i < 25)
+                    {
+                        Expenses obj = new Expenses();
+                        obj.CompanyName = r["CompanyName"].ToString();
+                        obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                        obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                        obj.ExpenseName = r["ExpenseName"].ToString();
+                        obj.ExpenseID = r["ExpenseType"].ToString();
+                        obj.Remarks = r["Remarks"].ToString();
+                        obj.ChequeStatus = r["TransactionStatus"].ToString();
+                        obj.TransactionTy = r["TransactionType"].ToString();
+                        obj.Transanction = r["TransactionStatus"].ToString();
+                        obj.ChequeNo = r["ChequeNo"].ToString();
+                        obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                        //obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString("n2");
+                        obj.CrAmount = r["CrAmount"].ToString();
+                        //  obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                        obj.DrAmount = (r["DrAmount"].ToString());//.ToString("n2");
+                        obj.Date = r["CheckDate"].ToString();
+                        obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+
+                        obj.PaymentMode = r["PaymentMode1"].ToString();
+                        Clearedlst.Add(obj);
+                        ViewBag.TotalCleredPaid = Convert.ToDecimal(ViewBag.TotalCleredPaid) + Convert.ToDecimal(r["DrAmount"].ToString());
+                    }
+                    i = i + 1;
+                }
+                model.ClearedListItem = Clearedlst;
+                //ViewBag.TotalCleredPaid = double.Parse(ds.Tables[0].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+            ViewBag.TotalPendingPaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[1].Rows.Count > 0)
+            {
+                var i = 0;
+                foreach (DataRow pr in ds.Tables[1].Rows)
+                {
+                    if (i < 25)
+                    {
+                        Expenses obj = new Expenses();
+                        obj.CompanyName = pr["CompanyName"].ToString();
+                        obj.ExpenseHeadName = pr["ExpenseHeadName"].ToString();
+                        obj.Pk_ExpenseDetailsId = pr["Pk_ExpenseDetailsId"].ToString();
+                        obj.ExpenseName = pr["ExpenseName"].ToString();
+                        obj.ExpenseID = pr["ExpenseType"].ToString();
+                        obj.Remarks = pr["Remarks"].ToString();
+                        obj.ChequeStatus = pr["TransactionStatus"].ToString();
+                        obj.TransactionTy = pr["TransactionType"].ToString();
+                        obj.Transanction = pr["TransactionStatus"].ToString();
+                        obj.ChequeNo = pr["ChequeNo"].ToString();
+                        obj.ChequeStatusUpdateDate = pr["ChequeStatusUpdateDate"].ToString();
+                        //obj.CrAmount = double.Parse(pr["CrAmount"].ToString()).ToString("n2");
+                        obj.CrAmount = pr["CrAmount"].ToString();
+                        //obj.DrAmount = double.Parse(pr["DrAmount"].ToString()).ToString("n2");
+                        obj.DrAmount = pr["DrAmount"].ToString();
+                        obj.Date = pr["CheckDate"].ToString();
+                        obj.ExpenseCategoryName = pr["ExpenseCategoryName"].ToString();
+                        obj.PaymentMode1 = pr["PaymentMode"].ToString();
+                        Pendinglst.Add(obj);
+                        ViewBag.TotalPendingPaid = Convert.ToDecimal(ViewBag.TotalPendingPaid) + Convert.ToDecimal(pr["DrAmount"].ToString());
+                    }
+                    i = i + 1;
+                }
+                model.PendingListItem = Pendinglst;
+                //ViewBag.TotalPendingPaid = double.Parse(ds.Tables[1].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+            ViewBag.TotalBouncePaid = 0;
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[2].Rows.Count > 0)
+            {
+                var i = 0;
+                foreach (DataRow r in ds.Tables[2].Rows)
+                {
+                    if (i < 25)
+                    {
+                        Expenses obj = new Expenses();
+                        obj.CompanyName = r["CompanyName"].ToString();
+                        obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                        obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                        obj.ExpenseName = r["ExpenseName"].ToString();
+                        obj.ExpenseID = r["ExpenseType"].ToString();
+                        obj.Remarks = r["Remarks"].ToString();
+                        obj.ChequeStatus = r["TransactionStatus"].ToString();
+                        obj.TransactionTy = r["TransactionType"].ToString();
+                        obj.Transanction = r["TransactionStatus"].ToString();
+                        obj.ChequeNo = r["ChequeNo"].ToString();
+                        obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                        obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString("n2");
+                        obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                        obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+                        obj.Date = r["CheckDate"].ToString();
+                        obj.PaymentMode2 = r["PaymentMode"].ToString();
+                        Bouncelst.Add(obj);
+                        ViewBag.TotalBouncePaid = Convert.ToDecimal(ViewBag.TotalBouncePaid) + Convert.ToDecimal(r["DrAmount"].ToString());
+                    }
+                    i = i + 1;
+                }
+                model.BounceListItem = Bouncelst;
+                ViewBag.TotalBouncePaid = double.Parse(ds.Tables[2].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+
+            return View(model);
+        }
+        [HttpPost]
+        [ActionName("ViewDrExpense")]
+        [OnAction(ButtonName = "btnSearch")]
+        public ActionResult ViewDrExpens(Expenses model)
+        {
+            List<SelectListItem> CheckStatus = Common.CheckStatus();
+            ViewBag.CheckStatus = CheckStatus;
+            #region ddlExpensetype
+            int ecount = 0;
+            List<SelectListItem> ddlexpensetype = new List<SelectListItem>();
+            DataSet dsexpensetype = model.GetExpenseTypeList();
+            if (dsexpensetype != null && dsexpensetype.Tables.Count > 0 && dsexpensetype.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dsexpensetype.Tables[0].Rows)
+                {
+                    if (ecount == 0)
+                    {
+                        ddlexpensetype.Add(new SelectListItem { Text = "Expense Type", Value = "0" });
+                    }
+                    ddlexpensetype.Add(new SelectListItem { Text = r["ExpenseTypeName"].ToString(), Value = r["Pk_ExpenseTypeId"].ToString() });
+                    ecount = ecount + 1;
+                }
+            }
+            ViewBag.ExpenseType = ddlexpensetype;
+            #endregion
+            #region ddlExpenseCategory
+            int Category = 0;
+            List<SelectListItem> ddlexpensecategory = new List<SelectListItem>();
+            DataSet dscat = model.GetExpenseCategory();
+            if (dscat != null && dscat.Tables.Count > 0 && dscat.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow r in dscat.Tables[0].Rows)
+                {
+                    if (Category == 0)
+                    {
+                        ddlexpensecategory.Add(new SelectListItem { Text = "Expense Category", Value = "0" });
+                    }
+                    ddlexpensecategory.Add(new SelectListItem { Text = r["ExpenseCategory"].ToString(), Value = r["Pk_ExpenseCategoryId"].ToString() });
+                    Category = Category + 1;
+                }
+            }
+            ViewBag.ExpenseCategory = ddlexpensecategory;
+            #endregion
+            #region transactiontype
+            int count = 0;
+            List<SelectListItem> ddlTransactionType = new List<SelectListItem>();
+            DataSet ddlTransaction = model.GetTransactionList();
+            if (ddlTransaction != null && ddlTransaction.Tables.Count > 0 && ddlTransaction.Tables[0].Rows.Count > 0)
+            {
+                //ddlTransactionType.Add(new SelectListItem { Text = "Cash", Value = "Cash" });
+                foreach (DataRow r in ddlTransaction.Tables[0].Rows)
+                {
+                    if (count == 0)
+                    {
+                        ddlTransactionType.Add(new SelectListItem { Text = "Select TransactionType", Value = "0" });
+                    }
+                    ddlTransactionType.Add(new SelectListItem { Text = r["BankName"].ToString(), Value = r["Pk_BankId"].ToString() });
+                    count = count + 1;
+
+                }
+            }
+            ViewBag.ddlTransactionType = ddlTransactionType;
+            #endregion
+            List<Expenses> Clearedlst = new List<Expenses>();
+            List<Expenses> Pendinglst = new List<Expenses>();
+            List<Expenses> Bouncelst = new List<Expenses>();
+            model.ChequeStatus = "Dr";
+            model.ExpenseID = model.ExpenseID == "0" ? null : model.ExpenseID;
+            model.Fk_CompanyId = model.Fk_CompanyId == "0" ? null : model.Fk_CompanyId;
+            model.ExpenseName = model.ExpenseName == "0" ? null : model.ExpenseName;
+            model.FK_ExpenseHead = model.FK_ExpenseHead == "0" ? null : model.FK_ExpenseHead;
+            model.Fk_ExpenseCategoryId = model.Fk_ExpenseCategoryId == "0" ? null : model.Fk_ExpenseCategoryId;
+            model.TransactionID = model.TransactionID == "0" ? null : model.TransactionID;
+            model.FromDate = string.IsNullOrEmpty(model.FromDate) ? null : Common.ConvertToSystemDate(model.FromDate, "dd/MM/yyyy");
+            model.ToDate = string.IsNullOrEmpty(model.ToDate) ? null : Common.ConvertToSystemDate(model.ToDate, "dd/MM/yyyy");
+            model.EntryFromDate = string.IsNullOrEmpty(model.EntryFromDate) ? null : Common.ConvertToSystemDate(model.EntryFromDate, "dd/MM/yyyy");
+            model.EntryToDate = string.IsNullOrEmpty(model.EntryToDate) ? null : Common.ConvertToSystemDate(model.EntryToDate, "dd/MM/yyyy");
+            model.AddedBy = Session["Pk_AdminId"].ToString();
+            model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            DataSet ds = model.GetDrExpenselist();
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds.Tables[0].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.CompanyName = r["CompanyName"].ToString();
+                    obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                    obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = r["ExpenseName"].ToString();
+                    obj.ExpenseID = r["ExpenseType"].ToString();
+                    obj.Remarks = r["Remarks"].ToString();
+                    obj.ChequeStatus = r["TransactionStatus"].ToString();
+                    obj.TransactionTy = r["TransactionType"].ToString();
+                    obj.Transanction = r["TransactionStatus"].ToString();
+                    obj.ChequeNo = r["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString("n2");
+                    obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                    obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+                    obj.Date = r["CheckDate"].ToString();
+                    obj.PaymentMode = r["PaymentMode1"].ToString();
+                    Clearedlst.Add(obj);
+                }
+                model.ClearedListItem = Clearedlst;
+                ViewBag.TotalCleredPaid = double.Parse(ds.Tables[0].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[1].Rows.Count > 0)
+            {
+                foreach (DataRow pr in ds.Tables[1].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.CompanyName = pr["CompanyName"].ToString();
+                    obj.ExpenseHeadName = pr["ExpenseHeadName"].ToString();
+                    obj.Pk_ExpenseDetailsId = pr["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = pr["ExpenseName"].ToString();
+                    obj.ExpenseID = pr["ExpenseType"].ToString();
+                    obj.Remarks = pr["Remarks"].ToString();
+                    obj.ChequeStatus = pr["TransactionStatus"].ToString();
+                    obj.TransactionTy = pr["TransactionType"].ToString();
+                    obj.Transanction = pr["TransactionStatus"].ToString();
+                    obj.ChequeNo = pr["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = pr["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(pr["CrAmount"].ToString()).ToString("n2");
+                    obj.DrAmount = double.Parse(pr["DrAmount"].ToString()).ToString("n2");
+                    obj.ExpenseCategoryName = pr["ExpenseCategoryName"].ToString();
+                    obj.Date = pr["CheckDate"].ToString();
+                    obj.PaymentMode1 = pr["PaymentMode"].ToString();
+                    Pendinglst.Add(obj);
+                }
+                model.PendingListItem = Pendinglst;
+                ViewBag.TotalPendingPaid = double.Parse(ds.Tables[1].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+            if (ds.Tables.Count > 0 && ds != null && ds.Tables[2].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds.Tables[2].Rows)
+                {
+                    Expenses obj = new Expenses();
+                    obj.CompanyName = r["CompanyName"].ToString();
+                    obj.ExpenseHeadName = r["ExpenseHeadName"].ToString();
+                    obj.Pk_ExpenseDetailsId = r["Pk_ExpenseDetailsId"].ToString();
+                    obj.ExpenseName = r["ExpenseName"].ToString();
+                    obj.ExpenseID = r["ExpenseType"].ToString();
+                    obj.Remarks = r["Remarks"].ToString();
+                    obj.ChequeStatus = r["TransactionStatus"].ToString();
+                    obj.TransactionTy = r["TransactionType"].ToString();
+                    obj.Transanction = r["TransactionStatus"].ToString();
+                    obj.ChequeNo = r["ChequeNo"].ToString();
+                    obj.ChequeStatusUpdateDate = r["ChequeStatusUpdateDate"].ToString();
+                    obj.CrAmount = double.Parse(r["CrAmount"].ToString()).ToString("n2");
+                    obj.DrAmount = double.Parse(r["DrAmount"].ToString()).ToString("n2");
+                    obj.ExpenseCategoryName = r["ExpenseCategoryName"].ToString();
+                    obj.Date = r["CheckDate"].ToString();
+                    obj.PaymentMode2 = r["PaymentMode"].ToString();
+                    Bouncelst.Add(obj);
+                }
+                model.BounceListItem = Bouncelst;
+                ViewBag.TotalBouncePaid = double.Parse(ds.Tables[2].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
+            }
+            #region ddlcompany
+            int ccount = 0;
+            Master master = new Master();
+            model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            DataSet dscompany = master.GetCompanyList();
+            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dscompany.Tables[0].Rows)
+                {
+                    if (ccount == 0)
+                    {
+                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+                    }
+                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+                    ccount = ccount + 1;
+                }
+            }
+            ViewBag.ddlcompany = ddlcompany;
+            #endregion
+            #region GetExpenseName
+            List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            model.Result = "yes";
+            DataSet ds11 = model.GetExpenseNameList();
+            int ExpenseCount = 0;
+            if (ds11 != null && ds11.Tables.Count > 0)
+            {
+                foreach (DataRow r in ds11.Tables[0].Rows)
+                {
+                    if (ExpenseCount == 0)
+                    {
+                        ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+                    }
+                    ddlexpensename.Add(new SelectListItem { Text = r["ExpenseName"].ToString(), Value = r["FK_ExpenseId"].ToString() });
+                    ExpenseCount = ExpenseCount + 1;
+                }
+            }
+            ViewBag.ddlexpensename = ddlexpensename;
+            #endregion
+            //List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            //ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+            //ViewBag.ddlexpensename = ddlexpensename;
+
+            #region ddlExpenseHead
+            int ccount12 = 0;
+            //Master master = new Master();
+            List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
+            DataSet ds1 = master.GetExpenseHeadList();
+            if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in ds1.Tables[0].Rows)
+                {
+                    if (ccount12 == 0)
+                    {
+                        ddlExpenseHead.Add(new SelectListItem { Text = "Select Expense Head", Value = "0" });
+                    }
+                    ddlExpenseHead.Add(new SelectListItem { Text = r["ExpenseHeadName"].ToString(), Value = r["PK_ExpenseHead"].ToString() });
+                    ccount12 = ccount12 + 1;
+                }
+            }
+            ViewBag.ddlExpenseHead = ddlExpenseHead;
+            #endregion
+            return View(model);
+        }
+        public ActionResult DeleteExpenseDetailsDr(string ExpenseDetailsId, string status)
+        {
+            string FormName = "";
+            string Controller = "";
+            try
+            {
+                Expenses model = new Expenses();
+                model.Status = status;
+                model.Pk_ExpenseDetailsId = ExpenseDetailsId;
+                model.UpdatedBy = Session["Pk_AdminId"].ToString();
+                DataSet ds = model.DeleteExpenseDetailsDr();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+
+                        TempData["CrExpenseList"] = "Expense Details Deleted!";
+                    }
+                    else
+                    {
+                        TempData["CrExpenseList"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["CrExpenseList"] = ex.Message;
+            }
+            FormName = "ViewCrExpense";
+            Controller = "Expense";
+
+            return RedirectToAction(FormName, Controller);
+        }
+  
+        #endregion
     }
 }
