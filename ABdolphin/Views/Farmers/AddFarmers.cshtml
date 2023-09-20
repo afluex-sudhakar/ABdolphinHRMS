@@ -47,7 +47,7 @@
                     <label for="inputEmail4" class="form-label">Area<span style="color:red">*</span></label>
                     @Html.TextBoxFor(m => m.Hectare, new { @class = "form-control", @placeholder = "Hectare", @onkeypress = "return isNumberKey(event);" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputPassword4" class="form-label">Acre<span>&nbsp;</span></label>
                     @Html.TextBoxFor(m => m.Acre, new { @class = "form-control", @Placeholder = "Acre", @onkeypress = "return isNumberKey(event);" })
                 </div>
@@ -75,16 +75,16 @@
                     <label for="inputPassword4" class="form-label">State</label>
                     @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @readonly = "true" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label"> Associate Id</label>
                     @Html.TextBoxFor(m => m.AssociateLoginID, new { @class = "form-control", @Placeholder = "Associate ID", @onchange = "return getSponsorName();" })
                     @Html.HiddenFor(m => m.AssociateID)
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label"> Associate Name</label>
                     @Html.TextBoxFor(m => m.DelearName, new { @class = "form-control", @Placeholder = "Associate Name", @readonly = "readonly" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label">Date of birth</label>
                     @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @Placeholder = "Date of birth" })
                 </div>
@@ -110,7 +110,6 @@
                 </div>*@
 
                     <div class="col-12">
-                        @*<button type="submit" class="btn btn-primary">Save</button>*@
                         @if (Model != null && Model.PK_Farmerid == null)
                         {
                             <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
@@ -131,6 +130,9 @@
 }
 
 
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
 <script>
     $(document).ready(function () {
         $("#divload").css({ 'display': 'none' });
