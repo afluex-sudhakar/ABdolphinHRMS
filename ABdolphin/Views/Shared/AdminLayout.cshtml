@@ -18,10 +18,14 @@
 
     <link href="~/assets/css/plugin.min.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
+    @* data table cnd css *@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
 
     <!-- endinject -->
 
-    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon.png">
+    @*<link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon.png">*@
 </head>
 @RenderBody();
 <body class="layout-dark side-menu overlayScroll">
@@ -69,17 +73,12 @@
                                         <img src="~/assets/img/author-nav.jpg" alt="" class="rounded-circle">
                                     </div>
                                     <div>
-                                        <h6>Abdullah Bin Talha</h6>
-                                        <span>UI Designer</span>
+                                        <h6>Hello (@Session["LoginId"])</h6>
+                                        <span>@Session["Name"]</span>
                                     </div>
                                 </div>
                                 <div class="nav-author__options">
                                     <ul>
-                                        <li>
-                                            <a href="#">
-                                                <span data-feather="user"></span> Profile
-                                            </a>
-                                        </li>
                                         <li>
                                             <a href="#">
                                                 <span data-feather="settings"></span> Settings
@@ -87,22 +86,12 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <span data-feather="key"></span> Billing
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span data-feather="users"></span> Activity
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="#">
-                                                <span data-feather="bell"></span> Help
+                                                <span data-feather="key"></span> Change Password
                                             </a>
                                         </li>
                                     </ul>
-                                    <a href="#" class="nav-author__signout">
-                                        <span data-feather="log-out"></span> Sign Out
+                                    <a href="/Home/Login" class="nav-author__signout">
+                                        <span data-feather="log-out"></span> Logout
                                     </a>
                                 </div>
                             </div>
@@ -169,7 +158,7 @@
                                     <a href="#" data-layout="light">View Account</a>
                                 </li>
                                 <li class="l_sidebar">
-                                    <a href="#" data-layout="light">Expense Type</a>
+                                    <a href="/Master/ExpenseTypeMaster" data-layout="light">Expense Type</a>
                                 </li>
                                 <li class="l_sidebar">
                                     <a href="#" data-layout="light">View Expense</a>
@@ -184,7 +173,7 @@
                                     <a href="#" data-layout="light">Expense Ledger</a>
                                 </li>
                                 <li class="l_sidebar">
-                                    <a href="#" data-layout="light">Expense Category</a>
+                                    <a href="/Master/ExpenseCategoryMaster" data-layout="light">Expense Category</a>
                                 </li>
                             </ul>
                         </li>
@@ -217,6 +206,25 @@
     <script src="~/assets/js/plugins.min.js"></script>
     <script src="~/assets/js/script.min.js"></script>
     <!-- endinject-->
+
+    @* data table cnd js *@
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+    <script>
+        /// For DataTable
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                pagingType: "numbers",
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    </script>
 </body>
 
 </html>
