@@ -8,94 +8,149 @@
 @using (Html.BeginForm("Farmerlist", "Farmers", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" }))
 {
     <div class="contents">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12 mb-30">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="userDatatable adv-table-table global-shadow border-0 bg-white w-100 adv-table">
-                                <div class="table-responsive">
-                                    <div class="adv-table-table__header">
-                                        <h4>Data Table</h4>
-                                    </div>
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
 
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Farmers Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
 
-                                </div>
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>Farmers Details</span>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12 mb-30">
                     <div class="card">
                         <div class="card-body">
-                            <h5>Booking Details</h5>
                             <div class="table-responsive">
-                                <table id="table_id" class="table table-striped table-bordered table-hover" style="width:100%">
+                                <table id="myTable" class="table mb-0 table-borderless">
                                     <thead>
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>Affiliate Name</th>
-                                            <th>Customer Name</th>
-                                            <th>Booking Date</th>
-                                            <th>Plot Amount</th>
-                                            <th>Plot Details</th>
-                                            <th>Booking Status</th>
+                                        <tr class="userDatatable-header">
+                                            <th>S.No.</th>
+                                            <th>Date</th>
+                                            <th>Name</th>
+                                            <th style="min-width:55px">Gata No.</th>
+                                            <th>Hectare</th>
+                                            <th>SQFT</th>
+                                            <th>Village</th>
+                                            <th>Status</th>
+                                            <th>Company</th>
+                                            <th style="min-width: 85px !important;">Registry Date</th>
+                                            <th style="min-width: 75px !important;">Registry File</th>
+                                            <th>Status</th>
+                                            <th>Payment</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>KAMINI SRIVASTAV</td>
-                                            <td>ANKITA </td>
-                                            <td>31/12/2021</td>
-                                            <td>787500.00</td>
-                                            <td>Dolphin Green City, Sector 1, Block D, D170</td>
-                                            <td>Registered</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>arvind kumar</td>
-                                            <td>DEENDAYAL PRASAD</td>
-                                            <td>31/12/2020</td>
-                                            <td>623750.00</td>
-                                            <td>Dolphin Green City, Sector 1, Block D, D171</td>
-                                            <td>Registered</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>CHANDRA SHEKHAR YADAV</td>
-                                            <td>HARINATH YADAV </td>
-                                            <td>31/12/2020</td>
-                                            <td>623750.00</td>
-                                            <td>Dolphin Green City, Sector 1, Block D, D11</td>
-                                            <td>Registered</td>
-                                        </tr>
-                                        <tr>
-                                            <td>4</td>
-                                            <td>SUNIL KUMAR VERMA </td>
-                                            <td>SUNIL KUMAR VERMA</td>
-                                            <td>31/12/2020</td>
-                                            <td>499000.00</td>
-                                            <td>Dolphin Green City, Sector 1, Block B, B177</td>
-                                            <td>Booked</td>
-                                        </tr>
-                                        <tr>
-                                            <td>5</td>
-                                            <td>CHANDRA SHEKHAR YADAV</td>
-                                            <td>CHANDRA SHEKHAR YADAV</td>
-                                            <td>31/12/2020</td>
-                                            <td>623750.00</td>
-                                            <td>Dolphin Green City, Sector 1, Block D, D14</td>
-                                            <td>Registered</td>
-                                        </tr>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.FarmerList != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.FarmerList)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td style="min-width:80px">@Item.JoiningDate</td>
+                                                        <td style="min-width:100px">@Item.Name</td>
+                                                        <td>@Item.GataKhasaraN</td>
+                                                        <td>@Item.Hectare</td>
+                                                        <td>@Item.SQFT</td>
+                                                        <td style="min-width:105px">@Item.Village</td>
+                                                        <td>@Item.Status</td>
+                                                        <td style="min-width:90px">@Item.CompanyName</td>
+                                                        <td>@Item.RegistryDate</td>
+                                                        @*<td>@Item.IDProof</td>*@
+
+                                                        @if (Item.IDProof == "N/A")
+                                                        {
+                                                            <td>@Item.IDProof</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+                                                                <a target="_blank" href="@Item.IDProof">
+                                                                    <i class="fa fa-file-pdf" style="font-size:28px;color:red"></i>
+                                                                </a>
+                                                            </td>
+                                                        }
+                                                        <td>
+
+                                                            @if (Item.FStatus == "Active")
+                                                            {
+                                                                <a class="btn btn-success btn-sm" href="/Farmers/Active?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return Inactive();">Active</a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="btn btn-danger btn-sm" href="/Farmers/Active?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" onclick="return Active();" data-original-title="Click to Active">Inactive</a>
+                                                            }
+                                                        </td>
+                                                        <td class="payment">
+                                                            <a href="/Farmers/AddPayFarmers?id=@Item.EncryptKey" class="btn btn-primary btn-sm" data-original-title="Click to Payment">Payment</a>
+                                                        </td>
+                                                        <td style="min-width: 140px !important;">
+                                                            <a target="_blank" href="/Farmers/PaymetFarmers?fid=@Item.EncryptKey" class="btn btn-warning btn-sm" data-original-title="Click to Payment">View Ledger</a>
+                                                        </td>
+                                                        <td class="edit">
+                                                            <a href="/Farmers/AddFarmers?id=@Item.EncryptKey" class="btn btn-info btn-sm edit" data-original-title="Click to Edit"> Edit</a>
+                                                        </td>
+                                                        <td class="delete">
+                                                            <a href="/Farmers/DeleteFarmers?id=@Item.EncryptKey" class="btn btn-danger btn-sm delete" data-original-title="Click to Delete" onclick="return confirm('Are you sure you want to delete this farmer?');"> Delete</a>
+                                                        </td>
+
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
                                     </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total </th>
+                                            <th>@ViewBag.Hectare</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th> </th>
+                                            <th> </th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
-                                <div class="text-end m-r-20">
-                                    <a href="#!" class="b-b-primary btn btn-dark text-white" id="myBtn">View all Bookings</a>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,18 +159,4 @@
 
         </div>
     </div>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-
-<script>
-    $(document).ready(function () {
-        $('#table_id').DataTable();
-    });
-    $("#mybtn").click(function () {
-        alert("okk");
-    })
-
-    </script>
-
 }
