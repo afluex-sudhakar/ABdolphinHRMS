@@ -14,7 +14,14 @@ namespace ABdolphin.Models
         public string ExpenseTypeName { get; set; }
         public string EncryptKey { get; set; }
         public List<Master> lstExpenseType { get; set; }
+        public List<Master> lstExpenseCategory { get; set; }
+        public string ExpenseCategory { get; set; }
+        public string Pk_ExpenseCategoryId { get; set; }
         public string UserType { get; set; }
+
+
+
+
 
         public DataSet GetCompanyList()
         {
@@ -78,6 +85,52 @@ namespace ABdolphin.Models
             DataSet ds = Connection.ExecuteQuery("Teamlist");
             return ds;
         }
+
+
+
+        #region ExpenseCategoryMaster
+        public DataSet SaveExpenseCategory()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@ExpenseCategory",ExpenseCategory),
+                                  new SqlParameter("@AddedBy",AddedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("SaveExpenseCategory", para);
+            return ds;
+        }
+        public DataSet UpdateExpenseCategory()
+        {
+            SqlParameter[] para =
+                            {
+                  new SqlParameter("@Pk_ExpenseCategoryId",Pk_ExpenseCategoryId),
+                                new SqlParameter("@ExpenseCategory",ExpenseCategory),
+                                  new SqlParameter("@AddedBy",AddedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("UpdateExpenseCategory", para);
+            return ds;
+        }
+        public DataSet ExpenseCategoryList()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Pk_ExpenseCategoryId",Pk_ExpenseCategoryId)
+                            };
+            DataSet ds = Connection.ExecuteQuery("Expensecategorylist", para);
+            return ds;
+        }
+        public DataSet Deleteexpensecategory()
+        {
+            SqlParameter[] para =
+                            {
+                  new SqlParameter("@Fk_ExpenseCategoryId",Pk_ExpenseCategoryId),
+                                  new SqlParameter("@DeletedBy",AddedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("Deleteexpensecategory", para);
+            return ds;
+        }
+        #endregion
+
 
         public DataSet GetMenuPermissionList()
         {

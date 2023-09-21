@@ -18,6 +18,9 @@ namespace ABdolphin.Models
             {
                 connectionString = "Data Source=DESKTOP-JR58KGS;Initial Catalog=ABdolphin;Integrated Security=True";
 
+                //Sarfraz
+                //connectionString = "Data Source=DESKTOP-ICNPI6I\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
+
             }
             catch (Exception)
             {

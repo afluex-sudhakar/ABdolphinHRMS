@@ -9,18 +9,41 @@
 @using (Html.BeginForm("AddFarmers", "Farmers", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" ,@autocomplete="off"}))
 {
     <div class="contents">
-        <section class="section">
-            <ul class="breadcrumb breadcrumb-style ">
-                <li class="breadcrumb-item">
-                    <a href="#">
-                        <i data-feather="home"></i>
-                    </a>
-                </li>
-                <li class="breadcrumb-item">Farmer Management</li>
-                <li class="breadcrumb-item">Add Farmer</li>
-            </ul>
-        </section>
-        <div class="container-fluid py-5">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Application Center</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>An Application</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
             <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="inputEmail4" class="form-label">Name<span style="color:red">*</span></label>
@@ -109,7 +132,10 @@
                     @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "form-control" })
                 </div>*@
 
-                    <div class="col-12">
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 mb-3">
+                    <div class="d-flex">
                         @if (Model != null && Model.PK_Farmerid == null)
                         {
                             <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
@@ -122,8 +148,8 @@
                         <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
                         <a class="btn btn-info" href="/Farmers/FarmerList" style="margin-left:5px;">Back To List</a>
                     </div>
+                </div>
             </div>
-
         </div>
     </div>
 
