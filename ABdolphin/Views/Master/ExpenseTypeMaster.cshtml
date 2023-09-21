@@ -1,0 +1,115 @@
+﻿@model ABdolphin.Models.Master
+
+@{
+    ViewBag.Title = "ExpenseTypeMaster";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("ExpenseTypeMaster", "Master", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data", @autocomplete = "off" }))
+{
+    <div class="contents">
+        <section class="section">
+            <ul class="breadcrumb breadcrumb-style ">
+                <li class="breadcrumb-item">
+                    <a href="#">
+                        <i data-feather="home"></i>
+                    </a>
+                </li>
+                <li class="breadcrumb-item">Master</li>
+                <li class="breadcrumb-item">Expense Type Master</li>
+            </ul>
+        </section>
+        <div class="container-fluid py-5">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label">Expense Type Name<span style="color:red">*</span></label>
+                    @Html.TextBoxFor(m => m.ExpenseTypeName, new { @class = "form-control", @Placeholder = "Expense Type Name" })
+                </div>
+
+                <div class="col-12">
+                   @if (Model.Fk_ExpenseTypeId == null)
+                    {
+                    <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                   }
+                   else
+                   {
+                    @Html.HiddenFor(m => m.Fk_ExpenseTypeId, new { @Value = @Model.Fk_ExpenseTypeId })
+                    <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                   }
+                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                <a class="btn btn-info" href="/Master/ExpenseTypeMasterList">Back To List</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}
+
+
+<script>
+    $(document).ready(function () {
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        if (UserType == 'Admin' && UserTypeName != 'Admin' && UserTypeName != "") {
+            GetMenuDetails();
+        }
+    });
+    function GetMenuDetails() {
+        debugger
+        var URL = "/Master/ExpenseTypeMaster";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].FormSave == true) {
+                        $('#btnSave').show();
+                        $("#btnSave").removeAttr('disabled');
+                    }
+                    else {
+                        $('#btnSave').hide();
+
+                        $("#btnSave").attr('disabled', 'disabled');
+                    }
+                    if (obj[i].FormUpdate == true && $('#NewsID').val() != "") {
+                        $('#btnUpdate').show();
+
+                        $("#btnUpdate").removeAttr('disabled');
+                    }
+                    else {
+                        $('#btnUpdate').hide();
+
+                        $("#btnUpdate").attr('disabled', 'disabled');
+                    }
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+    function validateform() {
+        $("#divload").css({ 'display': 'none' });
+        $(".errortext").removeClass("errortext");
+
+        if ($('#ExpenseTypeName').val() == '') {
+            $("#ExpenseTypeName").addClass('errortext');
+            $('#ExpenseTypeName').focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

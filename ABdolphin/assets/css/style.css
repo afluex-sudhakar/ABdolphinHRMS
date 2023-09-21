@@ -4237,7 +4237,7 @@ ul {
 }
 
 .main-content {
-	min-height: 100vh;
+	/*min-height: 100vh;*/
 	position: relative
 }
 
@@ -23795,7 +23795,7 @@ body:after {
 	-webkit-border-radius: 6px;
 	border-radius: 6px;
 	height: 40px;
-	border: 1px solid #e3e6ef;
+	border: 1px solid #c5c9dd;
 	color: #5a5f7d;
 	text-transform: capitalize;
 	width: 200px

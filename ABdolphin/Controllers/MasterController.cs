@@ -1,5 +1,6 @@
 ﻿using ABdolphin.Filters;
 using ABdolphin.Models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Web.Mvc;
 
 namespace ABdolphin.Controllers
 {
-    public class MasterController : Controller
+    public class MasterController : AdminBaseController
     {
         // GET: Master
         public ActionResult Index()
@@ -172,9 +173,6 @@ namespace ABdolphin.Controllers
                 if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                 {
                     model.ExpenseCategory = ds.Tables[0].Rows[0]["ExpenseCategoryName"].ToString();
-                    //model.EMI = ds.Tables[0].Rows[0]["EMI"].ToString();
-                    //model.DownPayment = ds.Tables[0].Rows[0]["DownPayment"].ToString();
-                    //model.PartPayment = ds.Tables[0].Rows[0]["PartPayment"].ToString();
                 }
             }
             return View(model);
@@ -220,9 +218,6 @@ namespace ABdolphin.Controllers
                     Master obj = new Master();
                     obj.Pk_ExpenseCategoryId = dr["Fk_ExpenseCategoryId"].ToString();
                     obj.ExpenseCategory = dr["ExpenseCategoryName"].ToString();
-                    //obj.EMI = dr["EMI"].ToString();
-                    //obj.DownPayment = dr["DownPayment"].ToString();
-                    //obj.PartPayment = dr["PartPayment"].ToString();
                     obj.EncryptKey = Crypto.Encrypt(dr["Fk_ExpenseCategoryId"].ToString());
                     lst.Add(obj);
                 }
@@ -298,5 +293,37 @@ namespace ABdolphin.Controllers
             return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        public ActionResult GetMenuDetails(string URL)
+        {
+            try
+            {
+                Master model = new Master();
+                model.Fk_UserId = Session["Pk_AdminId"].ToString();
+                model.UserType = Session["UserTypeName"].ToString();
+                model.Url = URL;
+                DataSet ds = model.GetMenuPermissionList();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        var MenuList = JsonConvert.SerializeObject(ds.Tables[0]);
+                        return Json(MenuList, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json("0", JsonRequestBehavior.AllowGet);
+                    }
+                }
+                else
+                {
+                    return Json("0", JsonRequestBehavior.AllowGet);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
