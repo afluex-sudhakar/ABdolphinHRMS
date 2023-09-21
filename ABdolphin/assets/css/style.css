@@ -4986,7 +4986,7 @@ ul {
 	left: 0;
 	top: 0;
 	z-index: 9988;
-	background: #fff;
+	background: #000;
 	-webkit-box-shadow: 0 2px 30px rgba(146, 153, 184, .1019607843);
 	box-shadow: 0 2px 30px rgba(146, 153, 184, .1019607843)
 }
@@ -5190,7 +5190,7 @@ ul {
 
 .navbar-right__menu .nav-item-toggle {
 	position: relative;
-	color: #9299b8
+	color: #fff
 }
 
 .navbar-right__menu .nav-item-toggle span,
@@ -5496,7 +5496,7 @@ ul {
 
 .navbar-right__menu .nav-author__signout {
 	font-size: 13px;
-	background: #f8f9fb;
+	background: #000;
 	padding: 18px 15px;
 	color: #868eae;
 	display: block;
@@ -5526,7 +5526,7 @@ ul {
 	font-size: 14px;
 	display: block;
 	padding: 9px 25px 9px;
-	color: #9299b8;
+	color: #fff;
 	-webkit-transition: all .3s ease;
 	-o-transition: all .3s ease;
 	transition: all .3s ease
@@ -6041,7 +6041,6 @@ ul {
 	visibility: hidden;
 	background-color: #868eae
 }
-
 .dropdown {
 	display: inline-block
 }
@@ -6138,7 +6137,7 @@ ul {
 	visibility: hidden;
 	opacity: 0;
 	pointer-events: none;
-	background: #fff;
+	background: #000;
 	-webkit-box-shadow: 0 5px 30px rgba(146, 153, 184, .15);
 	box-shadow: 0 5px 30px rgba(146, 153, 184, .15);
 	-webkit-transform: scale(.7);
@@ -6321,7 +6320,7 @@ ul {
 	-webkit-box-shadow: 0 0 30px rgba(146, 153, 184, .1);
 	box-shadow: 0 0 30px rgba(146, 153, 184, .1);
 	width: 280px;
-	background: #fff;
+	background: #000;
 	padding: 0;
 	-webkit-transition: all .3s ease;
 	-o-transition: all .3s ease;
@@ -6498,7 +6497,7 @@ ul {
 	-ms-flex-align: center;
 	align-items: center;
 	padding: 9.05px 30px 9.05px 30px;
-	color: #272b41;
+	color: #fff;
 	font-size: 14px;
 	position: relative
 }
