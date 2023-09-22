@@ -7,11 +7,13 @@
 
 @using (Html.BeginForm("ExpenseTypeMasterList", "Master", FormMethod.Post, new { @id = "form1" }))
 {
+
+
     <div class="contents">
         <div class="atbd-page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12 mt-2">
+                    <div class="col-lg-12">
                         <div class="card card-default card-md mb-4">
                             <div class="card-body">
                                 <ul class="atbd-breadcrumb nav">
@@ -32,7 +34,7 @@
                                     </li>
 
                                     <li class="atbd-breadcrumb__item">
-                                        <span>ExpenseTypeMasterList</span>
+                                        <span>Expense Type Master List</span>
                                     </li>
                                 </ul>
                             </div>
@@ -41,66 +43,87 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid card">
-            <h5 class="mt-3">ExpenseTypeMaster List</h5>
-
-            <a class="btn btn-primary btn-sm" style="margin-left:75%;margin-top:5px;" href="/Master/ExpenseTypeMaster">Add New</a>
-            <p style="color: red">
-                @TempData["ExpenseType"]
-            </p>
+        <div class="container-fluid">
             <div class="col-lg-12 mb-30">
                 <div class="card">
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table id="myTable" class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>S No.</th>
-                                        <th>Expense Type Name</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if (Model != null)
-                                    {
-                                        if (Model.lstExpenseType != null)
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 mb-3">
+                                <div class="d-lg-flex">
+                                    <h4 class="text-capitalize breadcrumb-title">ExpenseTypeMasterList</h4>
+                                    <p class="text-danger mb-0 p-left-50">
+                                        @TempData["ExpenseType"]
+                                    </p>
+                                    <div class="breadcrumb-action justify-content-between">
+                                        <div class="action-btn">
+                                            <a class="btn btn-primary btn-sm" target="_blank" href="/Master/ExpenseTypeMaster"> <i class="fa fa-plus-circle text-white"></i> Add New</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                            <th>Sr No.</th>
+                                            <th>Expense Type Name</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
                                         {
-                                            int i = 1;
-                                            foreach (var Item in Model.lstExpenseType)
+                                            if (Model.lstExpenseType != null)
                                             {
-                                                <tr class="text-left">
-                                                    <td>@i</td>
-                                                    <td>@Item.ExpenseTypeName</td>
-                                                    <td>
-                                                        <a class="btn btn-primary edit" data-toggle="tooltip" target="_blank" href="/Master/ExpenseTypeMaster?cid=@Item.EncryptKey" title="" data-original-title="Edit">
-                                                            <i class="material-icons">Edit</i>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="/Master/DeleteExpenseType?Eid=@Item.EncryptKey" class="btn btn-danger" data-toggle="tooltip" title="" data-original-title="Delete">
-                                                            <i class="material-icons">Delete</i>
-                                                        </a>
-                                                    </td>
+                                                int i = 1;
+                                                foreach (var Item in Model.lstExpenseType)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.ExpenseTypeName</td>
+                                                        <td>
+                                                            <a class="btn btn-primary edit" data-toggle="tooltip" target="_blank" href="/Master/ExpenseTypeMaster?cid=@Item.EncryptKey" title="" data-original-title="Edit">
+                                                                <i class="material-icons">Edit</i>
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="/Master/DeleteExpenseType?Eid=@Item.EncryptKey" class="btn btn-danger" data-toggle="tooltip" title="" data-original-title="Delete">
+                                                                <i class="material-icons">Delete</i>
+                                                            </a>
+                                                        </td>
 
 
-                                                </tr>
+                                                    </tr>
 
-                                                i++;
+                                                    i++;
+                                                }
                                             }
                                         }
-                                    }
-                                </tbody>
-                            </table>
-                            <input type="hidden" id="UserType" value="@Session["UserType"]" />
-                            <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Expense Type Name</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+            </div>
         </div>
-    </div>
+
+
+   
 }
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

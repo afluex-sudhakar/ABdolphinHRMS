@@ -11,7 +11,7 @@
         <div class="atbd-page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12 mt-2">
+                    <div class="col-lg-12">
                         <div class="card card-default card-md mb-4">
                             <div class="card-body">
                                 <ul class="atbd-breadcrumb nav">
@@ -32,7 +32,7 @@
                                     </li>
 
                                     <li class="atbd-breadcrumb__item">
-                                        <span>Expense List</span>
+                                        <span>View Expense</span>
                                     </li>
                                 </ul>
                             </div>
@@ -41,42 +41,52 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid card">
-            <h5 class="mt-3">Expense List</h5>
-            <hr />
-            <div class="row mt-3">
-                
-                    <div class="col-md-3 mb-3">
-                        Expense Type
-                        @Html.DropDownListFor(m => m.ExpenseID, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "ExpenseID form-control", @onchange = "return onExpeseTypeChange();" })
-                        @*@Html.TextBoxFor(m => m.ExpenseID, new { @class = "form-control", @Placeholder = "Expense ID" })*@
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        Expense Name
-                        @Html.DropDownListFor(m => m.ExpenseName, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "ExpenseName form-control select2" })
-                        @*@Html.TextBoxFor(m => m.ExpenseName, new { @class = "form-control", @Placeholder = "Expense Name" })*@
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        From Date
-                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "From Date", @readonly = "true" })
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        To Date
-                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "To Date", @readonly = "true" })
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="Search" />
-                    </div>
-                
-            </div>
+        <div class="container-fluid">
+            <div class="row">
                 <div class="col-lg-12 mb-30">
                     <div class="card">
                         <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 mb-3">
+                                    <div class="d-lg-flex">
+                                        <h4 class="text-capitalize breadcrumb-title">Expense List</h4>
+                                        <p class="text-danger mb-0 p-left-50">
+                                            @TempData["Expenselist"]
+                                        </p>
+                                        <div class="breadcrumb-action justify-content-center flex-wrap">
+                                            <div class="action-btn">
+                                                <a class="btn btn-primary btn-sm"  href="/Expense/AddExpense"> <i class="fa fa-plus-circle text-white"></i> Add-New</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Expense Type
+                                    @Html.DropDownListFor(m => m.ExpenseID, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "ExpenseID form-control", @onchange = "return onExpeseTypeChange();" })
+                                    @*@Html.TextBoxFor(m => m.ExpenseID, new { @class = "form-control", @Placeholder = "Expense ID" })*@
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Expense Name
+                                    @Html.DropDownListFor(m => m.ExpenseName, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "ExpenseName form-control select2" })
+                                    @*@Html.TextBoxFor(m => m.ExpenseName, new { @class = "form-control", @Placeholder = "Expense Name" })*@
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    From Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "From Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    To Date
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "To Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="Search" />
+                                </div>
+                            </div>
                             <div class="table-responsive">
-                                <table id="myTable" class="table mb-0 table-borderless">
+                                <table id="myTable" class="table table-bordered table-striped">
                                     <thead>
-                                        <tr>
-                                            <th>S No.</th>
+                                        <tr class="userDatatable-header">
+                                            <th>Sr No.</th>
                                             <th>Expense Type</th>
                                             <th>Expense Name</th>
                                             <th>Date</th>
@@ -122,7 +132,18 @@
                                             }
                                         }
                                     </tbody>
-                                   
+                                    <tfoot>
+                                        <tr>
+                                            <th>Sr No.</th>
+                                            <th>Expense Type</th>
+                                            <th>Expense Name</th>
+                                            <th>Date</th>
+                                            <th>Status</th>
+                                            <th>View</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </tfoot>
                                 </table>
                                 <input type="hidden" id="UserType" value="@Session["UserType"]" />
                                 <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
@@ -130,10 +151,12 @@
                         </div>
                     </div>
                 </div>
-           
+            </div>
 
         </div>
     </div>
+
+    
 }
 
 
