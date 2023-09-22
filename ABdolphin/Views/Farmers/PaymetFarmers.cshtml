@@ -27,341 +27,310 @@
 
                                     </li>
                                     <li class="atbd-breadcrumb__item">
-                                        <a href="#">Farmers List</a>
+                                        <a href="#">Farmers Management</a>
                                         <span class="breadcrumb__seperator">
                                             <span class="la la-slash"></span>
                                         </span>
                                     </li>
 
                                     <li class="atbd-breadcrumb__item">
-                                        <span>Farmer Payment List</span>
+                                        <span>Paymet Farmers</span>
                                     </li>
                                 </ul>
                             </div>
-
-                            <div class="card-header">
-                                <h4>Farmer Payment List</h4>
-
-                                <p style="color: green;">
-                                    @TempData["SucFarmerList"]
-                                </p>
-                                <p style="color: red">
-                                    @TempData["ErrFarmerList"]
-                                </p>
-                            </div>
-
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <a class="btn btn-primary btn-sm payment" href="/Farmers/AddPayFarmers?id=@Model.EncryptKey"><i class="fa fa-plus"></i> Add Payment</a>
-        </div>
-
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-4 mb-3">
-                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Name</label>
-                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Mobile No.</label>
-                   @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">SQFT</label>
-                    @Html.TextBoxFor(m => m.SQFT, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Gata No.</label>
-                   @Html.TextBoxFor(m => m.GataKhasaraN, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                
-                <div class="col-md-4 mb-3">
-                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Registry</label>
-                    @Html.TextBoxFor(m => m.Registry, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Agreement</label>
-                   @Html.TextBoxFor(m => m.Agreement, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-                <div class="col-md-4 mb-3">
-                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Notary</label>
-                    @Html.TextBoxFor(m => m.Notary, new { @class = "form-control", @readonly = "true" })
-                </div>
-
-
-
-                <div class="table-responsive">
-                    <table id="myTable" class="table mb-0 table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="13"><h6 style="color:black">Cleared Payment List</h6></th>
-                            </tr>
-                            <tr class="userDatatable-header">
-                                <th>S.No.</th>
-                                <th>Reciept No</th>
-                                <th>Generated Amount</th>
-                                <th style="text-align:right">Paid Amount</th>
-                                <th>Remaining Amount</th>
-                                <th>Payment Date</th>
-                                <th>Payment Type</th>
-                                <th>Cheque No</th>
-                                <th>Bank Name</th>
-                                <th>Remark</th>
-                                <th>Cheque Status</th>
-                                <th>Action</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                if (Model.ClearedListItem != null)
-                                {
-                                    int i = 1;
-                                    foreach (var Item in Model.ClearedListItem)
-                                    {
-                                        <tr class="text-left">
-                                            <td>@i</td>
-                                            <td>@Item.Reciept</td>
-                                            <td>@Item.TotalBalance</td>
-                                            <td style="text-align:right">@Item.PaidAmount</td>
-                                            <td>@Item.RemainingAmount</td>
-                                            <td>@Item.CashDate</td>
-                                            <td>@Item.PayType</td>
-                                            <td>@Item.ChequeNo</td>
-                                            <td style="min-width:100px">@Item.BankName</td>
-                                            <td style="min-width:120px">@Item.Remarks</td>
-                                            <td>@Item.CheqStatus</td>
-                                            <td>
-                                                <a data-toggle="tooltip" title="edit" href="/Farmers/UpdatePayment?FId=@Item.ID&&PId=@Item.EncryptKey" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a>
-                                            </td>
-                                            <td>
-                                                <a href="#" onclick="OpenDeletePopUp('@Item.Fk_PaymentId','@Item.ID');" class="btn btn-sm btn-danger">delete</a>
-                                            </td>
-                                        </tr>
-
-                                        i++;
-                                    }
-                                }
-                            }
-
-                        </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th></th>
-                                <th><b>Total Paid Amount</b></th>
-                                <th style="text-align:right"><b>@ViewBag.TotalCleredPaid</b></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-
-                <div class="table-responsive">
-                    <table id="myTable" class="table mb-0 table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="12"><h6 style="color:black">Pending Payment List</h6></th>
-                            </tr>
-                            <tr class="userDatatable-header">
-                                <th>S.No.</th>
-                                <th>Reciept No</th>
-                                <th style="text-align:right">Paid Amount</th>
-                                <th>Payment Date</th>
-                                <th>Payment Type</th>
-                                <th>Cheque No</th>
-                                <th>Bank Name</th>
-                                <th>Remark</th>
-                                <th>Cheque Status</th>
-                                <th class="td_Date" style="display:none">Cheque Status Date</th>
-                                <th class="td_Date" style="display:none">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                if (Model.PendingListItem != null)
-                                {
-                                    int i = 1;
-                                    foreach (var Item in Model.PendingListItem)
-                                    {
-                                        <tr class="text-left">
-                                            <td>@i</td>
-                                            <td>@Item.Reciept</td>
-                                            <td style="text-align:right">@Item.PaidAmount</td>
-                                            <td>@Item.CashDate</td>
-                                            <td>@Item.PayType</td>
-                                            <td>@Item.ChequeNo</td>
-                                            <td>@Item.BankName</td>
-                                            <td>@Item.Remarks</td>
-                                            @if (Item.CheqStatus == "Cleared" || Item.CheqStatus == "Bounce" || Item.CheqStatus == "Rejected" || Item.CheqStatus == "Cancel")
-                                            {
-                                                <td>@Item.CheqStatus</td>
-                                            }
-                                            else
-                                            {
-                                                <td>
-
-                                                    @Html.DropDownList("CheqStatus_" + @i, new SelectList(ViewBag.CheckStatus, "Value", "Text"), new { @class = "form-control CheckStatus_" + @i, @onchange = "return onChange(" + @i + ");" })
-                                                </td>
-                                            }
-                                            <td class="td_Date" style="display:none">
-                                                <input type="text" class="form-control d Date_@i" style="display:none;width:150px;" readonly="readonly" placeholder="DD/MM/YYYY" />
-                                            </td>
-                                            <td class="td_Date" style="display:none">
-                                                <a onclick="CheckStatusUpdate('@i');" id="btn_Update_@i" data-paymentId='@Item.Fk_PaymentId' data-Userid="@Model.Fk_UserId" class="btn btn-sm btn-success btn_check_@i" style="display:none">Update </a>
-                                            </td>                                           
-                                        </tr>
-
-                                        i++;
-                                    }
-                                }
-                            }
-
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th>Total</th>
-                                <th style="text-align:right">@ViewBag.TotalPendingPaid</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th class="td_Date" style="display:none"></th>
-                                <th class="td_Date" style="display:none"></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                <div class="table-responsive">
-                    <table id="myTable" class="table mb-0 table-borderless">
-                        <thead>
-                            <tr>
-                                <th colspan="10"><h6 style="color:black">Bounce/Cancel Payment List</h6></th>
-                            </tr>
-                            <tr class="userDatatable-header">
-                                <th>S.No.</th>
-                                <th>Reciept No</th>
-                                <th style="text-align:right">Paid Amount</th>
-                                <th>Payment Date</th>
-                                <th>Payment Type</th>
-                                <th>Cheque No</th>
-                                <th>Bank Name</th>
-                                <th>Remark</th>
-                                <th>Cheque Status</th>
-                                <th>Delete</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @if (Model != null)
-                            {
-                                if (Model.BounceListItem != null)
-                                {
-                                    int i = 1;
-                                    foreach (var Item in Model.BounceListItem)
-                                    {
-                                        <tr class="text-left">
-                                            <td>@i</td>
-                                            <td>@Item.Reciept</td>
-                                            <td style="text-align:right">@Item.PaidAmount</td>
-                                            <td>@Item.CashDate</td>
-                                            <td>@Item.PayType</td>
-                                            <td>@Item.ChequeNo</td>
-                                            <td>@Item.BankName</td>
-                                            <td>@Item.Remarks</td>
-                                            <td>@Item.CheqStatus</td>
-                                            <td>
-                                                <a href="/Farmers/DeletePayment?id=@Item.EncryptKey&&UserId=@Model.EncryptKey" onclick="return confirm('Are you sure you wish to delete this Payment?');" class="btn btn-sm btn-danger">delete</a>
-                                            </td>
-                                        </tr>
-
-                                        i++;
-                                    }
-                                }
-                            }
-
-                        </tbody>
-
-                        <tfoot>
-                            <tr>
-                                <th></th>
-                                <th>Total</th>
-                                <th style="text-align:right">@ViewBag.TotalBouncePaid</th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                                <th></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-
-                @Html.HiddenFor(m => m.Fk_PaymentId)
-                @Html.HiddenFor(m => m.Fk_UserId)
-                <div class="modal fade" id="deletemodal" role="dialog" style="display: none;padding-top:55px;">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Confirmation</h5>
-                                <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">&times;</button>
-                            </div>
-                            <div class="modal-body" style="color: black">
-                                <input type="hidden" id="BookingDetailsId" />
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p>Is this entry deleted in account head ?</p>
-                                        <input type="radio" name="dstatus" id="postageyes" value="Yes" />&nbsp; Yes &nbsp;&nbsp;&nbsp;&nbsp;
-                                        <input type="radio" name="dstatus" id="postageno" value="No" /> &nbsp; No
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal" onclick="closeModal();">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                           
-                                            <a class="btn btn-sm btn-success pull-right" name="btn_delete" onclick="return Delete()" id="btn_delete">Delete</a>
-
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="col-lg-12 col-md-12">
+                                <div class="breadcrumb-main m-0">
+                                    <h4 class="text-capitalize breadcrumb-title">Farmer Payment List</h4>
+                                    <p style="color: green;">
+                                        @TempData["SucFarmerList"]
+                                    </p>
+                                    <p style="color: red">
+                                        @TempData["ErrFarmerList"]
+                                    </p>
+                                    <div class="breadcrumb-action justify-content-center flex-wrap">
+                                        <div class="action-btn">
+                                            <a class="btn btn-primary btn-sm" target="_blank" href="/Farmers/AddPayFarmers?id=@Model.EncryptKey"> <i class="fa fa-plus-circle text-white"></i> Add Payment</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="modal-footer">
+
+                            <div class="row">
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Name</label>
+                                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Mobile No.</label>
+                                    @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">SQFT</label>
+                                    @Html.TextBoxFor(m => m.SQFT, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Gata No.</label>
+                                    @Html.TextBoxFor(m => m.GataKhasaraN, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Registry</label>
+                                    @Html.TextBoxFor(m => m.Registry, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Agreement</label>
+                                    @Html.TextBoxFor(m => m.Agreement, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Notary</label>
+                                    @Html.TextBoxFor(m => m.Notary, new { @class = "form-control", @readonly = "true" })
+                                </div>
+
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="13"><h6 style="color:black">Cleared Payment List</h6></th>
+                                        </tr>
+                                        <tr class="userDatatable-header">
+                                            <th>S.No.</th>
+                                            <th>Reciept No</th>
+                                            <th>Generated Amount</th>
+                                            <th style="text-align:right">Paid Amount</th>
+                                            <th>Remaining Amount</th>
+                                            <th>Payment Date</th>
+                                            <th>Payment Type</th>
+                                            <th>Cheque No</th>
+                                            <th>Bank Name</th>
+                                            <th>Remark</th>
+                                            <th>Cheque Status</th>
+                                            <th>Action</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.ClearedListItem != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.ClearedListItem)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.Reciept</td>
+                                                        <td>@Item.TotalBalance</td>
+                                                        <td style="text-align:right">@Item.PaidAmount</td>
+                                                        <td>@Item.RemainingAmount</td>
+                                                        <td>@Item.CashDate</td>
+                                                        <td>@Item.PayType</td>
+                                                        <td>@Item.ChequeNo</td>
+                                                        <td style="min-width:100px">@Item.BankName</td>
+                                                        <td style="min-width:120px">@Item.Remarks</td>
+                                                        <td>@Item.CheqStatus</td>
+                                                        <td>
+                                                            <a data-toggle="tooltip" title="edit" href="/Farmers/UpdatePayment?FId=@Item.ID&&PId=@Item.EncryptKey" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                                        </td>
+                                                        <td>
+                                                            <a href="#" onclick="OpenDeletePopUp('@Item.Fk_PaymentId','@Item.ID');" class="btn btn-sm btn-danger">delete</a>
+                                                        </td>
+                                                    </tr>
+
+                                                    i++;
+                                                }
+                                            }
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th><b>Total Paid Amount</b></th>
+                                            <th style="text-align:right"><b>@ViewBag.TotalCleredPaid</b></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="12"><h6 style="color:black">Pending Payment List</h6></th>
+                                        </tr>
+                                        <tr class="userDatatable-header">
+                                            <th>S.No.</th>
+                                            <th>Reciept No</th>
+                                            <th style="text-align:right">Paid Amount</th>
+                                            <th>Payment Date</th>
+                                            <th>Payment Type</th>
+                                            <th>Cheque No</th>
+                                            <th>Bank Name</th>
+                                            <th>Remark</th>
+                                            <th>Cheque Status</th>
+                                            <th class="td_Date" style="display:none">Cheque Status Date</th>
+                                            <th class="td_Date" style="display:none">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.PendingListItem != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.PendingListItem)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.Reciept</td>
+                                                        <td style="text-align:right">@Item.PaidAmount</td>
+                                                        <td>@Item.CashDate</td>
+                                                        <td>@Item.PayType</td>
+                                                        <td>@Item.ChequeNo</td>
+                                                        <td>@Item.BankName</td>
+                                                        <td>@Item.Remarks</td>
+                                                        @if (Item.CheqStatus == "Cleared" || Item.CheqStatus == "Bounce" || Item.CheqStatus == "Rejected" || Item.CheqStatus == "Cancel")
+                                                        {
+                                                            <td>@Item.CheqStatus</td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td>
+
+                                                                @Html.DropDownList("CheqStatus_" + @i, new SelectList(ViewBag.CheckStatus, "Value", "Text"), new { @class = "form-control CheckStatus_" + @i, @onchange = "return onChange(" + @i + ");" })
+                                                            </td>
+                                                        }
+                                                        <td class="td_Date" style="display:none">
+                                                            <input type="text" class="form-control d Date_@i" style="display:none;width:150px;" readonly="readonly" placeholder="DD/MM/YYYY" />
+                                                        </td>
+                                                        <td class="td_Date" style="display:none">
+                                                            <a onclick="CheckStatusUpdate('@i');" id="btn_Update_@i" data-paymentId='@Item.Fk_PaymentId' data-Userid="@Model.Fk_UserId" class="btn btn-sm btn-success btn_check_@i" style="display:none">Update </a>
+                                                        </td>
+                                                    </tr>
+
+                                                    i++;
+                                                }
+                                            }
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th style="text-align:right">@ViewBag.TotalPendingPaid</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="td_Date" style="display:none"></th>
+                                            <th class="td_Date" style="display:none"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+
+                                <div class="table-responsive">
+                                    <table id="myTable" class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th colspan="10"><h6 style="color:black">Bounce/Cancel Payment List</h6></th>
+                                            </tr>
+                                            <tr class="userDatatable-header">
+                                                <th>S.No.</th>
+                                                <th>Reciept No</th>
+                                                <th style="text-align:right">Paid Amount</th>
+                                                <th>Payment Date</th>
+                                                <th>Payment Type</th>
+                                                <th>Cheque No</th>
+                                                <th>Bank Name</th>
+                                                <th>Remark</th>
+                                                <th>Cheque Status</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @if (Model != null)
+                                            {
+                                                if (Model.BounceListItem != null)
+                                                {
+                                                    int i = 1;
+                                                    foreach (var Item in Model.BounceListItem)
+                                                    {
+                                                        <tr class="text-left">
+                                                            <td>@i</td>
+                                                            <td>@Item.Reciept</td>
+                                                            <td style="text-align:right">@Item.PaidAmount</td>
+                                                            <td>@Item.CashDate</td>
+                                                            <td>@Item.PayType</td>
+                                                            <td>@Item.ChequeNo</td>
+                                                            <td>@Item.BankName</td>
+                                                            <td>@Item.Remarks</td>
+                                                            <td>@Item.CheqStatus</td>
+                                                            <td>
+                                                                <a href="/Farmers/DeletePayment?id=@Item.EncryptKey&&UserId=@Model.EncryptKey" onclick="return confirm('Are you sure you wish to delete this Payment?');" class="btn btn-sm btn-danger">delete</a>
+                                                            </td>
+                                                        </tr>
+
+                                                        i++;
+                                                    }
+                                                }
+                                            }
+
+                                        </tbody>
+
+                                        <tfoot>
+                                            <tr>
+                                                <th></th>
+                                                <th>Total</th>
+                                                <th style="text-align:right">@ViewBag.TotalBouncePaid</th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
                             </div>
                         </div>
-                    </div>
                 </div>
-                <input type="hidden" id="UserType" value="@Session["UserType"]" />
-                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
-           
+            </div>
+</div>
         </div>
     </div>
- </div>
 }
 
 
