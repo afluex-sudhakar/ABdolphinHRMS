@@ -390,10 +390,10 @@ h6 {
   line-height: 1.2;
 }
 hr {
-  margin-top: 4.67rem;
-  margin-bottom: 4.67rem;
-  border: 0;
-  border-top: 1px solid #f1f2f6;
+    margin-top: 1.67rem;
+    margin-bottom: 0.6699999999999999rem;
+    border: 0;
+    border-top: 1px solid #d9dce9;
 }
 .small,
 small {

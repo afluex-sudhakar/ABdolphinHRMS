@@ -18,10 +18,14 @@
 
     <link href="~/assets/css/plugin.min.css" rel="stylesheet" />
     <link href="~/assets/css/style.css" rel="stylesheet" />
+    @* data table cnd css *@
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.0/css/jquery.dataTables_themeroller.css">
+
 
     <!-- endinject -->
 
-    <link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon.png">
+    @*<link rel="icon" type="image/png" sizes="16x16" href="~/assets/img/favicon.png">*@
 </head>
 @RenderBody();
 <body class="layout-dark side-menu overlayScroll">
@@ -41,7 +45,7 @@
                 </a>
                 <a class="navbar-brand" href="/Admin/AdminDashBoard"><img class="dark" src="~/assets/Images/logo.png" alt="svg"><img class="light" src="~/assets/Images/logo.png" alt="img"></a>
 
-                <form action="https://demo.jsnorm.com/" class="search-form">
+                <form  class="search-form">
                     <span data-feather="search"></span>
                     <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
                 </form>
@@ -60,36 +64,41 @@
                             <input class="form-control mr-sm-2 box-shadow-none" type="text" placeholder="Search...">
                         </form>
                     </li>
-                   
-                    <li class="nav-settings">
+                    <li class="nav-author">
                         <div class="dropdown-custom">
-                            <a href="javascript:;" class="nav-item-toggle">
-                                <span data-feather="settings"></span>
-                            </a>
-                            <div class="dropdown-wrapper dropdown-wrapper--large">
-                                <ul class="list-settings">
-                                   
-                                    <li class="d-flex">
-                                        <div class="mr-3"><img src="~/assets/img/video-camera.png" alt=""></div>
-                                        <div class="flex-grow-1">
-                                            <h6>
-                                                <a href="#" class="stretched-link">Change Password</a>
-                                            </h6>
-                                        </div>
-                                    </li>
-                                    <li class="d-flex">
-                                        <div class="mr-3"><img src="~/assets/img/document.png" alt=""></div>
-                                        <div class="flex-grow-1">
-                                            <h6>
-                                                <a href="#" class="stretched-link">Logout</a>
-                                            </h6>
-                                        </div>
-                                    </li>
-                                </ul>
+                            <a href="javascript:;" class="nav-item-toggle"><img src="~/assets/img/author-nav.jpg" alt="" class="rounded-circle"></a>
+                            <div class="dropdown-wrapper">
+                                <div class="nav-author__info">
+                                    <div class="author-img">
+                                        <img src="~/assets/img/author-nav.jpg" alt="" class="rounded-circle">
+                                    </div>
+                                    <div>
+                                        <h6>Hello (@Session["LoginId"])</h6>
+                                        <span>@Session["Name"]</span>
+                                    </div>
+                                </div>
+                                <div class="nav-author__options">
+                                    <ul>
+                                        <li>
+                                            <a href="#">
+                                                <span data-feather="settings"></span> Settings
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <span data-feather="key"></span> Change Password
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <a href="/Home/Login" class="nav-author__signout">
+                                        <span data-feather="log-out"></span> Logout
+                                    </a>
+                                </div>
                             </div>
+                            <!-- ends: .dropdown-wrapper -->
                         </div>
                     </li>
-                    
+                    <!-- ends: .nav-author -->
                 </ul>
                 <!-- ends: .navbar-right__menu -->
                 <div class="navbar-right__mobileAction d-md-none">
@@ -112,15 +121,12 @@
                 <div class="sidebar__menu-group">
                     <ul class="sidebar_nav">
                         <li>
-                            <a href="/Admin/AdminDashBoard">Dashboard</a>
-                        </li>
-                        @*<li class="has-child open">
-                            <a href="/Admin/AdminDashBoard" >
+                            <a href="/Admin/AdminDashBoard" class="">
                                 <span data-feather="home" class="nav-icon"></span>
                                 <span class="menu-text">Dashboard</span>
                             </a>
-                        </li>*@
-                        <li class="has-child open">
+                        </li>
+                        <li class="has-child">
                             <a href="#">
                                 <span data-feather="home" class="nav-icon"></span>
                                 <span class="menu-text">Farmer Management</span>
@@ -152,7 +158,7 @@
                                     <a href="#" data-layout="light">View Account</a>
                                 </li>
                                 <li class="l_sidebar">
-                                    <a href="#" data-layout="light">Expense Type</a>
+                                    <a href="/Master/ExpenseTypeMaster" data-layout="light">Expense Type</a>
                                 </li>
                                 <li class="l_sidebar">
                                     <a href="#" data-layout="light">View Expense</a>
@@ -167,7 +173,7 @@
                                     <a href="#" data-layout="light">Expense Ledger</a>
                                 </li>
                                 <li class="l_sidebar">
-                                    <a href="#" data-layout="light">Expense Category</a>
+                                    <a href="/Master/ExpenseCategoryMaster" data-layout="light">Expense Category</a>
                                 </li>
                             </ul>
                         </li>
@@ -200,6 +206,25 @@
     <script src="~/assets/js/plugins.min.js"></script>
     <script src="~/assets/js/script.min.js"></script>
     <!-- endinject-->
+
+    @* data table cnd js *@
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+
+    <script>
+        /// For DataTable
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                dom: 'Bfrtip',
+                pagingType: "numbers",
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+        });
+
+    </script>
 </body>
 
 </html>

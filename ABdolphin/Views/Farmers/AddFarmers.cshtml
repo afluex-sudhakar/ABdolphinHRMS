@@ -9,19 +9,44 @@
 @using (Html.BeginForm("AddFarmers", "Farmers", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data" ,@autocomplete="off"}))
 {
     <div class="contents">
-        <section class="section">
-            <ul class="breadcrumb breadcrumb-style ">
-                <li class="breadcrumb-item">
-                    <a href="#">
-                        <i data-feather="home"></i>
-                    </a>
-                </li>
-                <li class="breadcrumb-item">Farmer Management</li>
-                <li class="breadcrumb-item">Add Farmer</li>
-            </ul>
-        </section>
-        <div class="container-fluid py-5">
-            <div class="row">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 mt-2">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Farmers Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>AddFarmer</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid card">
+            <h5 class="mt-3">AddFarmer</h5>
+            <hr />
+            <div class="row mt-4">
                     <div class="col-md-4 mb-3">
                         <label for="inputEmail4" class="form-label">Name<span style="color:red">*</span></label>
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Farmer Name" })
@@ -47,7 +72,7 @@
                     <label for="inputEmail4" class="form-label">Area<span style="color:red">*</span></label>
                     @Html.TextBoxFor(m => m.Hectare, new { @class = "form-control", @placeholder = "Hectare", @onkeypress = "return isNumberKey(event);" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputPassword4" class="form-label">Acre<span>&nbsp;</span></label>
                     @Html.TextBoxFor(m => m.Acre, new { @class = "form-control", @Placeholder = "Acre", @onkeypress = "return isNumberKey(event);" })
                 </div>
@@ -75,16 +100,16 @@
                     <label for="inputPassword4" class="form-label">State</label>
                     @Html.TextBoxFor(m => m.State, new { @class = "form-control", @Placeholder = "State", @readonly = "true" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label"> Associate Id</label>
                     @Html.TextBoxFor(m => m.AssociateLoginID, new { @class = "form-control", @Placeholder = "Associate ID", @onchange = "return getSponsorName();" })
                     @Html.HiddenFor(m => m.AssociateID)
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label"> Associate Name</label>
                     @Html.TextBoxFor(m => m.DelearName, new { @class = "form-control", @Placeholder = "Associate Name", @readonly = "readonly" })
                 </div>
-                <div class="col-md-4 mb-3">
+                <div class="col-md-4 mb-3" style="display:none">
                     <label for="inputEmail4" class="form-label">Date of birth</label>
                     @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", @Placeholder = "Date of birth" })
                 </div>
@@ -109,8 +134,10 @@
                     @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "form-control" })
                 </div>*@
 
-                    <div class="col-12">
-                        @*<button type="submit" class="btn btn-primary">Save</button>*@
+            </div>
+            <div class="row">
+                <div class="col-md-6 col-lg-6 mb-3">
+                    <div class="d-flex">
                         @if (Model != null && Model.PK_Farmerid == null)
                         {
                             <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
@@ -123,14 +150,17 @@
                         <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
                         <a class="btn btn-info" href="/Farmers/FarmerList" style="margin-left:5px;">Back To List</a>
                     </div>
+                </div>
             </div>
-
         </div>
     </div>
 
 }
 
 
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
 <script>
     $(document).ready(function () {
         $("#divload").css({ 'display': 'none' });
