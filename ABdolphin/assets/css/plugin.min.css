@@ -390,10 +390,10 @@ h6 {
   line-height: 1.2;
 }
 hr {
-  margin-top: 4.67rem;
-  margin-bottom: 4.67rem;
-  border: 0;
-  border-top: 1px solid #f1f2f6;
+    margin-top: 1.67rem;
+    margin-bottom: 0.6699999999999999rem;
+    border: 0;
+    border-top: 1px solid #d9dce9;
 }
 .small,
 small {
@@ -4016,7 +4016,7 @@ input[type="submit"].btn-block {
   -ms-flex: 1 1 auto;
   flex: 1 1 auto;
   min-height: 1px;
-  padding: 1.56rem;
+  padding: 2.60rem;
 }
 .card-title {
   margin-bottom: 0.75rem;
