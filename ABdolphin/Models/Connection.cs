@@ -21,6 +21,8 @@ namespace ABdolphin.Models
                 //Sarfraz
                 connectionString = "Data Source=DESKTOP-ICNPI6I\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
 
+                //Tanishq
+                //connectionString = "Data Source=DESKTOP-OEAINLG\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
             }
             catch (Exception)
             {

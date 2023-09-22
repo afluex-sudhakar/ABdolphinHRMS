@@ -263,5 +263,4 @@ E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.xml
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.xml
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.dll
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.pdb
-E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache

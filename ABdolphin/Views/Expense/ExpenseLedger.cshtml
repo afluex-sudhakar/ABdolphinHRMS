@@ -1,0 +1,259 @@
+﻿@model ABdolphin.Models.Expenses
+
+@{
+    ViewBag.Title = "ExpenseLedger";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("ExpenseLedger", "Expense", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>Expense Ledger</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 mb-3">
+                                    <div class="d-flex">
+                                        <h4 class="text-capitalize breadcrumb-title">Expense Ledger</h4>
+                                        <p class="text-danger mb-0 p-left-50">
+                                            @TempData["CrExpenseList"]
+                                        </p>
+                                        @*<div class="breadcrumb-action justify-content-between">
+                    <div class="action-btn">
+                        <a class="btn btn-primary btn-sm" target="_blank" href="/Master/ExpenseTypeMaster"> <i class="fa fa-plus-circle text-white"></i> Add New</a>
+                    </div>
+                </div>*@
+                                    </div>
+                                    <br />
+                                    <h3>Account Ledger &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:red;"> Bank Name : @ViewBag.BankName</span></h3>
+                                 
+                                </div>
+                                <hr />
+                                <div class="col-md-3 mb-3">
+                                    Company Name
+                                    @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Expense Head
+                                    @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Expense Type
+                                    @Html.DropDownListFor(m => m.ExpenseID, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "ExpenseType form-control select2", @onchange = "return onExpeseTypeChange();" })
+                                </div>
+                                @*<div class="col-md-3 mb-3">
+            Expense Category
+            @Html.DropDownListFor(m => m.Fk_ExpenseCategoryId, new SelectList(ViewBag.ExpenseCategory, "Value", "Text"), new { @class = "ExpenseCategory form-control select2" })
+
+        </div>*@
+                                <div class="col-md-3 mb-3">
+                                    Expense Name
+                                    @Html.DropDownListFor(m => m.ExpenseName, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "ExpenseName form-control select2" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Type
+                                    @Html.DropDownListFor(m => m.Type, new SelectList(ViewBag.EntryType, "Value", "Text"), new { @class = "form-control" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Bank Name
+                                    @Html.DropDownListFor(m => m.TransactionID, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "TransactionID form-control select2" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    From Cheque Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    To Cheque Date
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    From Issue Date
+                                    @Html.TextBoxFor(m => m.EntryFromDate, new { @class = "form-control", @Placeholder = " Entry Issue Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Entry Issue Date
+                                    @Html.TextBoxFor(m => m.EntryToDate, new { @class = "form-control", @Placeholder = "Entry Issue Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="btnSearch" />
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                        
+                                            <th>Sr No.</th>
+                                            <th>Company Name</th>
+                                            <th>Expense Head</th>
+                                            <th>Expense Type</th>
+                                            <th>Expense Category</th>
+                                            <th>Expense Name</th>
+                                            <th>Transaction Type</th>
+                                            <th>Ledger Type</th>
+                                            <th>Cr Amount</th>
+                                            <th>Dr Amount</th>
+                                            <th>Balance</th>
+                                            <th>Cheque Status</th>
+                                            <th>Remarks</th>
+                                            <th>Issue Date</th>
+                                            <th>Clear Cheque Date</th>
+                                            @*<th>Print</th>*@
+                                     
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.CrExpenseList != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.CrExpenseList)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item.CompanyName</td>
+                                                        <td>@Item.ExpenseHead</td>
+                                                        <td>@Item.ExpenseID</td>
+                                                        <td>@Item.ExpenseCategoryName</td>
+                                                        <td style="min-width:160px">@Item.ExpenseName</td>
+                                                        <td style="min-width:120px">@Item.TransactionTy</td>
+                                                        <td>
+                                                            @if (Item.Type == "Cr")
+                                                            {
+                                                                <strong><span style="color:#527552">@Item.Type</span></strong>
+                                                            }
+                                                            else
+                                                            {
+                                                                <strong>
+                                                                    <span style="color:red">@Item.Type</span>
+                                                                </strong>
+                                                            }
+                                                        </td>
+                                                        <td style="color:#527552"><strong>@Item.CrAmount</strong></td>
+                                                        <td style="color:red"><strong>@Item.DrAmount</strong></td>
+                                                        <td>@Item.BalanceAmount</td>
+                                                        @*<td>@Item.ChequeStatus </td>*@
+                                                        <td>@Item.ChequeStatus</td>
+                                                        <td style="min-width:200px">@Item.Remarks</td>
+                                                        <td>@Item.Date</td>
+                                                        <td>@Item.ChequeStatusUpdateDate</td>
+                                                        @*<td>
+                            <a href="/Expense/PrintExpenseLedger?Bankid=@Item.Pk_BankId" class="btn btn-success btn-sm" target="_blank">Print</a>
+                        </td>*@
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="text-left">
+                                            <th style="text-align:end" colspan="8">Total</th>
+                                            <th>@ViewBag.CrAmount</th>
+                                            <th>@ViewBag.DrAmount</th>
+                                            @*<th>@ViewBag.BalanceAmount</th>*@
+                                            <th colspan="5"></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+}
+
+<script>
+    $(document).ready(function ()
+    {
+        debugger;
+        $("#divload").css({ 'display': 'none' });
+        $('#select2-ExpenseID-container').text('');
+    });
+    function onExpeseTypeChange() {
+        $("#divload").css({ 'display': '' });
+        var value = $('#ExpenseID').val();
+        var tr = [];
+        $.ajax({
+            url: "GetExpenseDetails",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseID: value },
+            success: function (data) {
+                debugger
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                console.log(data)
+                if (data.Result == "yes") {
+                    $("#ExpenseName").html(""); // clear before appending new list
+                    $("#ExpenseName").empty();
+                    $("#ExpenseName").append(
+                          $('<option></option>').val(0).html('Select Expense Name'));
+                    $.each(data.ddlexpensename, function (index, Expensecount) {
+                        $("#ExpenseName").append(
+                              $('<option></option>').val(Expensecount.Value).html(Expensecount.Text));
+
+                    });
+
+                }
+                else {
+                    $("#ExpenseName").empty();
+
+                }
+
+
+            }
+
+        });
+
+    }
+   
+</script>
+
+
