@@ -12,7 +12,7 @@
         <div class="atbd-page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-6">
+                    <div class="col-lg-12 mt-2">
                         <div class="card card-default card-md mb-4">
                             <div class="card-body">
                                 <ul class="atbd-breadcrumb nav">
@@ -43,8 +43,10 @@
             </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="row">
+        <div class="container-fluid card">
+            <h5 class="mt-3">AddFarmer</h5>
+            <hr />
+            <div class="row mt-4">
                     <div class="col-md-4 mb-3">
                         <label for="inputEmail4" class="form-label">Name<span style="color:red">*</span></label>
                         @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Farmer Name" })
