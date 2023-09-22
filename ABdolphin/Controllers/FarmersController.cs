@@ -26,34 +26,34 @@ namespace ABdolphin.Controllers
                 {
                     model.PK_Farmerid = Crypto.Decrypt(id);
                     DataSet ds = model.GetlistById();
-                    //if (ds.Tables.Count > 0 && ds != null && ds.Tables[0].Rows.Count > 0)
-                    //{
-                    //    model.Name = ds.Tables[0].Rows[0]["Name"].ToString();
-                    //    model.Mobile = ds.Tables[0].Rows[0]["Mobile"].ToString();
-                    //    model.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
-                    //    model.DOB = ds.Tables[0].Rows[0]["DOB"].ToString();
-                    //    model.SQFT = ds.Tables[0].Rows[0]["SQFT"].ToString();
-                    //    model.Acre = ds.Tables[0].Rows[0]["Acre"].ToString();
-                    //    model.Hectare = ds.Tables[0].Rows[0]["Hectare"].ToString();
-                    //    model.Pincode = ds.Tables[0].Rows[0]["Pincode"].ToString();
-                    //    model.Photo = ds.Tables[0].Rows[0]["Photo"].ToString();
-                    //    model.IDProof = ds.Tables[0].Rows[0]["IDProof"].ToString();
-                    //    model.City = ds.Tables[0].Rows[0]["City"].ToString();
-                    //    model.State = ds.Tables[0].Rows[0]["State"].ToString();
-                    //    model.DelearName = ds.Tables[0].Rows[0]["DelearName"].ToString();
-                    //    model.Email = ds.Tables[0].Rows[0]["Email"].ToString();
-                    //    model.PK_Farmerid = ds.Tables[0].Rows[0]["PK_Farmerid"].ToString();
-                    //    model.Title = ds.Tables[0].Rows[0]["Title"].ToString();
-                    //    model.AssociateID = ds.Tables[0].Rows[0]["AssociatId"].ToString();
-                    //    model.AssociateLoginID = ds.Tables[0].Rows[0]["AssociatId"].ToString();
-                    //    model.Address = ds.Tables[0].Rows[0]["Address"].ToString();
-                    //    model.GataKhasaraN = ds.Tables[0].Rows[0]["GataKhasaraN"].ToString();
-                    //    model.Village = ds.Tables[0].Rows[0]["Village"].ToString();
-                    //    model.Status = ds.Tables[0].Rows[0]["Status"].ToString();
-                    //    model.RegistryDate = ds.Tables[0].Rows[0]["RegistryDate"].ToString();
-                    //    model.Fk_CompanyId = ds.Tables[0].Rows[0]["Fk_CompanyId"].ToString();
-                    //    model.IDProof = ds.Tables[0].Rows[0]["IDProof"].ToString();
-                    //}
+                    if (ds.Tables.Count > 0 && ds != null && ds.Tables[0].Rows.Count > 0)
+                    {
+                        model.Name = ds.Tables[0].Rows[0]["Name"].ToString();
+                        model.Mobile = ds.Tables[0].Rows[0]["Mobile"].ToString();
+                        model.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
+                        model.DOB = ds.Tables[0].Rows[0]["DOB"].ToString();
+                        model.SQFT = ds.Tables[0].Rows[0]["SQFT"].ToString();
+                        model.Acre = ds.Tables[0].Rows[0]["Acre"].ToString();
+                        model.Hectare = ds.Tables[0].Rows[0]["Hectare"].ToString();
+                        model.Pincode = ds.Tables[0].Rows[0]["Pincode"].ToString();
+                        model.Photo = ds.Tables[0].Rows[0]["Photo"].ToString();
+                        model.IDProof = ds.Tables[0].Rows[0]["IDProof"].ToString();
+                        model.City = ds.Tables[0].Rows[0]["City"].ToString();
+                        model.State = ds.Tables[0].Rows[0]["State"].ToString();
+                        model.DelearName = ds.Tables[0].Rows[0]["DelearName"].ToString();
+                        model.Email = ds.Tables[0].Rows[0]["Email"].ToString();
+                        model.PK_Farmerid = ds.Tables[0].Rows[0]["PK_Farmerid"].ToString();
+                        model.Title = ds.Tables[0].Rows[0]["Title"].ToString();
+                        model.AssociateID = ds.Tables[0].Rows[0]["AssociatId"].ToString();
+                        model.AssociateLoginID = ds.Tables[0].Rows[0]["AssociatId"].ToString();
+                        model.Address = ds.Tables[0].Rows[0]["Address"].ToString();
+                        model.GataKhasaraN = ds.Tables[0].Rows[0]["GataKhasaraN"].ToString();
+                        model.Village = ds.Tables[0].Rows[0]["Village"].ToString();
+                        model.Status = ds.Tables[0].Rows[0]["Status"].ToString();
+                        model.RegistryDate = ds.Tables[0].Rows[0]["RegistryDate"].ToString();
+                        model.Fk_CompanyId = ds.Tables[0].Rows[0]["Fk_CompanyId"].ToString();
+                        model.IDProof = ds.Tables[0].Rows[0]["IDProof"].ToString();
+                    }
 
                 }
                 List<SelectListItem> ddltitle = FTitle();
@@ -1279,6 +1279,268 @@ namespace ABdolphin.Controllers
             }
             var uid = Crypto.Encrypt(FarmerId);
             return RedirectToAction(FormName, new { fid = uid });
+        }
+
+
+        public ActionResult FarmerPlotRegistry(Farmer model, string EncryptKey)
+        {
+
+            #region ddlBranch
+            Plot obj = new Plot();
+            int count = 0;
+            List<SelectListItem> ddlBranch = new List<SelectListItem>();
+            DataSet dsBranch = obj.GetBranchList();
+            if (dsBranch != null && dsBranch.Tables.Count > 0 && dsBranch.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dsBranch.Tables[0].Rows)
+                {
+                    ddlBranch.Add(new SelectListItem { Text = "Lucknow", Value = "1" });
+                    count = count + 1;
+                }
+            }
+            ViewBag.ddlBranch = ddlBranch;
+            #endregion
+            #region ddlSite
+            int count1 = 0;
+            List<SelectListItem> ddlSite = new List<SelectListItem>();
+            DataSet dsSite = obj.GetSiteList();
+            if (dsSite != null && dsSite.Tables.Count > 0 && dsSite.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dsSite.Tables[0].Rows)
+                {
+                    if (count1 == 0)
+                    {
+                        ddlSite.Add(new SelectListItem { Text = "Select Site", Value = "0" });
+                    }
+                    ddlSite.Add(new SelectListItem { Text = r["SiteName"].ToString(), Value = r["PK_SiteID"].ToString() });
+                    count1 = count1 + 1;
+
+                }
+            }
+            ViewBag.ddlSite = ddlSite;
+            #endregion
+            #region ddlSector
+            List<SelectListItem> ddlSector = new List<SelectListItem>();
+            DataSet dsSector = model.GetSectorList();
+
+            if (dsSector != null && dsSector.Tables.Count > 0)
+            {
+                foreach (DataRow r in dsSector.Tables[0].Rows)
+                {
+                    ddlSector.Add(new SelectListItem { Text = r["SectorName"].ToString(), Value = r["PK_SectorID"].ToString() });
+
+                }
+            }
+            ViewBag.ddlSector = ddlSector;
+            #endregion
+            #region ddlBlock
+            List<SelectListItem> ddlBlock = new List<SelectListItem>();
+            DataSet dsBlock = model.GetBlockList();
+
+            if (dsBlock != null && dsBlock.Tables.Count > 0)
+            {
+                foreach (DataRow r in dsBlock.Tables[0].Rows)
+                {
+                    ddlBlock.Add(new SelectListItem { Text = r["BlockName"].ToString(), Value = r["PK_BlockID"].ToString() });
+                }
+            }
+            ViewBag.ddlBlock = ddlBlock;
+            #endregion
+
+            //List<SelectListItem> ddlSector = new List<SelectListItem>();
+            //ddlSector.Add(new SelectListItem { Text = "Select Phase", Value = "0" });
+            //ViewBag.ddlSector = ddlSector;
+
+            //List<SelectListItem> ddlBlock = new List<SelectListItem>();
+            //ddlBlock.Add(new SelectListItem { Text = "Select Block", Value = "0" });
+            //ViewBag.ddlBlock = ddlBlock;
+
+            List<SelectListItem> ddlRegistry = new List<SelectListItem>();
+            ddlRegistry.Add(new SelectListItem { Text = "Select Registry", Value = "0" });
+            ddlRegistry.Add(new SelectListItem { Text = "Company", Value = "1" });
+            ddlRegistry.Add(new SelectListItem { Text = "Farmer", Value = "2" });
+            ddlRegistry.Add(new SelectListItem { Text = "C To C", Value = "3" });
+            ViewBag.ddlRegistry = ddlRegistry;
+            #region ddlfarmer
+            int countfarmer = 0;
+            List<SelectListItem> ddlfarmer = new List<SelectListItem>();
+            DataSet dsFamer = model.FarmerListForPlotRegistry();
+            if (dsFamer != null && dsFamer.Tables.Count > 0 && dsFamer.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dsFamer.Tables[0].Rows)
+                {
+                    if (countfarmer == 0)
+                    {
+                        ddlfarmer.Add(new SelectListItem { Text = "Select Farmer", Value = "0" });
+                    }
+                    ddlfarmer.Add(new SelectListItem { Text = r["Name"].ToString(), Value = r["PK_FarmerId"].ToString() });
+                    countfarmer = countfarmer + 1;
+
+                }
+            }
+            ViewBag.ddlfarmer = ddlfarmer;
+            #endregion
+
+            if (EncryptKey != "")
+            {
+                model.RegistryId = Crypto.Decrypt(EncryptKey);
+                DataSet ds = model.GetPlotRegistrylist();
+                if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+                {
+                    model.BranchID = ds.Tables[0].Rows[0]["BranchID"].ToString();
+                    model.SiteID = ds.Tables[0].Rows[0]["Fk_Siteid"].ToString();
+                    model.SectorID = ds.Tables[0].Rows[0]["Fk_SectorId"].ToString();
+                    model.BlockID = ds.Tables[0].Rows[0]["Fk_BlockId"].ToString();
+                    model.PlotNumber = ds.Tables[0].Rows[0]["PlotNumber"].ToString();
+                    model.CustomerId = ds.Tables[0].Rows[0]["PK_UserId"].ToString();
+                    model.CustomerName = ds.Tables[0].Rows[0]["CustomerName"].ToString();
+                    model.RegistryId = ds.Tables[0].Rows[0]["FK_RegistryId"].ToString();
+                    model.PK_Farmerid = ds.Tables[0].Rows[0]["FK_Farmerid"].ToString();
+                    model.GataKhasaraN = ds.Tables[0].Rows[0]["GataKhasraNo"].ToString();
+                    model.RegistryDate = ds.Tables[0].Rows[0]["RegistryDate"].ToString();
+                    model.PlotSize = ds.Tables[0].Rows[0]["PlotSize"].ToString();
+                    model.RemainingArea = ds.Tables[0].Rows[0]["RemainingArea"].ToString();
+                    model.PlotID = ds.Tables[0].Rows[0]["Fk_PlotId"].ToString();
+                }
+            }
+            return View(model);
+        }
+
+        [ActionName("FarmerPlotRegistry")]
+        [OnAction(ButtonName = "btnSave")]
+        public ActionResult SaveFarmerPlotRegistry(Farmer model)
+        {
+            try
+            {
+                model.AddedBy = Session["Pk_AdminId"].ToString();
+                model.RegistryDate = string.IsNullOrEmpty(model.RegistryDate) ? null : Common.ConvertToSystemDate(model.RegistryDate, "dd/MM/yyyy");
+                DataSet ds = model.SaveFarmerPlotRegistry();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        TempData["Plotregistry"] = "Plot Registry successfully";
+                        TempData["Booking"] = "Reciept Number : " + ds.Tables[0].Rows[0]["RecieptNumber"].ToString();
+                    }
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "0")
+                    {
+                        TempData["Plotregistry"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+                else
+                {
+                    TempData["Plotregistry"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+
+                TempData["Plotregistry"] = ex;
+            }
+
+            return RedirectToAction("FarmerPlotRegistry", "Farmers");
+        }
+
+        [ActionName("FarmerPlotRegistry")]
+        [OnAction(ButtonName = "btnUpdate")]
+        public ActionResult UpdateFarmerPlotRegistry(Farmer model, string EncryptKey)
+        {
+            try
+            {
+                model.EncryptKey = Crypto.Decrypt(EncryptKey);
+                model.AddedBy = Session["Pk_AdminId"].ToString();
+                model.RegistryDate = string.IsNullOrEmpty(model.RegistryDate) ? null : Common.ConvertToSystemDate(model.RegistryDate, "dd/MM/yyyy");
+                DataSet ds = model.UpdateFarmerPlotRegistry();
+                if (ds != null && ds.Tables.Count > 0)
+                {
+                    if (ds.Tables[0].Rows[0][0].ToString() == "1")
+                    {
+                        TempData["Plotregistry"] = "Plot Registry Update successfully";
+                    }
+                    else if (ds.Tables[0].Rows[0][0].ToString() == "0")
+                    {
+                        TempData["Plotregistry"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                    }
+                }
+                else
+                {
+                    TempData["Plotregistry"] = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["Plotregistry"] = ex;
+            }
+
+            return RedirectToAction("FarmerPlotRegistry", "Farmers");
+        }
+
+        public ActionResult FarmerDetailsById(string FarmerId)
+        {
+            Farmer obj = new Farmer();
+            obj.PK_Farmerid = FarmerId;
+            DataSet ds = obj.FarmerListById();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Msg"].ToString() == "1")
+                {
+                    obj.PK_Farmerid = ds.Tables[0].Rows[0]["PK_FarmerId"].ToString();
+                    obj.Name = ds.Tables[0].Rows[0]["Name"].ToString();
+                    obj.GataKhasaraN = ds.Tables[0].Rows[0]["GataKhasaraN"].ToString();
+                    obj.SQFT = ds.Tables[0].Rows[0]["SQFT"].ToString();
+                    obj.Result = "yes";
+                }
+                else if (ds.Tables[0].Rows[0]["Msg"].ToString() == "0")
+                {
+                    obj.Result = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                }
+                else
+                {
+                    obj.Result = "0";
+                }
+            }
+            else
+            {
+                obj.Result = "0";
+
+            }
+            return Json(obj, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult checkplotnumberforfarmerplotregistry(string SiteID, string SectorID, string BlockID, string PlotNumber)
+        {
+            Farmer obj = new Farmer();
+            obj.SiteID = SiteID;
+            obj.SectorID = SectorID;
+            obj.BlockID = BlockID;
+            obj.PlotNumber = PlotNumber;
+            DataSet ds = obj.CheckPlotNumberForPlotRegistry();
+            if (ds != null && ds.Tables[0].Rows.Count > 0)
+            {
+                if (ds.Tables[0].Rows[0]["Msg"].ToString() == "1")
+                {
+                    obj.PlotSize = ds.Tables[0].Rows[0]["PlotSize"].ToString();
+                    obj.PlotArea = ds.Tables[0].Rows[0]["PlotArea"].ToString();
+                    obj.PlotID = ds.Tables[0].Rows[0]["PK_PlotID"].ToString();
+                    obj.CustomerName = ds.Tables[0].Rows[0]["Name"].ToString();
+                    obj.CustomerId = ds.Tables[0].Rows[0]["PK_UserId"].ToString();
+                    obj.Result = "1";
+                }
+                else if (ds.Tables[0].Rows[0]["Msg"].ToString() == "0")
+                {
+                    obj.Result = ds.Tables[0].Rows[0]["ErrorMessage"].ToString();
+                }
+                else
+                {
+                    obj.Result = "Invalid Plot Number";
+                }
+            }
+            else
+            {
+                obj.Result = "Invalid Plot Number";
+
+            }
+            return Json(obj, JsonRequestBehavior.AllowGet);
         }
     }
 }

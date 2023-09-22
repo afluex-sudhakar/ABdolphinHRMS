@@ -325,5 +325,88 @@ namespace ABdolphin.Controllers
                 throw ex;
             }
         }
+
+        public ActionResult GetSiteDetailsForPlotBooking(string SiteID)
+        {
+            try
+            {
+                Plot model = new Plot();
+                model.SiteID = SiteID;
+
+                #region GetSiteRate
+                //DataSet dsSiteRate = model.GetSiteList();
+                //if (dsSiteRate != null)
+                //{
+                //    model.Rate = dsSiteRate.Tables[0].Rows[0]["Rate"].ToString();
+                //    model.Result = "yes";
+                //}
+                #endregion
+                #region GetSectors
+                List<SelectListItem> ddlSector = new List<SelectListItem>();
+                model.Result = "yes";
+                DataSet dsSector = model.GetSectorList();
+
+                if (dsSector != null && dsSector.Tables.Count > 0)
+                {
+                    foreach (DataRow r in dsSector.Tables[1].Rows)
+                    {
+                        ddlSector.Add(new SelectListItem { Text = r["SectorName"].ToString(), Value = r["PK_SectorID"].ToString() });
+
+                    }
+                }
+                model.ddlSector = ddlSector;
+                #endregion
+                //#region SitePLCCharge
+                //List<Master> lstPlcCharge = new List<Master>();
+                //DataSet dsPlcCharge = model.GetPLCChargeList();
+
+                //if (dsPlcCharge != null && dsPlcCharge.Tables.Count > 0)
+                //{
+                //    foreach (DataRow r in dsPlcCharge.Tables[0].Rows)
+                //    {
+                //        Master obj = new Master();
+                //        obj.SiteName = r["SiteName"].ToString();
+                //        obj.PLCName = r["PLCName"].ToString();
+                //        obj.PLCCharge = r["PLCCharge"].ToString();
+                //        obj.PLCID = r["PK_PLCID"].ToString();
+
+                //        lstPlcCharge.Add(obj);
+                //    }
+                //    model.lstPLC = lstPlcCharge;
+                //}
+                //#endregion
+
+                return Json(model, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message);
+            }
+        }
+
+        public ActionResult GetBlockList(string SiteID, string SectorID)
+        {
+            List<SelectListItem> lstBlock = new List<SelectListItem>();
+            Master model = new Master();
+            model.SiteID = SiteID;
+            model.SectorID = SectorID;
+            DataSet dsblock = model.GetBlockList();
+
+            #region ddlBlock
+            if (dsblock != null && dsblock.Tables.Count > 0 && dsblock.Tables[0].Rows.Count > 0)
+            {
+
+                foreach (DataRow dr in dsblock.Tables[0].Rows)
+                {
+                    lstBlock.Add(new SelectListItem { Text = dr["BlockName"].ToString(), Value = dr["PK_BlockID"].ToString() });
+                }
+
+            }
+
+            model.lstBlock = lstBlock;
+            #endregion
+
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
     }
 }

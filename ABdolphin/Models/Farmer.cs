@@ -80,6 +80,13 @@ namespace ABdolphin.Models
         public string Registry { get; set; }
         public string GeneratedAmount { get; set; }
 
+        public string PlotID { get; set; }
+        public string BlockID { get; set; }
+        public string SectorID { get; set; }
+        public string SiteID { get; set; }
+        public string BranchID { get; set; }
+        public string PlotArea { get; set; }
+
 
 
 
@@ -374,6 +381,100 @@ namespace ABdolphin.Models
                                 new SqlParameter("@UpdatedBy",AddedBy)
                             };
             DataSet ds = Connection.ExecuteQuery("UpdateCheckStatus", para);
+            return ds;
+        }
+
+        public DataSet SaveFarmerPlotRegistry()
+        {
+            SqlParameter[] para = {
+                                      new SqlParameter("@CustomerId",CustomerId),
+                                      new SqlParameter("@Fk_BranchId", BranchID),
+                                      new SqlParameter("@Fk_PlotId", PlotID),
+                                      new SqlParameter("@Fk_Siteid", SiteID),
+                                      new SqlParameter("@Fk_SectorId", SectorID),
+                                      new SqlParameter("@Fk_BlockId", BlockID),
+                                      new SqlParameter("@Fk_FarmerId", PK_Farmerid),
+                                      new SqlParameter("@FK_RegistryId",RegistryId),
+                                      new SqlParameter("@GataKhasraNo", GataKhasaraN),
+                                      new SqlParameter("@RegistryDate", RegistryDate),
+                                      new SqlParameter("@RemainingArea", RemainingArea),
+                                      new SqlParameter("@AddedBy", AddedBy)
+
+                                  };
+            DataSet ds = Connection.ExecuteQuery("FarmerPlotRegistry", para);
+            return ds;
+        }
+
+        public DataSet UpdateFarmerPlotRegistry()
+        {
+            SqlParameter[] para = {
+                                     new SqlParameter("@PK_PlotRegistryId",EncryptKey),
+                                      new SqlParameter("@CustomerId",CustomerId),
+                                      new SqlParameter("@Fk_BranchId", BranchID),
+                                      new SqlParameter("@Fk_PlotId", PlotID),
+                                      new SqlParameter("@Fk_Siteid", SiteID),
+                                      new SqlParameter("@Fk_SectorId", SectorID),
+                                      new SqlParameter("@Fk_BlockId", BlockID),
+                                      new SqlParameter("@Fk_FarmerId", PK_Farmerid),
+                                      new SqlParameter("@FK_RegistryId",RegistryId),
+                                      new SqlParameter("@GataKhasraNo", GataKhasaraN),
+                                      new SqlParameter("@RegistryDate", RegistryDate),
+                                      new SqlParameter("@RemainingArea", RemainingArea),
+                                       //new SqlParameter("@PlotSize", PlotSize),
+                                      new SqlParameter("@UpdatedBy", AddedBy)
+                                  };
+            DataSet ds = Connection.ExecuteQuery("UpdateFarmerPlotRegistry", para);
+            return ds;
+        }
+
+        public DataSet GetSectorList()
+        {
+            SqlParameter[] para = { new SqlParameter("@SiteID",Fk_EmployeeId)
+            };
+            DataSet ds = Connection.ExecuteQuery("GetSectorList", para);
+            return ds;
+        }
+        public DataSet GetBlockList()
+        {
+            SqlParameter[] para ={ new SqlParameter("@SiteID",SiteID),
+                                     new SqlParameter("@SectorID",SectorID),
+                                     new SqlParameter("@BlockID",BlockID),
+                                 };
+            DataSet ds = Connection.ExecuteQuery("GetBlockList", para);
+            return ds;
+        }
+
+        public DataSet FarmerListForPlotRegistry()
+        {
+            SqlParameter[] para = {
+                                      new SqlParameter("@FarmerId", PK_Farmerid),
+
+                                     };
+            DataSet ds = Connection.ExecuteQuery("GetFarmerListForPltRegistry");
+            return ds;
+        }
+
+        public DataSet FarmerListById()
+        {
+            SqlParameter[] para = {
+                                      new SqlParameter("@FarmerId", PK_Farmerid),
+
+                                     };
+            DataSet ds = Connection.ExecuteQuery("GetFarmerListForPltRegistry", para);
+            return ds;
+        }
+
+        public DataSet CheckPlotNumberForPlotRegistry()
+        {
+            SqlParameter[] para = {
+
+                                new SqlParameter("@SiteID",SiteID),
+                                new SqlParameter("@SectorID",SectorID),
+                                new SqlParameter("@BlockID",BlockID),
+                                new SqlParameter("@PlotNumber",PlotNumber)
+
+                                     };
+            DataSet ds = Connection.ExecuteQuery("CheckPlotNumberForPlotRegistry", para);
             return ds;
         }
     }

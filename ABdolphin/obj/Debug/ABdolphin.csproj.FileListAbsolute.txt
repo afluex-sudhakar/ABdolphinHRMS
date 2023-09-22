@@ -265,3 +265,4 @@ E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.dll
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.pdb
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
+F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
