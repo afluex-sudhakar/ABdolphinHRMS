@@ -1,0 +1,656 @@
+﻿@model ABdolphin.Models.Expenses
+
+@{
+    ViewBag.Title = "DrExpense";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    textarea#Remarks {
+        min-width: 182px;
+    }
+</style>
+@using (Html.BeginForm("CrExpense", "Expense", FormMethod.Post, new { @id = "form1", @autocomplete = "off", enctype = "multipart/form-data" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 mt-2">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>DrExpense</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Add New Dr Expense</h2>
+                            <p class="text-success mb-0 p-left-50">
+                               @TempData["DrExpense"]
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th width="120px">Company</th>
+                                            <th width="120px">Expense Head</th>
+                                            <th width="120px">Expense Type</th>
+                                            <th width="110px">Expense Category</th>
+                                            <th>Expense Name</th>
+                                            @*<th style="display:none" class="DivFromTransactionMode">From Bank</th>*@
+                                            <th class="TransactionMode">TransactionMode</th>
+                                            <th class="FromBank">From Bank</th>
+                                            <th style="display:none" class="DivToTransactionMode">To Bank</th>
+                                            @*<th class="DivTransactionMode">Transaction Mode</th>*@
+                                            <th>Transfer Type</th>
+                                            <th>Cheque/Txn No.</th>
+                                            <th>Amount</th>
+                                            <th width="100px">Dr Account Head</th>
+                                            <th width="100px">Cr Account Head</th>
+                                            <th>Date</th>
+                                            <th>Remarks</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="TextBoxContainer">
+                                        <tr class="mycontainer" id="mainrow">
+                                            <td>
+                                                @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2", @style = "min-width:150px;" })
+                                                <span class="error">Company Name</span>
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2", @style = "min-width:150px;", @onchange = "ShowTransactionMode()" })
+                                                <span class="error">Expense Head</span>
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.ExpenseID, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "ExpenseType form-control select2", @onchange = "return onExpeseTypeChange();", @style = "min-width:150px;" })
+                                                <span class="error">Expense Type</span>
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.Fk_ExpenseCategoryId, new SelectList(ViewBag.ExpenseCategory, "Value", "Text"), new { @class = "Fk_ExpenseCategoryId form-control select2", @style = "min-width:150px;" })
+                                                <span class="error">Expense Type</span>
+                                            </td>
+                                            <td>
+                                                @Html.DropDownListFor(m => m.ExpenseName, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "ExpenseName form-control select2", @style = "min-width:150px;" })
+                                                <span class="error">Expense Name</span>
+                                            </td>
+
+                                            @*<td display: none" class="ThFromTransactionMode" id="234">
+                    @Html.DropDownListFor(m => m.FromTransactionID, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "FromTransactionID form-control select2", @onchange = "return onTransactionChange()", @style = "min-width:150px;" })
+                    <span class="error">Transaction Mode</span>
+                </td>*@
+
+                                            <td>
+                                                @Html.DropDownListFor(m => m.TransactionID, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "TransactionID form-control select2", @onchange = "return onTransactionChange()", @style = "min-width:150px;" })
+                                                <span class="error">From Bank</span>
+                                                <span class="error1">Transaction Mode</span>
+                                            </td>
+
+                                            <td display none" class="ThToTransactionMode" id="345">
+                                                @Html.DropDownListFor(m => m.ToTransactionID, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "ToTransactionID form-control select2", @onchange = "return onTransactionChange()", @style = "min-width:150px;" })
+                                                <span class="error">To Bank</span>
+                                            </td>
+
+                                            <td>
+                                                @Html.DropDownListFor(m => m.PaymentMode, new SelectList(ViewBag.ddlpaymentmode, "Value", "Text"), new { @class = "PaymentMode form-control select2", @onchange = "return CheckPayMode()", @style = "min-width:150px;" })
+                                                <span class="error">Payment Mode</span>
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.Check, new { @class = "Check form-control", @placeholder = "Cheque/Txn No", @style = "min-width:150px;" })
+                                                <span class="error">Expense Type</span>
+                                            </td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.Amount, new { @class = "Amount form-control", @placeholder = "Amount", @onkeypress = "return isNumberOrDecimal(event);", @style = "min-width:150px;" })
+                                                <span class="error">quantity required</span>
+                                            </td>
+                                            <td style="padding-top: 17px;">
+
+                                                @Html.DropDownListFor(m => m.FK_AccountHeadId, new SelectList(ViewBag.ddlAccountHead, "Value", "Text"), new { @class = "FK_AccountHeadId form-control select2", @style = "min-width:150px;" })
+                                                <span class="error">Account Head Name required</span>
+                                            </td>
+                                            <td style="padding-top: 17px;">
+
+                                                @Html.DropDownListFor(m => m.CreditAccountHead, new SelectList(ViewBag.ddlAccountHead, "Value", "Text"), new { @class = "CreditAccountHead form-control select2", @style = "min-width:150px;" })
+                                                <span class="error">Account Head Name required</span>
+                                            </td>
+                                            <td>
+
+                                                @Html.TextBoxFor(m => m.Date, new { @class = "Date form-control", @placeholder = "Date", @readonly = true, @style = "min-width:150px;" })
+                                                <span class="error">Date required</span>
+                                            </td>
+                                            <td>
+                                                @Html.TextAreaFor(m => m.Remarks, new { @class = "Remarks form-control", @placeholder = "Remarks", @style = "min-width:150px;" })
+                                                <span class="error">Remarks</span>
+                                            </td>
+
+                                            <td>
+                                                <input type="button" id="add" data-toggle="tooltip" data-original-title="Add" value="add" style="width:80px" class="btn btn-success" />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div id="orderItems">
+                                    <table class="table table-responsive" id="orderdetailsItems"></table>
+                                    <span id="orderItemError" style="color:red"></span>
+                                </div>
+                            </div>
+                            <br />
+
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6 mb-3">
+                                    <div class="d-flex">
+                                        <input id="submit" type="button" value="Save" class="btn btn-warning" />
+                                        <a class="btn btn-info" href="/Expense/ViewDrExpense" id="btn_View" style="margin-left:5px;">Back To List</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                            <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+
+@*<script src="~/AssociateCSS/assets/bundles/select2/dist/js/select2.full.min.js"></script>*@
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+@*<script>
+        $('#Date').datepicker({
+            format: 'dd/mm/yyyy',
+            changeYear: true,
+            changeMonth: true,
+            //maxDate: 0
+        });
+    </script>*@
+<script>
+    $(document).ready(function () {
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        $(".FromBank").hide();
+        $(".TransactionMode").show();
+        $(".ThToTransactionMode").hide();
+
+        debugger
+        if (UserType == 'Admin' && UserTypeName != 'Admin' && UserTypeName != "") {
+            GetMenuDetails();
+        }
+        $('#Date').datepicker({
+            dateFormat: 'dd/mm/yy',
+            maxDate: 0,
+            changeYear: true,
+            changeMonth: true
+        });
+        //Add button click event
+        $('#add').click(function () {
+            debugger;
+            //validation and add order items
+            var today = new Date();
+            var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+            var isAllValid = true;
+            if ($('#Fk_CompanyId').val() == "0") {
+                isAllValid = false;
+                $('#Fk_CompanyId').siblings('span.error').css('visibility', 'visible');
+            }
+
+            if ($('#FK_ExpenseHead').val() == "0") {
+                isAllValid = false;
+                $('#FK_ExpenseHead').siblings('span.error').css('visibility', 'visible');
+            }
+            if ($('#ExpenseID').val() == "0") {
+                isAllValid = false;
+                $('#ExpenseID').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#ExpenseID').siblings('span.error').css('visibility', 'hidden');
+            }
+            //if ($('#Fk_ExpenseCategoryId').val() == "0") {
+            //    isAllValid = false;
+            //    $('#Fk_ExpenseCategoryId').siblings('span.error').css('visibility', 'visible');
+            //}
+            //else {
+            //    $('#Fk_ExpenseCategoryId').siblings('span.error').css('visibility', 'hidden');
+            //}
+            if ($('#ExpenseName').val() == "0") {
+                isAllValid = false;
+                $('#ExpenseName').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#ExpenseName').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#FK_ExpenseHead').val() == "2")
+            {
+                if ($('#TransactionID').val() == "0" || $('#ToTransactionID').val() == "0") {
+                    isAllValid = false;
+                $('#TransactionID').siblings('span.error').css('visibility', 'visible');
+                $('#ToTransactionID').siblings('span.error').css('visibility', 'visible');
+                //$('#TransactionID').siblings('span.error1').css('visibility', 'hidden');
+            }
+                else {
+                    $('#TransactionID').siblings('span.error').css('visibility', 'hidden');
+                    $('#ToTransactionID').siblings('span.error').css('visibility', 'hidden');
+                    //$('#TransactionID').siblings('span.error1').css('visibility', 'visible');
+             }
+           }
+          else
+              {
+             if ($('#TransactionID').val() == "0") {
+                 isAllValid = false;
+                 $('#TransactionID').siblings('span.error1').css('visibility', 'visible');
+                 $('#TransactionID').siblings('span.error').css('visibility', 'hidden');
+              }
+             else {
+                 //$('#TransactionID').siblings('span.error').css('visibility', 'visible');
+                $('#TransactionID').siblings('span.error1').css('visibility', 'hidden');
+               }
+              }
+
+            if ($('#PaymentMode').val() == "0") {
+                isAllValid = false;
+                $('#PaymentMode').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#PaymentMode').siblings('span.error').css('visibility', 'hidden');
+            }
+            //if (!($('#Check').val() != '' && $('#PaymentMode').val() == "1")) {
+            //    isAllValid = false;
+            //    $('#Check').siblings('span.error').css('visibility', 'visible');
+            //}
+            //else {
+            //    $('#Check').siblings('span.error').css('visibility', 'hidden');
+            //}
+
+            if (!($('#Amount').val().trim() != '' && (parseInt($('#Amount').val()) || 0))) {
+                isAllValid = false;
+                $('#Amount').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Amount').siblings('span.error').css('visibility', 'hidden');
+            }
+
+            if ($('#FK_AccountHeadId').val() == "0") {
+                isAllValid = false;
+                $('#FK_AccountHeadId').siblings('span.error').css('visibility', 'visible');
+            }
+
+            if (!($('#Date').val().trim() != '')) {
+                isAllValid = false;
+                $('#Date').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Date').siblings('span.error').css('visibility', 'hidden');
+            }
+            if (!($('#Remarks').val().trim() != '' && ($('#Remarks').val().trim()))) {
+                isAllValid = false;
+                $('#Remarks').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#Remarks').siblings('span.error').css('visibility', 'hidden');
+            }
+            if (!($('#FK_AccountHeadId').val().trim() != '' && (parseInt($('#FK_AccountHeadId').val()) || 0))) {
+                isAllValid = false;
+                $('#FK_AccountHeadId').siblings('span.error').css('visibility', 'visible');
+            }
+            else {
+                $('#FK_AccountHeadId').siblings('span.error').css('visibility', 'hidden');
+            }
+            debugger
+            if (isAllValid) {
+                var date = $('#Date').val();
+                var datetime = date.concat(" ", time);
+                //alert(datetime);
+                var $newRow = $('#mainrow').clone().removeAttr('id');
+                $('.Fk_CompanyId', $newRow).prop('disabled', true).val($('#Fk_CompanyId').val());
+                $('.FK_ExpenseHead', $newRow).prop('disabled', true).val($('#FK_ExpenseHead').val());
+                $('.ExpenseType', $newRow).prop('disabled', true).val($('#ExpenseID').val());
+                $('.Fk_ExpenseCategoryId', $newRow).prop('disabled', true).val($('#Fk_ExpenseCategoryId').val());
+                $('.ExpenseName', $newRow).prop('disabled', true).val($('#ExpenseName').val());
+                $('.TransactionID', $newRow).prop('disabled', true).val($('#TransactionID').val());
+                $('.ToTransactionID', $newRow).prop('disabled', true).val($('#ToTransactionID').val());
+                $('.PaymentMode', $newRow).prop('disabled', true).val($('#PaymentMode').val());
+                $('.Check', $newRow).prop('disabled', true).val($('#Check').val());
+                $('.Amount', $newRow).prop('disabled', true).val($('#Amount').val());
+                $('.FK_AccountHeadId', $newRow).prop('disabled', true).val($('#FK_AccountHeadId').val());
+                $('.CreditAccountHead', $newRow).prop('disabled', true).val($('#CreditAccountHead').val());
+                $('.Date', $newRow).prop('disabled', true).val(datetime);
+                $('.Remarks', $newRow).prop('disabled', true).val($('#Remarks').val());
+                //Replace add button with remove button
+                $('#add', $newRow).addClass('remove').val('Remove').removeClass('btn-success').addClass('btn-danger');
+
+                //remove id attribute from new clone row
+                $('#Fk_CompanyId,#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,  #TransactionID,#ToTransactionID,#PaymentMode,#Check,#Amount,#FK_AccountHeadId,#CreditAccountHead,#Date,#Remarks,#add', $newRow).removeAttr('id');
+                $('span.error', $newRow).remove();
+                //append clone row
+                $('#orderdetailsItems').append($newRow);
+
+                //clear select data
+                $('#orderdetailsItems .ThToTransactionMode').removeClass("ThToTransactionMode");
+                $('#Fk_CompanyId,#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,#TransactionID,#ToTransactionID,#PaymentMode,#FK_AccountHeadId,#CreditAccountHead').val('0');
+                $('#select2-ExpenseID-container').text('Expense Type');
+                $('#select2-Fk_ExpenseCategoryId-container').text('Select Expense Category');
+                $('#select2-TransactionID-container').text('Select TransactionType');
+                $('#select2-ToTransactionID-container').text('Select TransactionType');
+                $('#select2-ExpenseName-container').text('Select Expense Name');
+                $('#select2-PaymentMode-container').text('Select Payment Mode');
+                $('#Check,#Amount,#Date,#Remarks').val('');
+
+                //$(".DivToTransactionMode").hide();
+                //$("#ToTransactionID").hide();
+                //$(".ThToTransactionMode").hide();
+                $('#orderItemError').empty();
+            }
+
+        })
+        //remove button click event
+        $('#orderdetailsItems').on('click', '.remove', function () {
+            $(this).parents('tr').remove();
+        });
+        $('#submit').click(function () {
+            var isAllValid = true;
+            $("#divload").css({ 'display': 'none' });
+            $('#orderItemError').text('');
+            var list = [];
+            var errorItemCount = 0;
+            $('#orderdetailsItems tr').each(function (index, ele) {
+                if (
+                    $('select.ExpenseName', this).val() == "0"
+                    ) {
+                    errorItemCount++;
+
+                    $(this).addClass('error');
+                    $("#divload").css({ 'display': 'none' });
+                } else {
+                    var orderItem = {
+                        Fk_CompanyId: $('select.Fk_CompanyId', this).val(),
+                        FK_ExpenseHead: $('select.FK_ExpenseHead', this).val(),
+                        ExpenseType: $('select.ExpenseType', this).val(),
+                        Fk_ExpenseCategoryId: $('select.Fk_ExpenseCategoryId', this).val(),
+                        ExpenseName: $('select.ExpenseName', this).val(),
+                        TransactionID: $('select.TransactionID', this).val(),
+                        ToTransactionID: $('select.ToTransactionID', this).val(),
+                        PaymentMode: $('select.PaymentMode', this).val(),
+                        Check: ($('.Check', this).val()),
+                        Amount: $('.Amount', this).val(),
+                        FK_AccountHeadId: ($('.FK_AccountHeadId', this).val()),
+                        CreditAccountHead: ($('select.CreditAccountHead', this).val()),
+                        Date: ($('.Date', this).val()),
+                        Remarks: $('.Remarks', this).val()
+                    }
+                    list.push(orderItem);
+                }
+
+            })
+            console.log(list)
+            if (errorItemCount > 0) {
+                $('#orderItemError').text(errorItemCount + " invalid entry in list.");
+                isAllValid = false;
+                $("#divload").css({ 'display': 'none' });
+            }
+
+            if (list.length == 0) {
+                $('#orderItemError').text('At least 1  row required.');
+                isAllValid = false;
+                $("#divload").css({ 'display': 'none' });
+            }
+
+            if (isAllValid) {
+                var data = {
+                    DrExpenses: JSON.stringify(list)
+                }
+                $("#divload").css({ 'display': 'block' });
+                debugger
+                $.ajax({
+                    type: 'POST',
+                    url: 'SaveDrExpense',
+                    data: JSON.stringify({ dataValue: JSON.stringify(data) }),
+                    contentType: 'application/json',
+                    success: function (data) {
+                        if (data.status == "Yes") {
+                            $("#divload").css({ 'display': 'block' });
+                            alert('Successfully saved');
+                            //here we will clear the form
+                            list = [];
+                            window.location.href = '@Url.Action("DrExpense", "Expense")';
+                            $('#ExpenseID,#FK_ExpenseHead,#ExpenseName, #TransactionID,#ToTransactionID,#PaymentMode,#FK_AccountHeadId,#CreditAccountHead').val('0');
+                            $('#Check,#Amount,#Date,#Remarks').val('');
+                            $('#select2-ExpenseID-container').val('Expense Type');
+                            $('#orderdetailsItems').empty();
+                            $('#orderdetailsItems').hide();
+                        }
+
+                        else {
+                            console.log(data.status)
+                            alert(data.status);
+                        }
+                        $('#submit').text('Save');
+                    },
+                    error: function (error) {
+                        console.log(error);
+                        $('#submit').text('Save');
+                    }
+                });
+                $('#submit').text('Save');
+            }
+        });
+    });
+    function onExpeseTypeChange() {
+        $("#divload").css({ 'display': '' });
+        var value = $('#ExpenseID').val();
+        var tr = [];
+        $.ajax({
+            url: "GetExpenseDetails",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseID: value },
+            success: function (data) {
+                debugger
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                console.log(data)
+                if (data.Result == "yes") {
+                    $("#ExpenseName").html(""); // clear before appending new list
+                    $("#ExpenseName").empty();
+                    $("#ExpenseName").append(
+                          $('<option></option>').val(0).html('Select Expense Name'));
+                    $.each(data.ddlexpensename, function (index, Expensecount) {
+                        $("#ExpenseName").append(
+                              $('<option></option>').val(Expensecount.Value).html(Expensecount.Text));
+
+                    });
+
+                }
+                else {
+                    $("#ExpenseName").empty();
+
+                }
+
+
+            }
+
+        });
+
+    }
+    function onTransactionChange() {
+        $("#divload").css({ 'display': 'none' });
+        debugger
+        var value = $('#TransactionID').val();
+        var values = $('#ToTransactionID').val();
+        if (value == '8' || values == '8')
+        {
+            $("#PaymentMode").val('1');
+            $(".PaymentMode form-control select2 select2-hidden-accessible").select2("val", "1");
+            $('#select2-PaymentMode-container').text('Cash');
+            $("#PaymentMode").prop('disabled', true);
+            $("#Check").prop('disabled', true);
+
+
+        }
+        else
+        {
+            $("#PaymentMode").prop('disabled', false);
+            $(".PaymentMode form-control select2 select2-hidden-accessible").select2("val", "");
+            $('#select2-PaymentMode-container').text('Select Payment Mode');
+            $("#Check").prop('disabled', false);
+        }
+
+    }
+    function CheckPayMode() {
+        debugger
+        if ($('#PaymentMode').val() == '1') {
+            $("#Check").prop('disabled', true);
+
+        }
+
+        else {
+            $("#Check").prop('disabled', false);
+        }
+    }
+    function isNumberOrDecimal(evt) {
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode != 46 && charCode > 31
+          && (charCode < 48 || charCode > 57))
+            return false;
+
+        return true;
+    }
+    function GetMenuDetails() {
+        debugger
+        var URL = "/Expense/ViewDrExpense";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+            //contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                console.log(obj)
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].FormSave == true) {
+                        $('#submit').show();
+                        $("#submit").removeAttr('disabled');
+                    }
+                    else {
+                        $('#submit').hide();
+                        $("#submit").attr('disabled', 'disabled');
+                    }
+                    debugger
+                    if (obj[i].FormView == true) {
+                        $('#btn_View').show();
+                        $("#btn_View").removeAttr('disabled');
+                    }
+                    else {
+                        $('#btn_View').hide();
+                        $("#btn_View").attr('disabled', 'disabled');
+                    }
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+
+
+    function ShowTransactionMode() {
+        debugger;
+
+        if ($('#FK_ExpenseHead').val() == '2') {
+            //$("#FromTransactionID").show();
+            //$(".DivFromTransactionMode").show();
+            //$(".ThFromTransactionMode").show();
+            $(".FromBank").show();
+            $(".TransactionMode").hide();
+
+            $("#ToTransactionID").show();
+            $(".DivToTransactionMode").show();
+            $(".ThToTransactionMode").show();
+
+            //$("#TransactionID").hide();
+            //$(".DivTransactionMode").hide();
+            //$(".ThTransactionMode").hide();
+            //$("#TransactionID").val('');
+
+        }
+        else {
+            //$(".DivFromTransactionMode").hide();
+            //$("#FromTransactionID").hide();
+            //$(".ThFromTransactionMode").hide();
+            //$("#FromTransactionID").val('');
+
+            $(".FromBank").hide();
+            $(".TransactionMode").show();
+            $(".DivToTransactionMode").hide();
+            $("#ToTransactionID").hide();
+            $(".ThToTransactionMode").hide();
+            $("#ToTransactionID").val('');
+
+            //$("#TransactionID").show();
+            //$(".DivTransactionMode").show();
+            //$(".ThTransactionMode").show();
+        }
+
+    }
+
+
+</script>
+<style>
+    span.error, error1 {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error, error1 {
+        background-color: rgba(255,0,0,0.35);
+    }
+
+    span.error1 {
+        display: block;
+        visibility: hidden;
+        color: red;
+        font-size: 90%;
+    }
+
+    tr.error1 {
+        background-color: rgba(255,0,0,0.35);
+    }
+</style>
+
