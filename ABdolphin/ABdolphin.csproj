@@ -491,6 +491,7 @@
     <Content Include="Views\Expense\ExpenseLedger.cshtml" />
     <Content Include="Views\Master\ExpenseTypeMasterList.cshtml" />
     <Content Include="Views\Expense\ViewDrExpense.cshtml" />
+    <Content Include="Views\Master\ExpenseCategoryList.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

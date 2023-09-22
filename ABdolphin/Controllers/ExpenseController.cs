@@ -9,10 +9,9 @@ using System.Web.Mvc;
 
 namespace ABdolphin.Controllers
 {
-    public class ExpenseController : Controller
+    public class ExpenseController : AdminBaseController
     {
-
-
+        
         // GET: Expense
         #region Account
         public ActionResult AddAccount(string id)
