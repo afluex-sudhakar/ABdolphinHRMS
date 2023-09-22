@@ -49,10 +49,11 @@
                                 <div class="col-xl-7 col-lg-8 col-md-12">
                                     <div class="edit-profile mt-md-25 mt-0">
                                         <div class="card border-0">
-                                            
                                             <div class="card-body" style="border:1px dotted blue">
                                                 <div class="edit-profile__body">
-
+                                                    <p style="color:red;">
+                                                        @TempData["Login"]
+                                                    </p>
                                                     <div class="form-group">
                                                         <label for="username">UserId</label>
                                                         @Html.TextBoxFor(m => m.LoginId, new { @class ="form-control", @Placeholder = "Login Id", @required = "required" })
