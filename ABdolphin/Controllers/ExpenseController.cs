@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace ABdolphin.Controllers
 {
-    public class ExpenseController : Controller
+    public class ExpenseController : AdminBaseController
     {
 
 
