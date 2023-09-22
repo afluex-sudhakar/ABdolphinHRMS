@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ABdolphin.Models
 {
@@ -55,6 +56,7 @@ namespace ABdolphin.Models
         public string Pk_ExpenseDetailsId { get; set; }
         public string ChequeNo { get; set; }
         public List<Expenses> ClearedListItem { get; set; }
+        public List<SelectListItem> ddlexpensename { get; set; }
 
         public string Fk_Teamid { get; set; }
         public string TeamName { get; set; }
@@ -71,6 +73,11 @@ namespace ABdolphin.Models
         public string ExpenseIDD2 { get; set; }
         public string ExpenseName2 { get; set; }
         public string Status { get; set; }
+        public DataTable dtExpenseDetails { get; set; }
+        public string ToTransactionID { get; set; }
+        public string Check { get; set; }
+        public string FK_AccountHeadId { get; set; }
+        public string CreditAccountHead { get; set; }
 
 
 
@@ -446,5 +453,62 @@ namespace ABdolphin.Models
             DataSet ds = Connection.ExecuteQuery("DeleteExpenseDetailsDR", para);
             return ds;
         }
+
+        public DataSet GetAccountHeadDetailsNew()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@Fk_EmployeeId",Fk_EmployeeId)
+            };
+            DataSet ds = Connection.ExecuteQuery("GetAccountHeadList", para);
+            return ds;
+        }
+
+        public DataSet getexpensecategorylist()
+        {
+            SqlParameter[] para =
+            {
+                  new SqlParameter("@Pk_ExpenseCategoryId",Fk_ExpenseCategoryId)
+            };
+            DataSet ds = Connection.ExecuteQuery("Expensecategorylist", para);
+            return ds;
+        }
+
+        public DataSet GetExpenseNameLists()
+        {
+            SqlParameter[] para = { new SqlParameter("@ExpenseID", ExpenseIDD) };
+            DataSet ds = Connection.ExecuteQuery("GetExpenseNameList", para);
+            return ds;
+        }
+
+        public DataSet GetExpenseNameLists2()
+        {
+            SqlParameter[] para = { new SqlParameter("@ExpenseID", ExpenseIDD2) };
+            DataSet ds = Connection.ExecuteQuery("GetExpenseNameList", para);
+            return ds;
+        }
+
+        public DataSet SaveCrExpenseDetails()
+        {
+            SqlParameter[] para = { new SqlParameter("@AddedBy",AddedBy) ,
+                 new SqlParameter("@ChequeStatus",ChequeStatus) ,
+                                  new SqlParameter("@CrdtExpenseDetails",dtExpenseDetails)
+            };
+            DataSet ds = Connection.ExecuteQuery("SaveExpenseDetailsCr", para);
+            return ds;
+        }
+
+        public DataSet SaveDrExpenseDetails()
+        {
+            SqlParameter[] para = { new SqlParameter("@AddedBy",AddedBy) ,
+                                    new SqlParameter("@ChequeStatus",ChequeStatus) ,
+                                  new SqlParameter("@CrdtExpenseDetails",dtExpenseDetails)
+
+            };
+            DataSet ds = Connection.ExecuteQuery("SaveExpenseDetailsDr", para);
+            return ds;
+        }
+
+
     }
 }
