@@ -1,0 +1,167 @@
+﻿@model ABdolphin.Models.Expenses
+
+@{
+    ViewBag.Title = "AddExpense";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("AddExpense", "Expense", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data", @autocomplete = "off" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 mt-2">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>AddExpense</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container-fluid">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Add Expense</h2>
+                    <p class="text-success mb-0 p-left-50">
+                        @TempData["MsgExpense"]
+                    </p>
+                </div>
+                <div class="card-body">
+                    <div class="row mt-2">
+                       
+                        <div class="col-md-6 md-3 ">
+                            Expense Type<span style="color: red">*</span>
+                            @Html.DropDownListFor(m => m.FK_ExpenseNameId, new SelectList(ViewBag.ddlExpenseType, "Value", "Text"), new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-6 md-3">
+                            Expense Name<span style="color:red">*</span>
+                            @Html.TextBoxFor(m => m.ExpenseName, new { @class = "form-control", @placeholder = "Expense Name" })
+                            @Html.HiddenFor(m => m.Pk_ExpenseId)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-md-6 col-lg-6 mb-3">
+                            <div class="d-flex">
+                                @if (Model.EncryptKey == null)
+                                {
+                                    <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                                }
+                                else
+                                {
+                                    <input class="btn btn-success pull-left" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                                }
+
+                                <a class="btn btn-info view" href="/Expense/ExpenseList" style="margin-left:5px;">Back To List</a>
+                            </div>
+                            <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                            <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        debugger
+        if (UserType == 'Admin' && UserTypeName != 'Admin' && UserTypeName != "") {
+            GetMenuDetails();
+        }
+    });
+    function GetMenuDetails() {
+        debugger
+        var URL = "/Expense/Expenselist";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+            //contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                console.log(obj)
+                for (var i = 0; i < obj.length; i++) {
+                    if (obj[i].FormSave == true) {
+                        $('#btnSave').show();
+                        $("#btnSave").removeAttr('disabled');
+                    }
+                    else {
+                        $('#btnSave').hide();
+                        $("#btnSave").attr('disabled', 'disabled');
+                    }
+                    if (obj[i].FormView == true) {
+                        $('.view').show();
+                        $(".view").removeAttr('disabled');
+                    }
+                    else {
+                        $('.view').hide();
+                        $(".view").attr('disabled', 'disabled');
+                    }
+                    debugger
+                    if (obj[i].FormUpdate == true && $('#EncryptKey').val() != "") {
+                        $('#btnUpdate').show();
+
+                        $("#btnUpdate").removeAttr('disabled');
+                    }
+                    else {
+                        $('#btnUpdate').hide();
+                        $("#btnUpdate").attr('disabled', 'disabled');
+                    }
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+    function validateform() {
+        $("#divload").css({ 'display': 'none' });
+        $(".errortext").removeClass("errortext");
+        if ($('#FK_ExpenseNameId').val() == '0') {
+            $("#FK_ExpenseNameId").addClass('errortext');
+            $('#FK_ExpenseNameId').focus();
+            return false;
+        }
+        if ($('#ExpenseName').val() == '') {
+            $("#ExpenseName").addClass('errortext');
+            $('#ExpenseName').focus();
+            return false;
+        }
+        $("#divload").css({ 'display': '' });
+        return true;
+    }
+</script>
