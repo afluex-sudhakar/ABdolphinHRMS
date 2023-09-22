@@ -68,6 +68,8 @@ namespace ABdolphin.Models
         public string FK_ExpenseDetailsId { get; set; }
         public string ExpenseIDD { get; set; }
         public string ExpenseName1 { get; set; }
+        public string ExpenseIDD2 { get; set; }
+        public string ExpenseName2 { get; set; }
         public string Status { get; set; }
 
 

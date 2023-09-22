@@ -486,6 +486,7 @@
     <Content Include="Views\Master\ExpenseCategoryMaster.cshtml" />
     <Content Include="Views\Expense\AddAccount.cshtml" />
     <Content Include="Views\Expense\Expenselist.cshtml" />
+    <Content Include="Views\Expense\ViewCrExpense.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
