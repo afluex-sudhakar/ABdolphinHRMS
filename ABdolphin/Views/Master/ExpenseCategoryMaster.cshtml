@@ -1,0 +1,97 @@
+﻿@model ABdolphin.Models.Master
+
+@{
+    ViewBag.Title = "ExpenseCategoryMaster";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("ExpenseCategoryMaster", "Master", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data", @autocomplete = "off" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>Expense Category Master</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid py-5">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label">Expense Category Name<span style="color:red">*</span></label>
+                   @Html.TextBoxFor(m => m.ExpenseCategory, new { @class = "form-control", @Placeholder = "Expense Category Name" })
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-6 mb-3">
+                    <div class="d-flex">
+                        <br />
+                        @if (Model.Pk_ExpenseCategoryId == null)
+                        {
+                            <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                        }
+                        else
+                        {
+                            <input type="hidden" id="Pk_ExpenseCategoryId" name="Pk_ExpenseCategoryId" value="@Model.Pk_ExpenseCategoryId" />
+                                <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                        }
+                        <a class="btn btn-info" href="/Master/ExpenseCategoryList">Back To List</a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+
+}
+
+
+
+<script>
+    function validateform() {
+        $("#divload").css({ 'display': 'none' });
+        $(".errortext").removeClass("errortext");
+
+        if ($('#ExpenseCategory').val() == '') {
+            $("#ExpenseCategory").addClass('errortext');
+            $('#ExpenseCategory').focus();
+            return false;
+        }
+        return true;
+    }
+</script>
+<style>
+    .errortext {
+        border: 1px solid red !important;
+        background-color: #fff0f0 !important;
+    }
+</style>

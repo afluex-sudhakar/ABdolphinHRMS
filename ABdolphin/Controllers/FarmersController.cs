@@ -245,53 +245,53 @@ namespace ABdolphin.Controllers
             model.PK_Farmerid = model.PK_Farmerid == "0" ? null : model.PK_Farmerid;
             model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
             DataSet ds = model.Getlist();
-            //if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
-            //{
-            //    var i = 0;
-            //    foreach (DataRow r in ds.Tables[0].Rows)
-            //    {
-            //        Farmer obj = new Farmer();
-            //        obj.Name = r["Name"].ToString();
-            //        obj.Hectare = r["Hectare"].ToString();
-            //        obj.Mobile = r["Mobile"].ToString();
-            //        obj.City = r["City"].ToString();
-            //        obj.Email = r["Email"].ToString();
-            //        obj.FStatus = r["Status"].ToString();
-            //        obj.IsActive = r["IsActive"].ToString();
-            //        obj.JoiningDate = r["AddedDate"].ToString();
-            //        obj.GataKhasaraN = r["GataKhasaraN"].ToString();
-            //        obj.Hectare = r["Hectare"].ToString();
-            //        obj.Village = r["Village"].ToString();
-            //        obj.RegistryDate = r["RegistryDate"].ToString();
-            //        obj.Status = r["FarmerStatus"].ToString();
-            //        obj.EncryptKey = Crypto.Encrypt(r["Pk_FarmerID"].ToString());
-            //        obj.CompanyName = r["CompanyName"].ToString();
-            //        obj.IDProof = r["IDProof"].ToString();
-            //        obj.SQFT = r["SQFT"].ToString();
-            //        lst.Add(obj);
-            //    }
-            //    model.FarmerList = lst;
-            //    ViewBag.Hectare = double.Parse(ds.Tables[0].Compute("sum(Hectare)", "").ToString()).ToString("n2");
-            //}
-                        
-            //List<SelectListItem> ddlfarmername = new List<SelectListItem>();
-            //model.AddedBy = Session["Pk_AdminId"].ToString();
-            //DataSet ds1 = model.GetFarmerList();
+            if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
+            {
+                var i = 0;
+                foreach (DataRow r in ds.Tables[0].Rows)
+                {
+                    Farmer obj = new Farmer();
+                    obj.Name = r["Name"].ToString();
+                    obj.Hectare = r["Hectare"].ToString();
+                    obj.Mobile = r["Mobile"].ToString();
+                    obj.City = r["City"].ToString();
+                    obj.Email = r["Email"].ToString();
+                    obj.FStatus = r["Status"].ToString();
+                    obj.IsActive = r["IsActive"].ToString();
+                    obj.JoiningDate = r["AddedDate"].ToString();
+                    obj.GataKhasaraN = r["GataKhasaraN"].ToString();
+                    obj.Hectare = r["Hectare"].ToString();
+                    obj.Village = r["Village"].ToString();
+                    obj.RegistryDate = r["RegistryDate"].ToString();
+                    obj.Status = r["FarmerStatus"].ToString();
+                    obj.EncryptKey = Crypto.Encrypt(r["Pk_FarmerID"].ToString());
+                    //obj.CompanyName = r["CompanyName"].ToString();
+                    obj.IDProof = r["IDProof"].ToString();
+                    obj.SQFT = r["SQFT"].ToString();
+                    lst.Add(obj);
+                }
+                model.FarmerList = lst;
+                ViewBag.Hectare = double.Parse(ds.Tables[0].Compute("sum(Hectare)", "").ToString()).ToString("n2");
+            }
 
-            //if (ds1 != null && ds1.Tables.Count > 0)
-            //{
-            //    int count1 = 0;
-            //    foreach (DataRow r in ds1.Tables[0].Rows)
-            //    {
-            //        if (count1 == 0)
-            //        {
-            //            ddlfarmername.Add(new SelectListItem { Text = "Select Farmer", Value = "0" });
-            //        }
-            //        ddlfarmername.Add(new SelectListItem { Text = r["Name"].ToString(), Value = r["PK_FarmerId"].ToString() });
-            //        count1 = count1 + 1;
-            //    }
-            //}
-            //ViewBag.FarmerloginId = ddlfarmername;
+            List<SelectListItem> ddlfarmername = new List<SelectListItem>();
+            model.AddedBy = Session["Pk_AdminId"].ToString();
+            DataSet ds1 = model.GetFarmerList();
+
+            if (ds1 != null && ds1.Tables.Count > 0)
+            {
+                int count1 = 0;
+                foreach (DataRow r in ds1.Tables[0].Rows)
+                {
+                    if (count1 == 0)
+                    {
+                        ddlfarmername.Add(new SelectListItem { Text = "Select Farmer", Value = "0" });
+                    }
+                    ddlfarmername.Add(new SelectListItem { Text = r["Name"].ToString(), Value = r["PK_FarmerId"].ToString() });
+                    count1 = count1 + 1;
+                }
+            }
+            ViewBag.FarmerloginId = ddlfarmername;
 
             //#region ddlcompany
             //int ccount = 0;
@@ -348,7 +348,7 @@ namespace ABdolphin.Controllers
                     obj.Status = r["FarmerStatus"].ToString();
                     obj.RegistryDate = r["RegistryDate"].ToString();
                     obj.EncryptKey = Crypto.Encrypt(r["Pk_FarmerID"].ToString());
-                    obj.CompanyName = r["CompanyName"].ToString();
+                    //obj.CompanyName = r["CompanyName"].ToString();
                     obj.IDProof = r["IDProof"].ToString();
                     obj.SQFT = r["SQFT"].ToString();
                     lst.Add(obj);
@@ -376,26 +376,26 @@ namespace ABdolphin.Controllers
             }
             ViewBag.FarmerloginId = ddlfarmername;
 
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
 
             return View(model);
         }

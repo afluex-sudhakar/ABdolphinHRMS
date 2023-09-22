@@ -17,6 +17,7 @@ namespace ABdolphin.Models
         public List<Master> lstExpenseCategory { get; set; }
         public string ExpenseCategory { get; set; }
         public string Pk_ExpenseCategoryId { get; set; }
+        public string UserType { get; set; }
 
 
 
@@ -93,9 +94,6 @@ namespace ABdolphin.Models
             SqlParameter[] para =
                             {
                                 new SqlParameter("@ExpenseCategory",ExpenseCategory),
-                                //new SqlParameter("@EMI",EMI),
-                                //new SqlParameter("@DownPayment",DownPayment),
-                                //new SqlParameter("@PartPayment",PartPayment),
                                   new SqlParameter("@AddedBy",AddedBy)
                             };
             DataSet ds = Connection.ExecuteQuery("SaveExpenseCategory", para);
@@ -107,9 +105,6 @@ namespace ABdolphin.Models
                             {
                   new SqlParameter("@Pk_ExpenseCategoryId",Pk_ExpenseCategoryId),
                                 new SqlParameter("@ExpenseCategory",ExpenseCategory),
-                                //    new SqlParameter("@EMI",EMI),
-                                //new SqlParameter("@DownPayment",DownPayment),
-                                //new SqlParameter("@PartPayment",PartPayment),
                                   new SqlParameter("@AddedBy",AddedBy)
                             };
             DataSet ds = Connection.ExecuteQuery("UpdateExpenseCategory", para);
@@ -136,5 +131,15 @@ namespace ABdolphin.Models
         }
         #endregion
 
+
+        public DataSet GetMenuPermissionList()
+        {
+            SqlParameter[] para = { new SqlParameter("@PK_AdminId", Fk_UserId),
+                                    new SqlParameter("@UserType", UserType),
+                                    new SqlParameter("@URL",Url)
+            };
+            DataSet ds = Connection.ExecuteQuery("GetMenuListForUser", para);
+            return ds;
+        }
     }
 }
