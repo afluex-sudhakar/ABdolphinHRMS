@@ -484,6 +484,8 @@
     <Content Include="Views\Farmers\Farmerlist.cshtml" />
     <Content Include="Views\Master\ExpenseTypeMaster.cshtml" />
     <Content Include="Views\Master\ExpenseCategoryMaster.cshtml" />
+    <Content Include="Views\Farmers\AddPayFarmers.cshtml" />
+    <Content Include="Views\Farmers\PaymetFarmers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

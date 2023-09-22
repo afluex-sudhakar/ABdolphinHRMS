@@ -7612,8 +7612,8 @@ ul {
 }
 
 .card {
-	-webkit-box-shadow: 0 5px 20px rgba(146, 153, 184, .03);
-	box-shadow: 0 5px 20px rgba(146, 153, 184, .03)
+	-webkit-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+	  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .card .card-header {
