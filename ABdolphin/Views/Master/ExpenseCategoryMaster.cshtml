@@ -40,8 +40,46 @@
                     </div>
                 </div>
             </div>
+
+
+            <div class="container-fluid">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 mb-3">
+                                <div class="d-lg-flex">
+                                    <h4 class="text-capitalize breadcrumb-title">Expense Category Master</h4>
+                                    <p class="text-success mb-0 p-left-50">
+                                        suucessfully
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="inputEmail4" class="form-label">Expense Category Name<span style="color:red">*</span></label>
+                                @Html.TextBoxFor(m => m.ExpenseCategory, new { @class = "form-control", @Placeholder = "Expense Category Name" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-lg-6 mb-3">
+                                <div class="d-flex">
+                                    @if (Model.Pk_ExpenseCategoryId == null)
+                                    {
+                                        <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Save" id="btnSave" name="btnSave" />
+                                    }
+                                    else
+                                    {
+                                        <input type="hidden" id="Pk_ExpenseCategoryId" name="Pk_ExpenseCategoryId" value="@Model.Pk_ExpenseCategoryId" />
+                                        <input class="btn cyan waves-effect waves-light left btn-primary" type="submit" onclick="return validateform();" value="Update" id="btnUpdate" name="btnUpdate" />
+                                    }
+                                    <a class="btn btn-info" style="margin-left:5px;" href="/Master/ExpenseCategoryList">Back To List</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="container-fluid py-5">
+        @*<div class="container-fluid py-5">
             <div class="row">
                 <div class="col-md-4 mb-3">
                     <label for="inputEmail4" class="form-label">Expense Category Name<span style="color:red">*</span></label>
@@ -69,7 +107,7 @@
 
 
 
-        </div>
+        </div>*@
     </div>
 
 }

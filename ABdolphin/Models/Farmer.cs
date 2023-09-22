@@ -60,6 +60,29 @@ namespace ABdolphin.Models
         public string BankName { get; set; }
         public string Remarks { get; set; }
 
+        public string Paymentdate { get; set; }
+        public string TransactionDate { get; set; }
+        public string TransactionNo { get; set; }
+
+        public string Fk_ExpenseCategory { get; set; }
+        public string FK_AccountHeadId { get; set; }
+        public string Fk_BankId { get; set; }
+        public string BankBranch { get; set; }
+        public string PaymentMode { get; set; }
+        public List<Farmer> ClearedListItem { get; set; }
+        public List<Farmer> BounceListItem { get; set; }
+        public List<Farmer> PendingListItem { get; set; }
+        public string RemainingAmount { get; set; }
+        public string Fk_PaymentId { get; set; }
+
+        public string Notary { get; set; }
+        public string Agreement { get; set; }
+        public string Registry { get; set; }
+        public string GeneratedAmount { get; set; }
+
+
+
+
 
 
         public DataSet GetlistById()
@@ -202,5 +225,156 @@ namespace ABdolphin.Models
             return ds;
         }
 
+        public DataSet FarmerStatus()
+        {
+            SqlParameter[] para =
+            {
+                new SqlParameter("@PK_Farmerid",PK_Farmerid),
+                new SqlParameter("@UpdatedBy",UpdatedBy),
+                new SqlParameter("@IsActive",IsActive)
+            };
+            DataSet ds = Connection.ExecuteQuery("UpdateFarmerStatus", para);
+            return ds;
+        }
+
+        public DataSet GetExpensecategorylist()
+        {
+            DataSet ds = Connection.ExecuteQuery("Expensecategorylist");
+            return ds;
+        }
+
+        public DataSet GetPaymentListByPkId()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Fk_UserId",PK_Farmerid)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetAddPaymentDetailsByID", para);
+            return ds;
+        }
+        public DataSet GetPaymentModeList()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@PK_paymentID",PaymentMode)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetPaymentModeList", para);
+            return ds;
+        }
+        public DataSet GetTransactionList()
+        {
+            DataSet ds = Connection.ExecuteQuery("GetTransferAccountList");
+            return ds;
+        }
+
+        public DataSet GetAccountHeadDetailsNew()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Fk_EmployeeId",Fk_EmployeeId)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetAccountHeadList", para);
+            return ds;
+        }
+
+        public DataSet SavePayMentFarmerDetails()
+        {
+            SqlParameter[] para = {
+                                      new SqlParameter("@Name", Name),
+                                      new SqlParameter("@Mobile", Mobile),
+                                      new SqlParameter("@TotalBalanc", TotalBalance),
+                                      new SqlParameter("@PaidAmount",PaidAmount),
+                                      //new SqlParameter("@PaidDate", CashDate),
+                                      new SqlParameter("@Paytyp",PayType),
+                                      new SqlParameter("@TransactionNo", TransactionNo),
+                                      new SqlParameter("@TransactionDate", TransactionDate),
+                                       new SqlParameter("@BankName", BankName),
+                                      new SqlParameter("@BankBranch", BankBranch),
+                                      new SqlParameter("@Remark", Remarks),
+                                      new SqlParameter("@AddedBy",AddedBy),
+                                      new SqlParameter("@Fk_Farmerid", PK_Farmerid),
+                                      new SqlParameter("@Paymentdate",Paymentdate),
+                                      new SqlParameter("@Fk_BankId",Fk_BankId),
+                                      new SqlParameter("@FK_AccountHeadId",FK_AccountHeadId),
+                                      new SqlParameter("@Fk_ExpenseCategory",Fk_ExpenseCategory)
+                                  };
+            DataSet ds = Connection.ExecuteQuery("SaveFarmerPayMentDetails", para);
+            return ds;
+        }
+
+        public DataSet DeletePayment()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Id",ID),
+                                new SqlParameter("@DeletedBy",AddedBy),
+                                new SqlParameter("@Status",Status)
+                            };
+            DataSet ds = Connection.ExecuteQuery("DeletePayment", para);
+            return ds;
+        }
+
+        public DataSet GetPaymentDataByPkId()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@fk_Farmerid",PK_Farmerid)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetAddPaymentDetailsByIdDetails", para);
+            return ds;
+        }
+        public DataSet GetFarmerPaymentByPaymentId()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Fk_PaymentId",Fk_PaymentId)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetFarmerPaymetListByPaymentId", para);
+            return ds;
+        }
+
+        public DataSet UpdateFarmerPayment()
+        {
+            SqlParameter[] para = {
+
+                                      new SqlParameter("@PaidAmount",PaidAmount),
+                                      new SqlParameter("@Paytyp",PayType),
+                                      new SqlParameter("@TransactionNo", TransactionNo),
+                                      new SqlParameter("@TransactionDate", TransactionDate),
+                                       new SqlParameter("@BankName", BankName),
+                                      new SqlParameter("@BankBranch", BankBranch),
+                                      new SqlParameter("@Remark", Remarks),
+                                      new SqlParameter("@AddedBy",AddedBy),
+                                      new SqlParameter("@Fk_PaymentId", Fk_PaymentId),
+                                      new SqlParameter("@Paymentdate",Paymentdate),
+                                      new SqlParameter("@Fk_BankId",Fk_BankId)
+                                  };
+            DataSet ds = Connection.ExecuteQuery("UpdateFarmerPayment", para);
+            return ds;
+        }
+        public DataSet GetPaymentListByIdDeta(string id, string res)
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@Fk_UserId",id),
+                                new SqlParameter("@Id",res)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetAddPaymentDetailsByIdDetails", para);
+            return ds;
+        }
+
+        public DataSet UpdateCheckStatus()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@ReferencdId",ID),
+                                new SqlParameter("@ChequeDate",CashDate),
+                                new SqlParameter("@Farmerid",Fk_UserId),
+                                new SqlParameter("@ChequeStaus",CheqStatus),
+                                new SqlParameter("@UpdatedBy",AddedBy)
+                            };
+            DataSet ds = Connection.ExecuteQuery("UpdateCheckStatus", para);
+            return ds;
+        }
     }
 }

@@ -1,0 +1,622 @@
+﻿@model ABdolphin.Models.Farmer
+
+@{
+    ViewBag.Title = "PaymetFarmers";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("PaymetFarmers", "Farmers", FormMethod.Post, new { @id = "form1", enctype = "multipart/form-data", @autocomplete = "off" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Farmers List</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>Farmer Payment List</span>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div class="card-header">
+                                <h4>Farmer Payment List</h4>
+
+                                <p style="color: green;">
+                                    @TempData["SucFarmerList"]
+                                </p>
+                                <p style="color: red">
+                                    @TempData["ErrFarmerList"]
+                                </p>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <a class="btn btn-primary btn-sm payment" href="/Farmers/AddPayFarmers?id=@Model.EncryptKey"><i class="fa fa-plus"></i> Add Payment</a>
+        </div>
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Name</label>
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Mobile No.</label>
+                   @Html.TextBoxFor(m => m.Mobile, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">SQFT</label>
+                    @Html.TextBoxFor(m => m.SQFT, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Gata No.</label>
+                   @Html.TextBoxFor(m => m.GataKhasaraN, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Registry</label>
+                    @Html.TextBoxFor(m => m.Registry, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="inputPassword4" class="form-label" style="text-align:center;margin-left:20px;">Agreement</label>
+                   @Html.TextBoxFor(m => m.Agreement, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label for="inputEmail4" class="form-label" style="text-align:center;margin-left:20px;">Notary</label>
+                    @Html.TextBoxFor(m => m.Notary, new { @class = "form-control", @readonly = "true" })
+                </div>
+
+
+
+                <div class="table-responsive">
+                    <table id="myTable" class="table mb-0 table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="13"><h6 style="color:black">Cleared Payment List</h6></th>
+                            </tr>
+                            <tr class="userDatatable-header">
+                                <th>S.No.</th>
+                                <th>Reciept No</th>
+                                <th>Generated Amount</th>
+                                <th style="text-align:right">Paid Amount</th>
+                                <th>Remaining Amount</th>
+                                <th>Payment Date</th>
+                                <th>Payment Type</th>
+                                <th>Cheque No</th>
+                                <th>Bank Name</th>
+                                <th>Remark</th>
+                                <th>Cheque Status</th>
+                                <th>Action</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.ClearedListItem != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.ClearedListItem)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+                                            <td>@Item.Reciept</td>
+                                            <td>@Item.TotalBalance</td>
+                                            <td style="text-align:right">@Item.PaidAmount</td>
+                                            <td>@Item.RemainingAmount</td>
+                                            <td>@Item.CashDate</td>
+                                            <td>@Item.PayType</td>
+                                            <td>@Item.ChequeNo</td>
+                                            <td style="min-width:100px">@Item.BankName</td>
+                                            <td style="min-width:120px">@Item.Remarks</td>
+                                            <td>@Item.CheqStatus</td>
+                                            <td>
+                                                <a data-toggle="tooltip" title="edit" href="/Farmers/UpdatePayment?FId=@Item.ID&&PId=@Item.EncryptKey" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a>
+                                            </td>
+                                            <td>
+                                                <a href="#" onclick="OpenDeletePopUp('@Item.Fk_PaymentId','@Item.ID');" class="btn btn-sm btn-danger">delete</a>
+                                            </td>
+                                        </tr>
+
+                                        i++;
+                                    }
+                                }
+                            }
+
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th><b>Total Paid Amount</b></th>
+                                <th style="text-align:right"><b>@ViewBag.TotalCleredPaid</b></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+
+                <div class="table-responsive">
+                    <table id="myTable" class="table mb-0 table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="12"><h6 style="color:black">Pending Payment List</h6></th>
+                            </tr>
+                            <tr class="userDatatable-header">
+                                <th>S.No.</th>
+                                <th>Reciept No</th>
+                                <th style="text-align:right">Paid Amount</th>
+                                <th>Payment Date</th>
+                                <th>Payment Type</th>
+                                <th>Cheque No</th>
+                                <th>Bank Name</th>
+                                <th>Remark</th>
+                                <th>Cheque Status</th>
+                                <th class="td_Date" style="display:none">Cheque Status Date</th>
+                                <th class="td_Date" style="display:none">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.PendingListItem != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.PendingListItem)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+                                            <td>@Item.Reciept</td>
+                                            <td style="text-align:right">@Item.PaidAmount</td>
+                                            <td>@Item.CashDate</td>
+                                            <td>@Item.PayType</td>
+                                            <td>@Item.ChequeNo</td>
+                                            <td>@Item.BankName</td>
+                                            <td>@Item.Remarks</td>
+                                            @if (Item.CheqStatus == "Cleared" || Item.CheqStatus == "Bounce" || Item.CheqStatus == "Rejected" || Item.CheqStatus == "Cancel")
+                                            {
+                                                <td>@Item.CheqStatus</td>
+                                            }
+                                            else
+                                            {
+                                                <td>
+
+                                                    @Html.DropDownList("CheqStatus_" + @i, new SelectList(ViewBag.CheckStatus, "Value", "Text"), new { @class = "form-control CheckStatus_" + @i, @onchange = "return onChange(" + @i + ");" })
+                                                </td>
+                                            }
+                                            <td class="td_Date" style="display:none">
+                                                <input type="text" class="form-control d Date_@i" style="display:none;width:150px;" readonly="readonly" placeholder="DD/MM/YYYY" />
+                                            </td>
+                                            <td class="td_Date" style="display:none">
+                                                <a onclick="CheckStatusUpdate('@i');" id="btn_Update_@i" data-paymentId='@Item.Fk_PaymentId' data-Userid="@Model.Fk_UserId" class="btn btn-sm btn-success btn_check_@i" style="display:none">Update </a>
+                                            </td>                                           
+                                        </tr>
+
+                                        i++;
+                                    }
+                                }
+                            }
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Total</th>
+                                <th style="text-align:right">@ViewBag.TotalPendingPaid</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th class="td_Date" style="display:none"></th>
+                                <th class="td_Date" style="display:none"></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="myTable" class="table mb-0 table-borderless">
+                        <thead>
+                            <tr>
+                                <th colspan="10"><h6 style="color:black">Bounce/Cancel Payment List</h6></th>
+                            </tr>
+                            <tr class="userDatatable-header">
+                                <th>S.No.</th>
+                                <th>Reciept No</th>
+                                <th style="text-align:right">Paid Amount</th>
+                                <th>Payment Date</th>
+                                <th>Payment Type</th>
+                                <th>Cheque No</th>
+                                <th>Bank Name</th>
+                                <th>Remark</th>
+                                <th>Cheque Status</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null)
+                            {
+                                if (Model.BounceListItem != null)
+                                {
+                                    int i = 1;
+                                    foreach (var Item in Model.BounceListItem)
+                                    {
+                                        <tr class="text-left">
+                                            <td>@i</td>
+                                            <td>@Item.Reciept</td>
+                                            <td style="text-align:right">@Item.PaidAmount</td>
+                                            <td>@Item.CashDate</td>
+                                            <td>@Item.PayType</td>
+                                            <td>@Item.ChequeNo</td>
+                                            <td>@Item.BankName</td>
+                                            <td>@Item.Remarks</td>
+                                            <td>@Item.CheqStatus</td>
+                                            <td>
+                                                <a href="/Farmers/DeletePayment?id=@Item.EncryptKey&&UserId=@Model.EncryptKey" onclick="return confirm('Are you sure you wish to delete this Payment?');" class="btn btn-sm btn-danger">delete</a>
+                                            </td>
+                                        </tr>
+
+                                        i++;
+                                    }
+                                }
+                            }
+
+                        </tbody>
+
+                        <tfoot>
+                            <tr>
+                                <th></th>
+                                <th>Total</th>
+                                <th style="text-align:right">@ViewBag.TotalBouncePaid</th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                @Html.HiddenFor(m => m.Fk_PaymentId)
+                @Html.HiddenFor(m => m.Fk_UserId)
+                <div class="modal fade" id="deletemodal" role="dialog" style="display: none;padding-top:55px;">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Confirmation</h5>
+                                <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">&times;</button>
+                            </div>
+                            <div class="modal-body" style="color: black">
+                                <input type="hidden" id="BookingDetailsId" />
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <p>Is this entry deleted in account head ?</p>
+                                        <input type="radio" name="dstatus" id="postageyes" value="Yes" />&nbsp; Yes &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <input type="radio" name="dstatus" id="postageno" value="No" /> &nbsp; No
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal" onclick="closeModal();">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                           
+                                            <a class="btn btn-sm btn-success pull-right" name="btn_delete" onclick="return Delete()" id="btn_delete">Delete</a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+           
+        </div>
+    </div>
+ </div>
+}
+
+
+
+ <script>
+    $(document).ready(function () {
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        if (UserType == 'Admin' && UserTypeName != 'Admin') {
+            GetMenuDetails();
+        }
+        $("#tableExport1").dataTable({
+            dom: "Bfrtip",
+            buttons: ["csv", "excel", "pdf", "print"],
+            columnDefs: [{ sortable: false, targets: [2, 3] }],
+        });
+        $("#divload").css({ 'display': 'none' });
+        $("#tableExport2").dataTable({
+            dom: "Bfrtip",
+            buttons: ["csv", "excel", "pdf", "print"],
+            columnDefs: [{ sortable: false, targets: [2, 3] }],
+        });
+
+    });
+    function GetMenuDetails() {
+        var URL = "/Farmers/Farmerlist";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+
+                console.log(data);
+                for (var i = 0; i < obj.length; i++) {
+                    debugger
+                    if (obj[i].FormDelete == true && obj[i].FormUpdate == false) {
+                        $(".delete").show();
+                        $(".edit").hide();
+                        $(".payment").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(false);
+                        table.column(12).visible(true);
+                        table1.column(8).visible(false);
+                        table2.column(9).visible(true);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == true) {
+                        $(".delete").hide();
+                        $(".edit").show();
+                        $(".payment").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(true);
+                        table.column(12).visible(false);
+                        table1.column(8).visible(true);
+                        table2.column(9).visible(false);
+
+                    }
+                    else if (obj[i].FormDelete == true && obj[i].FormUpdate == true) {
+                        $(".delete").show();
+                        $(".edit").show();
+                        $(".payment").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(true);
+                        table.column(12).visible(true);
+                        table1.column(8).visible(true);
+                        table2.column(9).visible(true);
+                    }
+                    else if (obj[i].FormSave == true) {
+                        $(".delete").hide();
+                        $(".edit").hide();
+                        $(".payment").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(false);
+                        table.column(12).visible(false);
+                        table1.column(8).visible(false);
+                        table2.column(9).visible(false);
+
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == false) {
+                        $(".delete").hide();
+                        $(".edit").hide();
+                        $(".payment").hide();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(false);
+                        table.column(12).visible(false);
+                        table1.column(8).visible(false);
+                        table2.column(9).visible(false);
+
+                    }
+                    else {
+                        $(".delete").hide();
+                        $(".edit").hide();
+                        $(".payment").hide();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        var table2 = $('#tableExport2').DataTable();
+                        table.column(11).visible(false);
+                        table.column(12).visible(false);
+                        table1.column(8).visible(false);
+                        table2.column(9).visible(false);
+                    }
+
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+    function onChange(index) {
+        debugger
+        $("#divload").css({ 'display': 'none' });
+        var CheqStatus = $('.CheckStatus_' + index).val();
+        if (CheqStatus == "0") {
+            $('.Date_' + index).hide();
+            $('.btn_check_' + index).hide();
+            $('.td_Date').hide();
+        }
+        else {
+            $('.Date_' + index).show();
+            $('.btn_check_' + index).show();
+            $('.td_Date').show();
+        }
+    }
+    $('.d').datepicker({
+        dateFormat: 'dd/mm/yy',
+        maxDate: 0,
+        changeYear: true,
+        changeMonth: true
+    });
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy'
+    });
+    function CheckStatusUpdate(index) {
+        debugger
+        var CheqStatus = $('.CheckStatus_' + index).val();
+        var CheckDate = $('.Date_' + index).val();
+        var ReferencdId = $('#btn_Update_' + index).attr('data-paymentId');
+        var FarmerId = $('#btn_Update_' + index).attr('data-Userid');
+
+        if (CheqStatus == "0") {
+            $('.CheckStatus_' + index).addClass('errortext');
+            $("#divload").css({ 'display': 'none' });
+            $('.CheckStatus_' + index).focus();
+            return false;
+        }
+        if (CheckDate == "") {
+            $('.Date_' + index).addClass('errortext');
+            $("#divload").css({ 'display': 'none' });
+            $('.Date_' + index).focus();
+            return false;
+        }
+        else {
+            $(".errortext").removeClass("errortext");
+            $.ajax({
+                url: "/Farmers/UpdateCheckStaus",
+                Type: "Get",
+                DataType: "JSON",
+                data: { CheqStatus: CheqStatus, ReferencdId: ReferencdId, FarmerId: FarmerId, CheckDate: CheckDate },
+                success: function (data) {
+                    alert('Payment update successfully !!')
+                    location.reload();
+
+                }
+            });
+
+        }
+    }
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
+    });
+    function Inactive() {
+        debugger
+        if (confirm("Are you sure you want to Inactive this farmer ?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function Active() {
+        debugger
+        if (confirm("Are you sure you want to Active this farmer?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function OpenDeletePopUp(PaymentId, userid) {
+        debugger;
+        $("#deletemodal").modal('show');
+        $("#Fk_PaymentId").val(PaymentId);
+        $("#Fk_UserId").val(userid);
+    }
+    function Delete() {
+        $(".errortext").removeClass("errortext");
+        var status = $("input[type='radio'][name='dstatus']:checked").val();
+        var option = document.getElementsByName('dstatus');
+        if (!(option[0].checked || option[1].checked)) {
+            alert("Please Select Your Gender");
+            return false;
+        }
+        else {
+            $.ajax({
+                url: "/Farmers/DeletePayment",
+                Type: "Get",
+                DataType: "JSON",
+                data: { id: $("#Fk_PaymentId").val(), UserId: $("#Fk_UserId").val(), status: status },
+                success: function (data) {
+                    if (data.Result = "1")
+                    {
+                        alert('Payment details deleted successfully');
+                        location.reload();
+                    }
+                    else
+                    {
+                        alert(data.Result);
+                        location.reload();
+                    }
+
+
+                }
+            });
+        }
+
+    }
+    function closeModal() {
+        $("#deletemodal").hide();;
+    }
+        </script>
+        <style>
+            .errortext {
+                border: 1px solid red !important;
+                background-color: #fff0f0 !important;
+            }
+        </style>
