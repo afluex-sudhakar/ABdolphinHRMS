@@ -20,7 +20,6 @@ namespace ABdolphin.Controllers
         #region ExpenseTypeMaster
         public ActionResult ExpenseTypeMaster(string cid)
         {
-
             Master obj = new Master();
             if (cid != null)
             {

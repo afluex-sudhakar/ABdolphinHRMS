@@ -1,0 +1,947 @@
+﻿@model ABdolphin.Models.Expenses
+
+@{
+    ViewBag.Title = "ViewCrExpense";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+<style>
+    .modal-dialog-centered {
+        min-height: calc(100% - 3.5rem);
+        min-width: 669px;
+    }
+
+    .custom-file, .custom-file-label, .custom-select, .custom-file-label:after, .form-control[type="color"], select.form-control:not([size]):not([multiple]) {
+        height: calc(2rem + 6px);
+        background-position: right calc(0.375em + 0.9rem) center;
+    }
+</style>
+
+@using (Html.BeginForm("ViewCrExpense", "Expense", FormMethod.Post, new { @id = "form1" }))
+{
+
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>View Expense</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>ViewCrExpense</h2>
+                            <p class="text-success mb-0 p-left-50">
+                                @TempData["CrExpenseList"]
+                            </p>
+                            <div class="breadcrumb-action justify-content-between">
+                                <div class="action-btn">
+                                    <a class="btn btn-primary btn-sm"  href="/Expense/CrExpense"> <i class="fa fa-plus-circle text-white"></i> Add-New</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+                                
+                                <div class="col-md-3 mb-3">
+                                    Company Name
+                                    @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Income Head
+                                    @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Income Type
+                                    @Html.DropDownListFor(m => m.ExpenseID, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "ExpenseID form-control select2", @onchange = "return onExpeseTypeChange();" })
+                                    @*@Html.TextBoxFor(m => m.ExpenseName, new { @class = "form-control", @Placeholder = "Expense Name" })*@
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Expense Category
+                                    @Html.DropDownListFor(m => m.Fk_ExpenseCategoryId, new SelectList(ViewBag.ExpenseCategory, "Value", "Text"), new { @class = "form-control select2" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Team Name
+                                    @Html.DropDownListFor(m => m.Fk_Teamid, new SelectList(ViewBag.ddlTeam, "Value", "Text"), new { @class = "form-control select2" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Income Name
+                                    @Html.DropDownListFor(m => m.ExpenseName, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "ExpenseName form-control select2" })
+
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    Transaction Mode
+                                    @Html.DropDownListFor(m => m.TransactionID, new SelectList(ViewBag.ddlTransactionType, "Value", "Text"), new { @class = "form-control select2" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    From Cheque Date
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Cheque Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    To Cheque Date
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Cheque Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    From Issue Date
+                                    @Html.TextBoxFor(m => m.EntryFromDate, new { @class = "form-control", @Placeholder = " From Issue Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    To Issue Date
+                                    @Html.TextBoxFor(m => m.EntryToDate, new { @class = "form-control", @Placeholder = "To Issue Date", @readonly = "true" })
+                                </div>
+                                <div class="col-md-3 mb-3">
+                                    <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="btnSearch" />
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="17"><h6 style="color:black">Cleared Cheque</h6></th>
+                                        </tr>
+
+                                        <tr class="text-left">
+                                            <th>Sr No.</th>
+                                            <th style="display:none;min-width:110px;"></th>
+                                            <th>Company Name</th>
+                                            <th>Income Head Name</th>
+                                            <th style="display:none;min-width:110px;"></th>
+                                            <th style="display:none;min-width:110px;"> </th>
+                                            <th>Income Type</th>
+
+                                            <th style="display:none;min-width:110px;"> </th>
+                                            <th>Income Category</th>
+                                            <th>Team Name</th>
+                                            <th style="display:none;min-width:110px;"></th>
+                                            <th>Income Name</th>
+                                            <th style="display:none;min-width:110px;"> </th>
+                                            <th>Transaction Mode</th>
+                                            <th>Plot Info</th>
+                                            <th>Chq/Txn No.</th>
+                                            <th style="text-align:right;color:#527552"><strong>Amount </strong></th>
+                                            <th>Cheque Status</th>
+                                            <th>Issue Date</th>
+                                            <th>Check Clear Date</th>
+                                            <th style="display:none;min-width:110px;"> </th>
+                                            <th>Remarks</th>
+                                            <th>Delete</th>
+                                            <th>Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.ClearedListItem != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item in Model.ClearedListItem)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "form-control company_" + @Item.Pk_ExpenseDetailsId })
+                                                        </td>
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.CompanyName</td>
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.ExpenseHeadName</td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "form-control expensehead_" + @Item.Pk_ExpenseDetailsId })
+                                                        </td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.ExpenseIDD, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "form-control expenseTypeId_" + @Item.Pk_ExpenseDetailsId, @id = "expenseIddd" + @i + "", @onchange = "return onExpeseTypeChangee(" + @i + ");" })
+                                                        </td>
+
+                                                        @*<td class="ExpenseType_@Item.Pk_ExpenseDetailsId">@Item.ExpenseID</td>
+                        <td class="ExpenseName_@Item.Pk_ExpenseDetailsId">@Item.ExpenseName</td>*@
+
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.ExpenseID</td>
+
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.Fk_ExpenseCategoryId, new SelectList(ViewBag.ExpenseCategory, "Value", "Text"), new { @class = "form-control expensecategory_" + @Item.Pk_ExpenseDetailsId })
+                                                        </td>
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.ExpenseCategoryName</td>
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.TeamName</td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.Fk_Teamid, new SelectList(ViewBag.ddlTeam, "Value", "Text"), new { @class = "form-control team_" + @Item.Pk_ExpenseDetailsId })
+                                                        </td>
+                                                        <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.ExpenseName</td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.ExpenseName1, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "form-control expenseName_" + @Item.Pk_ExpenseDetailsId, @id = "expenseName" + @i + "" })
+                                                        </td>
+                                                        <td style="min-width:160px">@Item.TransactionTy</td>
+                                                        <td style="min-width:200px">@Item.PlotInfo</td>
+                                                        <td>@Item.PaymentMode - @Item.ChequeNo</td>
+                                                        <td style="text-align:right;color:#527552"><strong>@Item.CrAmount </strong></td>
+                                                        <td>@Item.ChequeStatus</td>
+                                                        <td>@Item.Date</td>
+                                                        <td>@Item.ChequeStatusUpdateDate</td>
+                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:150px;">
+                                                            <textarea class="form-control remark_@Item.Pk_ExpenseDetailsId" id="remark_@i">@Item.Remarks</textarea>
+                                                            @*@Html.TextAreaFor(m => m.Remarks, new { @class = "form-control remark_" + @Item.Pk_ExpenseDetailsId, @id = "remark_" + @i + "" })*@
+                                                        </td>
+                                                        <td style="min-width:200px" class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.Remarks</td>
+                                                        @*<td><a href="#" data-remarks="@Item.Remarks" onclick="openPopup('@Item.Pk_ExpenseDetailsId');" class="form-bg-info remark_@Item.Pk_ExpenseDetailsId">@Item.Remarks</a></td>*@
+                                                        <td><a href="#" onclick="OpenDeletePopUp('@Item.Pk_ExpenseDetailsId');" class="btn-sm btn-danger delete">Delete</a></td>
+                                                        <td>
+                                                            <a class="btn tblEditBtn edit" data-toggle="tooltip" id="btn_Edit_@Item.Pk_ExpenseDetailsId" onclick="Edit('@Item.Pk_ExpenseDetailsId');" title="" data-original-title="Edit">
+                                                                <i class="material-icons">
+                                                                    mode_edit
+                                                                </i>
+                                                            </a>
+                                                            <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                                                <a href="#company_@Item.Pk_ExpenseDetailsId" data-comepensedetailsid='@Item.Pk_ExpenseDetailsId' onclick="CompanyUpdate('@Item.Pk_ExpenseDetailsId');" class="btn btn-primary ccompany_@Item.Pk_ExpenseDetailsId" style="display:none" id="btn_cupdate_@Item.Pk_ExpenseDetailsId">update</a>
+                                                                <a href="#btn_Edit_@Item.Pk_ExpenseDetailsId" onclick="CompanyCancel('@Item.Pk_ExpenseDetailsId');" class="btn btn-danger ccompany_@Item.Pk_ExpenseDetailsId" style="display:none" id="btn_cancel_+@Item.Pk_ExpenseDetailsId">cancel</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th style="display:none"></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th style="text-align:right">@ViewBag.TotalCleredPaid</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th style="display:none"></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <br />
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="17"><h6 style="color:black">Pending Cheque</h6></th>
+                                        </tr>
+                                        <tr>
+                                            <th>S No.</th>
+                                            <th style="display:none" class="editcompany"></th>
+                                            <th>Company Name</th>
+                                            <th style="display:none" class="editcompany"></th>
+                                            <th>Income Head Name</th>
+                                            <th style="display:none" class="editcompany"></th>
+                                            <th>Income Type</th>
+                                            <th style="display:none" class="editcompany"></th>
+                                            <th>Income Category</th>
+                                            <th>Team Name</th>
+                                            <th>Income Name</th>
+                                            <th>Transaction Mode</th>
+                                            <th>Issue Date</th>
+                                            <th>Cheque Amount</th>
+                                            <th>Chq/Txn No.</th>
+                                            <th>Remark</th>
+                                            <th>Cheque Status</th>
+                                            <th class="td_Date" style="display:none">Cheque Status Date</th>
+                                            <th class="td_Date" style="display:none">Action</th>
+                                            <th>Edit</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.PendingListItem != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item1 in Model.PendingListItem)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td class="ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "form-control company_" + @Item1.Pk_ExpenseDetailsId })
+                                                        </td>
+                                                        <td class="tdcompany_@Item1.Pk_ExpenseDetailsId">@Item1.CompanyName</td>
+                                                        <td class="tdcompany_@Item1.Pk_ExpenseDetailsId">@Item1.ExpenseHeadName</td>
+                                                        <td class="ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "form-control expensehead_" + @Item1.Pk_ExpenseDetailsId })
+                                                        </td>
+
+
+                                                        <td class="ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.ExpenseIDD2, new SelectList(ViewBag.ExpenseType, "Value", "Text"), new { @class = "form-control expenseTypeId_" + @Item1.Pk_ExpenseDetailsId, @id = "expenseIdddd" + @i + "", @onchange = "return onExpeseTypeChangee1(" + @i + ");" })
+                                                        </td>
+                                                        <td class="tdcompany_@Item1.Pk_ExpenseDetailsId">@Item1.ExpenseID</td>
+                                                        <td>@Item1.ExpenseCategoryName</td>
+                                                        <td>@Item1.TeamName</td>
+                                                        <td class="ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                            @Html.DropDownListFor(m => m.ExpenseName2, new SelectList(ViewBag.ddlexpensename, "Value", "Text"), new { @class = "form-control expenseName_" + @Item1.Pk_ExpenseDetailsId, @id = "expenseNamee" + @i + "" })
+                                                        </td>
+                                                        <td class="tdcompany_@Item1.Pk_ExpenseDetailsId">@Item1.ExpenseName</td>
+                                                        <td style="min-width:160px">@Item1.TransactionTy</td>
+                                                        <td>@Item1.Date</td>
+                                                        <td style="text-align:right">@Item1.CrAmount</td>
+                                                        <td>@Item1.PaymentMode1 - @Item1.ChequeNo</td>
+                                                        <td>@Item1.Remarks</td>
+                                                        <td>
+                                                            @Html.DropDownList("CheqStatus_" + @i, new SelectList(ViewBag.CheckStatus, "Value", "Text"), new { @class = "form-control edit CheckStatus_" + @i, @onchange = "return onChange(" + @i + ");" })
+                                                        </td>
+                                                        <td class="td_Date" style="display:none">
+                                                            <input type="text" class="form-control d Date_@i" style="display:none;width:150px;" readonly="readonly" placeholder="DD/MM/YYYY" />
+                                                        </td>
+                                                        @*@Html.TextBoxFor(m => m.CashDate, new { @class = "form-control d Date_" + @i, @placeholder = "Date", @readonly = true, @style = "display:none" })</td>*@
+                                                        <td class="td_Date" style="display:none">
+                                                            <a onclick="CheckStatusUpdate('@i');" id="btn_Update_@i" data-epensedetailsid='@Item1.Pk_ExpenseDetailsId' class="btn btn-sm btn-success edit btn_check_@i" style="display:none">Update </a>
+                                                        </td>
+                                                        <td>
+                                                            <a class="btn tblEditBtn edit" data-toggle="tooltip" id="btn_Edit_@Item1.Pk_ExpenseDetailsId" onclick="Edit('@Item1.Pk_ExpenseDetailsId');" title="" data-original-title="Edit Company"><i class="material-icons">mode_edit</i></a>
+                                                            <div class="btn-group mb-3 btn-group-sm" role="group" aria-label="Basic example">
+                                                                <a href="#company_@Item1.Pk_ExpenseDetailsId" data-comepensedetailsid='@Item1.Pk_ExpenseDetailsId' onclick="CompanyUpdate('@Item1.Pk_ExpenseDetailsId');" class="btn btn-primary ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none" id="btn_cupdate_@Item1.Pk_ExpenseDetailsId">update</a>
+                                                                <a href="#btn_Edit_@Item1.Pk_ExpenseDetailsId" onclick="CompanyCancel('@Item1.Pk_ExpenseDetailsId');" class="btn btn-danger ccompany_@Item1.Pk_ExpenseDetailsId" style="display:none" id="btn_cancel_+@Item1.Pk_ExpenseDetailsId">cancel</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    i++;
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th style="text-align:right">@ViewBag.TotalPendingPaid</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th class="td_Date" style="display:none"></th>
+                                            <th class="td_Date" style="display:none"></th>
+                                            <th></th>
+                                    
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <br />
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th colspan="13"><h6 style="color:black">Bounced/Cancel Cheque</h6></th>
+                                        </tr>
+                                        <tr>
+                                            <th>S No.</th>
+                                            <th>Company Name</th>
+                                            <th>Income Head Name</th>
+                                            <th>Income Type</th>
+                                            <th>Income Name</th>
+                                            <th>Transaction Mode</th>
+                                            <th>Plot Info</th>
+                                            <th>Issue Date</th>
+                                            <th>Cheque Amount</th>
+                                            <th>Chq/Txn No.</th>
+                                            <th>Remark</th>
+                                            <th>Cheque Status</th>
+                                            <th>Cheque Update Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model != null)
+                                        {
+                                            if (Model.BounceListItem != null)
+                                            {
+                                                int i = 1;
+                                                foreach (var Item2 in Model.BounceListItem)
+                                                {
+                                                    <tr class="text-left">
+                                                        <td>@i</td>
+                                                        <td>@Item2.CompanyName</td>
+                                                        <td>@Item2.ExpenseHeadName</td>
+                                                        <td class="ExpenseType_@Item2.Pk_ExpenseDetailsId">@Item2.ExpenseID</td>
+                                                        <td class="ExpenseName_@Item2.Pk_ExpenseDetailsId">@Item2.ExpenseName</td>
+                                                        <td style="min-width:160px">@Item2.TransactionTy</td>
+                                                        <td style="min-width:200px">@Item2.PlotInfo</td>
+                                                        <td>@Item2.Date</td>
+                                                        <td style="text-align:right">@Item2.CrAmount</td>
+                                                        <td>@Item2.PaymentMode2 - @Item2.ChequeNo</td>
+                                                        <td>@Item2.Remarks</td>
+                                                        <td>@Item2.ChequeStatus</td>
+                                                        <td>@Item2.ChequeStatusUpdateDate</td>
+                                                    </tr>
+
+                                                    i++;
+                                                }
+                                            }
+                                        }
+
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th style="text-align:right">@ViewBag.TotalBouncePaid</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="myModal" role="dialog" style="display: none;padding-top:55px;">
+        <div class="modal-dialog modal-dialog-centered">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="row" style="display:none">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-10"></div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-6">
+                            <label>Income Type : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label id="ExpenseType"></label>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-md-6">
+                            <label>Income Name : </label>
+                        </div>
+                        <div class="col-md-6">
+                            <label id="ExpenseName"></label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">&times;</button>
+                </div>
+                <div class="modal-body" style="color: black">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                @Html.TextAreaFor(m => m.Remarks, new { @class = "form-control", @placeholder = "Remark" })
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal" onclick="closeModal();">Close</button>&nbsp;&nbsp;&nbsp;
+                                <input type="button" class="btn btn-sm btn-success pull-right" onclick="return updateremarks()" value="Update" />
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    @Html.HiddenFor(m => m.Pk_ExpenseDetailsId)
+    <div class="modal fade" id="ConformationDeleteModal" role="dialog" style="display: none;padding-top:55px;">
+        <div class="modal-dialog modal-dialog-centered">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirmation</h5>
+                    <button type="button" class="close" data-dismiss="modal" onclick="closeModal();">&times;</button>
+                </div>
+                <div class="modal-body" style="color: black">
+                    <input type="hidden" id="BookingDetailsId" />
+                    <div class="row">
+                        <div class="col-md-10">
+                            <p>Is this entry deleted in account head ?</p>
+                            <input type="radio" name="dstatus" id="postageyes" value="Yes" />&nbsp; Yes &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="radio" name="dstatus" id="postageno" value="No" /> &nbsp; No
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <button type="button" class="btn btn-sm btn-danger pull-right" data-dismiss="modal" onclick="closeModal();">Close</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @*<input type="button" class="btn btn-sm btn-success pull-right" onclick="return Delete($('#BookingDetailsId').val())" value="Delete" />*@
+                                <a class="btn btn-sm btn-success pull-right" name="btn_delete" onclick="return Delete()" id="btn_delete">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        if (UserType == 'Admin' && UserTypeName != 'Admin') {
+            GetMenuDetails();
+        }
+        $('#select2-ExpenseID-container').text('');
+        $("#divload").css({ 'display': 'none' });
+        $("#tableExport1").dataTable({
+            dom: "Bfrtip",
+            buttons: ["csv", "excel", "pdf", "print"],
+            columnDefs: [{ sortable: false, targets: [2, 3] }],
+        });
+        $("#divload").css({ 'display': 'none' });
+        $("#tableExport2").dataTable({
+            dom: "Bfrtip",
+            buttons: ["csv", "excel", "pdf", "print"],
+            columnDefs: [{ sortable: false, targets: [2, 3] }],
+        });
+        debugger
+    });
+    function CheckStatusUpdate(index) {
+        debugger
+        var CheqStatus = $('.CheckStatus_' + index).val();
+        var CheckDate = $('.Date_' + index).val();
+        var ExpenseDetailsId = $('#btn_Update_' + index).attr('data-epensedetailsid');
+
+        if (CheqStatus == "0") {
+            $('.CheckStatus_' + index).addClass('errortext');
+            $("#divload").css({ 'display': 'none' });
+            $('.CheckStatus_' + index).focus();
+            return false;
+        }
+        if (CheckDate == "") {
+            $('.Date_' + index).addClass('errortext');
+            $("#divload").css({ 'display': 'none' });
+            $('.Date_' + index).focus();
+            return false;
+        }
+        else {
+            var r = confirm('Are you sure you want to update this payment ?');
+            if (r == true) {
+                $(".errortext").removeClass("errortext");
+                //$("#divload").css({ 'display': '' });
+                $.ajax({
+                    url: "/Expense/UpdateExpenseCheckStaus",
+                    Type: "Get",
+                    DataType: "JSON",
+                    data: { CheqStatus: CheqStatus, ExpenseDetailsId: ExpenseDetailsId, CheckDate: CheckDate },
+                    success: function (data) {
+                        alert('Payment update successfully !!')
+                        location.reload();
+
+                    }
+                });
+            }
+        }
+    }
+    function onChange(index) {
+        $("#divload").css({ 'display': 'none' });
+        var CheqStatus = $('.CheckStatus_' + index).val();
+        if (CheqStatus == "0") {
+            $('.Date_' + index).hide();
+            $('.btn_check_' + index).hide();
+            $('.td_Date').hide();
+        }
+        else {
+            $('.Date_' + index).show();
+            $('.btn_check_' + index).show();
+            $('.td_Date').show();
+        }
+    }
+    $('.d').datepicker({
+        dateFormat: 'dd/mm/yy',
+        maxDate: 0,
+        changeYear: true,
+        changeMonth: true
+    });
+    function validate() {
+        $("#divload").css({ 'display': '' });
+        $(".errortext").removeClass("errortext");
+
+        if ($('#ExpenseID').val() == '0') {
+            $("#ExpenseID").addClass('errortext');
+            $('#ExpenseID').focus();
+            $("#divload").css({ 'display': 'none' });
+            return false;
+        }
+    }
+    function openPopup(ExpenseDetailsId) {
+        debugger
+        $("#Pk_ExpenseDetailsId").val(ExpenseDetailsId);
+        var remark = $('.remark_' + ExpenseDetailsId).text();
+        //var remark = $('.remark_' + ExpenseDetailsId).attr('data-remarks');
+        var expenseType = $('.ExpenseType_' + ExpenseDetailsId).text();
+        var expenseName = $('.ExpenseName_' + ExpenseDetailsId).text();
+        //alert(expenseName)
+        $("#Remarks").val(remark);
+        $("#ExpenseType").text(expenseType);
+        $("#ExpenseName").text(expenseName);
+        $("#myModal").modal('show');
+    }
+    function closeModal() {
+        $("#myModal").hide();
+        //$('body').removeClass().removeAttr('style'); $('.modal-backdrop').remove();
+    }
+    function updateremarks() {
+        $(".errortext").removeClass("errortext");
+        if ($('#Remarks').val() == '') {
+            $("#Remarks").addClass('errortext');
+            $('#Remarks').focus();
+            return false;
+        }
+        //$("#divload").css({ 'display': '' });
+        $.ajax({
+            url: "/Expense/UpdateRemarks",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseDetailsId: $("#Pk_ExpenseDetailsId").val(), Remark: $("#Remarks").val() },
+            success: function (data) {
+                alert("Remarks Updatd.");
+                location.reload();
+
+            }
+        });
+
+    }
+    function OpenDeletePopUp(ExpenseDetailsId) {
+        debugger;
+        $("#ConformationDeleteModal").modal('show');
+        $("#Pk_ExpenseDetailsId").val(ExpenseDetailsId);
+        //var ExpenseDetailsId = $("#ExpenseDetailsId").val(ExpenseDetailsId);
+    }
+    function Delete() {
+        $(".errortext").removeClass("errortext");
+        //$("#divload").css({ 'display': '' });
+        var status = $("input[type='radio'][name='dstatus']:checked").val();
+        var option = document.getElementsByName('dstatus');
+        if (!(option[0].checked || option[1].checked)) {
+            alert("Please Select Your Gender");
+            return false;
+        }
+        else {
+            $.ajax({
+                url: "/Expense/DeleteExpenseDetails",
+                Type: "Get",
+                DataType: "JSON",
+                data: { ExpenseDetailsId: $("#Pk_ExpenseDetailsId").val(), status: status },
+                success: function (data) {
+                    alert("Expense Details Deleted.");
+                    location.reload();
+
+                }
+            });
+        }
+
+    }
+    function Edit(ExpenseDetailsId) {
+        debugger
+        $('.ccompany_' + ExpenseDetailsId).show();
+        $('.tdcompany_' + ExpenseDetailsId).hide();
+
+        $('#btn_Edit_' + ExpenseDetailsId).hide();
+
+    }
+    function CompanyUpdate(ExpenseDetailsId) {
+        debugger
+        var CompanyId = $(".company_" + ExpenseDetailsId + "  option:selected").val();
+        var ExpenseHead = $(".expensehead_" + ExpenseDetailsId + "  option:selected").val();
+        var expenseTypeId = $(".expenseTypeId_" + ExpenseDetailsId + "  option:selected").val();
+        var expenseName = $(".expenseName_" + ExpenseDetailsId + "  option:selected").val();
+        //alert($('.company_' + index).prop('selectedIndex'));
+        var ExpenseId = $('#btn_cupdate_' + ExpenseDetailsId).attr('data-comepensedetailsid');
+        var expensecategoryId = $(".expensecategory_" + ExpenseDetailsId + "  option:selected").val();
+        var teamid = $(".team_" + ExpenseDetailsId + " option:selected").val();
+        var remarks = $(".remark_" + ExpenseDetailsId).val();
+        //    $('.company_' + ExpenseDetailsId).addClass('errortext');
+        //    $("#divload").css({ 'display': 'none' });
+        //    $('.company_' + ExpenseDetailsId).focus();
+        //    return false;
+        //}
+        //else {
+        $(".errortext").removeClass("errortext");
+        //$("#divload").css({ 'display': '' });
+        $.ajax({
+            url: "/Expense/UpdateCompany",
+            Type: "Get",
+            DataType: "JSON",
+            data: { CompanyId: CompanyId, ExpenseDetailsId: ExpenseId, ExpenseheadId: ExpenseHead, expenseTypeId: expenseTypeId, expenseName: expenseName, expensecategoryId: expensecategoryId, Fk_Teamid: teamid, Remarks: remarks },
+            success: function (data) {
+                if (data.Result == 'Yes') {
+                    alert('details updated successfully !!')
+                }
+                else {
+                    alert(data.Result);
+                }
+                location.reload();
+
+            }
+        });
+
+    }
+    //}
+    function CompanyCancel(ExpenseDetailsId) {
+        debugger
+        //var Company = $('.company_' + index).val();
+        $('.ccompany_' + ExpenseDetailsId).hide();
+        $('.tdcompany_' + ExpenseDetailsId).show();
+        $('#btn_Edit_' + ExpenseDetailsId).show();
+    }
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
+    });
+    $('#EntryToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
+    });
+    $('#EntryFromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
+    });
+    function onExpeseTypeChange() {
+        $("#divload").css({ 'display': '' });
+        var value = $('#ExpenseID').val();
+        var tr = [];
+        $.ajax({
+            url: "GetExpenseDetails",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseID: value },
+            success: function (data) {
+                debugger
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                console.log(data)
+                if (data.Result == "yes") {
+                    $("#ExpenseName").html(""); // clear before appending new list
+                    $("#ExpenseName").empty();
+                    $("#ExpenseName").append(
+                          $('<option></option>').val(0).html('Select Expense Name'));
+                    $.each(data.ddlexpensename, function (index, Expensecount) {
+                        $("#ExpenseName").append(
+                              $('<option></option>').val(Expensecount.Value).html(Expensecount.Text));
+                    });
+                }
+                else {
+                    $("#ExpenseName").empty();
+                }
+            }
+        });
+    }
+    function onExpeseTypeChangee(i) {
+        debugger
+        $("#divload").css({ 'display': '' });
+        //var value = $("#ExpenseIDD").val();
+        var value = $("#expenseIddd" + i + "").val();
+
+
+        var tr = [];
+        $.ajax({
+            url: "GetExpenseDetailss",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseIDD: value },
+            success: function (data) {
+                debugger
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                console.log(data)
+                if (data.Result == "yes") {
+                    $("#expenseName" + i + "").html(""); // clear before appending new list
+                    $("#expenseName" + i + "").empty();//ExpenseName1
+                    $("#expenseName" + i + "").append(
+                          $('<option></option>').val(0).html('Select Expense Name'));
+                    $.each(data.ddlexpensename, function (index, Expensecount) {
+                        $("#expenseName" + i + "").append(
+                              $('<option></option>').val(Expensecount.Value).html(Expensecount.Text));
+                    });
+                }
+                else {
+                    $("#expenseName" + i + "").empty();
+                }
+            }
+        });
+    }
+    function onExpeseTypeChangee1(i) {
+        debugger
+        $("#divload").css({ 'display': '' });
+        //var value = $('#ExpenseIDD2').val();
+        var value = $("#expenseIdddd" + i + "").val();
+
+        var tr = [];
+        $.ajax({
+            url: "GetExpenseDetailss1",
+            Type: "Get",
+            DataType: "JSON",
+            data: { ExpenseIDD2: value },
+            success: function (data) {
+                debugger
+                $("#divload").css({ 'display': 'none' });
+                var j = 1;
+                console.log(data)
+                if (data.Result == "yes") {
+                    $("#expenseNamee" + i + "").html(""); // clear before appending new list
+                    $("#expenseNamee" + i + "").empty();
+                    $("#expenseName" + i + "").append(
+                          $('<option></option>').val(0).html('Select Expense Name'));
+                    $.each(data.ddlexpensename, function (index, Expensecount) {
+                        $("#expenseNamee" + i + "").append(
+                              $('<option></option>').val(Expensecount.Value).html(Expensecount.Text));
+                    });
+                }
+                else {
+                    $("#expenseNamee" + i + "").empty();
+                }
+            }
+        });
+    }
+    function GetMenuDetails() {
+        var URL = "/Expense/ViewCrExpense";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                console.log(data);
+                for (var i = 0; i < obj.length; i++) {
+                    debugger
+                    if (obj[i].FormDelete == true && obj[i].FormUpdate == false) {
+                        $(".delete").show();
+                        $(".edit").hide();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        table.column(22).visible(true);
+                        //table.column(21).visible(false);
+                        table.column(23).visible(false);
+                        table1.column(16).visible(false);
+                        table1.column(19).visible(false);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == true) {
+                        $(".delete").hide();
+                        $(".edit").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        table.column(22).visible(false);
+                        //table.column(21).visible(true);
+                        table.column(23).visible(true);
+                        table1.column(16).visible(true);
+                        table1.column(19).visible(true);
+                    }
+                    else if (obj[i].FormDelete == true && obj[i].FormUpdate == true) {
+                        $(".delete").show();
+                        $(".edit").show();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        table.column(22).visible(true);
+                        //table.column(21).visible(true);
+                        table.column(23).visible(true);
+                        table1.column(16).visible(true);
+                        table1.column(19).visible(true);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == false) {
+                        $(".delete").hide();
+                        $(".edit").hide();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        table.column(22).visible(false);
+                        //table.column(21).visible(false);
+                        table.column(23).visible(false);
+                        table1.column(16).visible(false);
+                        table1.column(19).visible(false);
+
+                    }
+                    else {
+                        $(".delete").hide();
+                        $(".edit").hide();
+                        var table = $('#tableExport').DataTable();
+                        var table1 = $('#tableExport1').DataTable();
+                        table.column(22).visible(false);
+                        //table.column(21).visible(false);
+                        table.column(23).visible(false);
+                        table1.column(16).visible(false);
+                        table1.column(19).visible(false);
+                    }
+
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+</script>
+
+
+

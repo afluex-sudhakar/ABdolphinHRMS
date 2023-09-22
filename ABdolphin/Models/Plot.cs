@@ -14,6 +14,8 @@ namespace ABdolphin.Models
         public string SiteID { get; set; }
 
 
+        public string PaymentMode { get; set; }
+
         public DataSet GetExpenseTypeList()
         {
             DataSet ds = Connection.ExecuteQuery("GetExpenseType");
@@ -38,6 +40,16 @@ namespace ABdolphin.Models
         {
             SqlParameter[] para = { new SqlParameter("@SiteID", SiteID) };
             DataSet ds = Connection.ExecuteQuery("GetSectorList", para);
+            return ds;
+        }
+
+        public DataSet GetPaymentModeList()
+        {
+            SqlParameter[] para =
+                            {
+                                new SqlParameter("@PK_paymentID",PaymentMode)
+                            };
+            DataSet ds = Connection.ExecuteQuery("GetPaymentModeList", para);
             return ds;
         }
     }
