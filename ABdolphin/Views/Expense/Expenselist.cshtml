@@ -58,11 +58,11 @@
                     </div>
                     <div class="col-md-3 mb-3">
                         From Date
-                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "true" })
+                        @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "From Date", @readonly = "true" })
                     </div>
                     <div class="col-md-3 mb-3">
                         To Date
-                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "true" })
+                        @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control form-control-default hasDatepicker", @Placeholder = "To Date", @readonly = "true" })
                     </div>
                     <div class="col-md-3 mb-3">
                         <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="Search" />
@@ -139,7 +139,7 @@
 
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
 <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+@*<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">*@
 
 
 <script>

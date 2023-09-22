@@ -210,7 +210,6 @@ F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\Newtonsoft.Json.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Net.Http.Formatting.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.xml
-F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\ApplicationInsights.config
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\csc.exe
 E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
