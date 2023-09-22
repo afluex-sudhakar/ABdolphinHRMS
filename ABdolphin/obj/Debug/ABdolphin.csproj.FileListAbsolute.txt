@@ -157,7 +157,6 @@ F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.xml
 F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.xml
 F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.dll
 F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.pdb
-F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.dll
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.pdb
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\ApplicationInsights.config
@@ -211,4 +210,58 @@ F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\Newtonsoft.Json.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Net.Http.Formatting.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.xml
 F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.xml
-F:\Ashwani Afluex\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\ApplicationInsights.config
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\csc.exe
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.CodeAnalysis.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.CSharp.Core.targets
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\Microsoft.VisualBasic.Core.targets
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\System.Collections.Immutable.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\System.Reflection.Metadata.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\vbc.exe
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\VBCSCompiler.exe
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\roslyn\VBCSCompiler.exe.config
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\ABdolphin.dll.config
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\ABdolphin.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\ABdolphin.pdb
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.Agent.Intercept.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.DependencyCollector.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.PerfCounterCollector.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.ServerTelemetryChannel.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.Web.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.WindowsServer.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.ApplicationInsights.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.Web.Infrastructure.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Newtonsoft.Json.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Net.Http.Formatting.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Helpers.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Mvc.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Razor.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.Deployment.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.Razor.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.DependencyCollector.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.ServerTelemetryChannel.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.Web.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.AI.WindowsServer.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.ApplicationInsights.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Razor.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.Deployment.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Webpages.Razor.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Helpers.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Mvc.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\Newtonsoft.Json.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Net.Http.Formatting.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\bin\System.Web.Http.WebHost.xml
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.dll
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.pdb
+E:\Tanishq\Repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
+F:\Sarfraz Ahmad\repository\ABdolphinHRMS\ABdolphin\obj\Debug\ABdolphin.csprojResolveAssemblyReference.cache
