@@ -55,21 +55,19 @@
 
         <div class="container-fluid">
             <div class="card">
+                <div class="card-header">
+                    <h2>Add Account</h2>
+                    <p class="text-danger mb-0 p-left-50">
+                        @TempData["MsgAccount"]
+                    </p>
+                    @*<div class="breadcrumb-action justify-content-between">
+                        <div class="action-btn">
+                            <a class="btn btn-primary btn-sm" target="_blank" href="/Master/ExpenseCategoryMaster"> <i class="fa fa-plus-circle text-white"></i> Add New</a>
+                        </div>
+                    </div>*@
+                </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-lg-12 col-md-12 mb-3">
-                            <div class="d-lg-flex">
-                                <h4 class="text-capitalize breadcrumb-title">Add Account</h4>
-                                <p class="text-danger mb-0 p-left-50">
-                                    @TempData["MsgAccount"]
-                                </p>
-                                @*<div class="breadcrumb-action justify-content-center flex-wrap">
-                                        <div class="action-btn">
-                                            <a class="btn btn-primary btn-sm" target="_blank" href="/Farmers/PaymetFarmers?fid=JX20cm6y9+gA6jqs+EoTHA=="> <i class="fa fa-plus-circle text-white"></i> View Payment History</a>
-                                        </div>
-                                    </div>*@
-                            </div>
-                        </div>
                         <div class="col-md-4 mb-3">
                             Account Holder Name<span style="color:red">*</span>
                             @Html.TextBoxFor(m => m.AcountHolder, new { @class = "form-control", @placeholder = "Account Holder Name" })
