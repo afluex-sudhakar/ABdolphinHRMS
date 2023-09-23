@@ -77,8 +77,8 @@
                                             <th>Action</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="TextBoxContainer">
-                                        <tr class="mycontainer" id="mainrow">
+                                    <tbody >
+                                        <tr  id="mainrow">
                                             <td>
                                                 @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2", @style = "min-width:150px;" })
                                                 <span class="error">Company Name</span>
@@ -135,7 +135,7 @@
                                     </tbody>
                                 </table>
                                 <div id="orderItems">
-                                    <table class="table table-responsive" id="orderdetailsItems"></table>
+                                    <table class="table" id="orderdetailsItems"></table>
                                     <span id="orderItemError" style="color:red"></span>
                                 </div>
                             </div>
@@ -163,18 +163,20 @@
 }
 
 
-@*<script src="~/AssociateCSS/assets/bundles/select2/dist/js/select2.full.min.js"></script>*@
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
-@*<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+@*For DatePicker*@
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+<script>
         $('#Date').datepicker({
             format: 'dd/mm/yy',
             changeYear: true,
             changeMonth: true,
             //maxDate: 0
         });
-    </script>*@
+    </script>
 <script>
     $(document).ready(function () {
 
@@ -197,9 +199,10 @@
             changeYear: true,
             changeMonth: true
         });
-
+    });
         //Add button click event
         $('#add').click(function () {
+            debugger;
             var today = new Date();
             var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
 
@@ -409,7 +412,7 @@
                 $('#submit').text('Save');
             }
         });
-    });
+  
     function onTransactionChange() {
         $("#divload").css({ 'display': 'none' });
         debugger

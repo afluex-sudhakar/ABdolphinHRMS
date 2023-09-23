@@ -16,10 +16,10 @@ namespace ABdolphin.Models
         {
             try
             {
-                connectionString = "Data Source=DESKTOP-JR58KGS;Initial Catalog=ABdolphin;Integrated Security=True";
+                //connectionString = "Data Source=DESKTOP-JR58KGS;Initial Catalog=ABdolphin;Integrated Security=True";
 
                 //Sarfraz
-                //connectionString = "Data Source=DESKTOP-ICNPI6I\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
+                connectionString = "Data Source=DESKTOP-ICNPI6I\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
 
                 //Tanishq
                 //connectionString = "Data Source=DESKTOP-OEAINLG\\SQLEXPRESS;Initial Catalog=ABdolphin;Integrated Security=True";
