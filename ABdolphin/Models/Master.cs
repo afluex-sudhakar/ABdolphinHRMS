@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ABdolphin.Models
 {
@@ -18,6 +19,11 @@ namespace ABdolphin.Models
         public string ExpenseCategory { get; set; }
         public string Pk_ExpenseCategoryId { get; set; }
         public string UserType { get; set; }
+
+        public string SiteID { get; set; }
+        public string SectorID { get; set; }
+        public string BlockID { get; set; }
+        public List<SelectListItem> lstBlock { get; set; }
 
 
 
@@ -139,6 +145,16 @@ namespace ABdolphin.Models
                                     new SqlParameter("@URL",Url)
             };
             DataSet ds = Connection.ExecuteQuery("GetMenuListForUser", para);
+            return ds;
+        }
+
+        public DataSet GetBlockList()
+        {
+            SqlParameter[] para ={ new SqlParameter("@SiteID",SiteID),
+                                     new SqlParameter("@SectorID",SectorID),
+                                     new SqlParameter("@BlockID",BlockID),
+                                 };
+            DataSet ds = Connection.ExecuteQuery("GetBlockList", para);
             return ds;
         }
     }

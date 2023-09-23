@@ -86,13 +86,11 @@
                         <td>@Item.DownPayment</td>
                         <td>@Item.PartPayment</td>*@
                                                         <td>
-                                                            <a class="btn btn-success edit" data-toggle="tooltip" target="_blank" href="/Master/ExpenseCategoryMaster?Id=@Item.EncryptKey" title="" data-original-title="Edit">
-                                                                <i class="material-icons">Edit</i>
+                                                            <a class="btn btn-success btn-sm"   href="/Master/ExpenseCategoryMaster?Id=@Item.EncryptKey" >Edit
                                                             </a>
                                                         </td>
                                                         <td>
-                                                            <a href="javascript:void(0)" onclick="return Deleteexpensecategory('@Item.EncryptKey')" class="btn btn-danger" data-toggle="tooltip" title="" data-original-title="Delete">
-                                                                <i class="material-icons">Delete</i>
+                                                            <a href="javascript:void(0)" onclick="return Deleteexpensecategory('@Item.EncryptKey')" class="btn btn-danger btn-sm" >Delete
                                                             </a>
                                                         </td>
                                                     </tr>

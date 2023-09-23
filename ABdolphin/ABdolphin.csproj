@@ -495,6 +495,7 @@
     <Content Include="Views\Expense\CrExpense.cshtml" />
     <Content Include="Views\Expense\DrExpense.cshtml" />
     <Content Include="Views\Expense\AddExpense.cshtml" />
+    <Content Include="Views\Expense\ExpenseLedgerByName.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

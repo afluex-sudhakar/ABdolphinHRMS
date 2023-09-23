@@ -1,0 +1,228 @@
+﻿@model ABdolphin.Models.Expenses
+
+@{
+    ViewBag.Title = "ExpenseLedgerByName";
+    Layout = "~/Views/Shared/AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("ExpenseLedgerByName", "Expense", FormMethod.Post, new { @id = "form1" }))
+{
+    <div class="contents">
+        <div class="atbd-page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card card-default card-md mb-4">
+                            <div class="card-body">
+                                <ul class="atbd-breadcrumb nav">
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">
+                                            <span class="la la-home"></span>
+                                        </a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+
+                                    </li>
+                                    <li class="atbd-breadcrumb__item">
+                                        <a href="#">Expense Management</a>
+                                        <span class="breadcrumb__seperator">
+                                            <span class="la la-slash"></span>
+                                        </span>
+                                    </li>
+
+                                    <li class="atbd-breadcrumb__item">
+                                        <span>ExpenseLedgerByName</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12 mb-30">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>ExpenseLedgerByName</h2>
+                            <p class="text-danger mb-0 p-left-50">
+                                @TempData["ExpenseType"]
+                            </p>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="myTable" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr class="userDatatable-header">
+                                            <th>Sr No.</th>
+                                            <th>Expense Type</th>
+                                            <th>Expense Name</th>
+                                            <th>Remarks</th>
+                                            <th>Bank</th>
+                                            <th>Transaction Type</th>
+                                            <th>Dr Amount</th>
+                                            <th>Cr Amount</th>
+                                            <th>Cheque Status</th>
+                                            <th>Cheque No</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                            @*<th>Print</th>*@
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                       @if (Model != null)
+                                       {
+                                           if (Model.ClearedListItem != null)
+                                           {
+                                               int i = 1;
+                                               foreach (var Item in Model.ClearedListItem)
+                                               {
+                                                <tr class="text-left">
+                                                    <td>@i</td>
+                                                    <td class="ExpenseType_@Item.Pk_ExpenseDetailsId">@Item.ExpenseID</td>
+                                                    <td class="ExpenseName_@Item.Pk_ExpenseDetailsId">@Item.ExpenseName</td>
+                                                    <td>@Item.Remarks</td>
+                                                    <td>@Item.BankName</td>
+                                                    <td>
+                                                        @if (Item.TransactionTy == "Cr")
+                                                        {
+                                                            <strong><span style="color:green">@Item.TransactionTy</span></strong>
+                                                        }
+                                                        else
+                                                        {
+                                                            <strong>
+                                                                <span style="color:red">@Item.TransactionTy</span>
+                                                            </strong>
+                                                        }
+                                                    </td>
+                                                    <td style="color:red;text-align:right"><strong>@Item.DrAmount</strong></td>
+                                                    <td style="color:green;text-align:right"><strong>@Item.CrAmount</strong></td>
+                                                    @*<td style="text-align:right;color:red">@Item.DrAmount</td>
+                                                        <td style="text-align:right;color:green">@Item.CrAmount</td>*@
+                                                    <td>@Item.ChequeStatus</td>
+                                                    <td>@Item.ChequeNo</td>
+                                                    <td>@Item.Date</td>
+                                                    <td>
+                                                        <a href="#" onclick="Delete('@Item.Pk_ExpenseDetailsId');" class="btn-sm btn-danger delete">Delete</a>
+                                                    </td>
+                                                    @*<td>
+                                                            <a href="/Expense/PrintExpenseLedger?id=@Item.Pk_ExpenseDetailsId" class="btn btn-success btn-sm" target="_blank">Print</a>
+                                                        </td>*@
+                                                </tr>
+                                                   i++;
+                                               }
+                                           }
+                                       }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Total</th>
+                                            <th style="text-align:right;color:red">@ViewBag.TotalDrAmount</th>
+                                            <th style="text-align:right;color:green">@ViewBag.TotalCrAmount</th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                            @*<th></th>*@
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
+                                @Html.HiddenFor(m => m.Pk_ExpenseDetailsId)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+}
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script>
+    $(document).ready(function () {
+        var UserType = $('#UserType').val();
+        var UserTypeName = $('#UserTypeName').val();
+        if (UserType == 'Admin' && UserTypeName != 'Admin') {
+            GetMenuDetails();
+        }
+    });
+    function Delete(ExpenseDetailsId) {
+        $(".errortext").removeClass("errortext");
+        $("#Pk_ExpenseDetailsId").val(ExpenseDetailsId);
+        //$("#divload").css({ 'display': '' });
+        var r = confirm('Are you sure you want to delete this expense ?');
+        if (r == true) {
+            $.ajax({
+                url: "/Expense/DeleteExpenseDetails",
+                Type: "Get",
+                DataType: "JSON",
+                data: { ExpenseDetailsId: $("#Pk_ExpenseDetailsId").val() },
+                success: function (data) {
+                    alert("Expense Details Deleted.");
+                    location.reload();
+
+                }
+            });
+        }
+
+    }
+    function GetMenuDetails() {
+        var URL = "/Expense/ViewCrExpense";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                console.log(data);
+                for (var i = 0; i < obj.length; i++) {
+                    debugger
+                    if (obj[i].FormDelete == true && obj[i].FormUpdate == false) {
+                        $(".delete").show();
+                        var table = $('#table-1').DataTable();
+                        table.column(11).visible(true);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == true) {
+                        $(".delete").hide();
+                        var table = $('#table-1').DataTable();
+                        table.column(11).visible(false);
+                    }
+                    else if (obj[i].FormDelete == true && obj[i].FormUpdate == true) {
+                        $(".delete").show();
+                        var table = $('#table-1').DataTable();
+                        table.column(11).visible(true);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == false) {
+                        $(".delete").hide();
+                        var table = $('#table-1').DataTable();
+                        table.column(11).visible(false);
+
+                    }
+                    else {
+                        $(".delete").hide();
+                        var table = $('#table-1').DataTable();
+                        table.column(11).visible(false);
+                    }
+
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+</script>
+

@@ -1,16 +1,17 @@
-﻿@model ABdolphin.Models.Expenses
+﻿@model ABdolphin.Models.Farmer
 
 @{
-    ViewBag.Title = "Accountlist";
+    ViewBag.Title = "FarmerPlotRegistrylist";
     Layout = "~/Views/Shared/AdminLayout.cshtml";
 }
-@using (Html.BeginForm("Accountlist", "Expense", FormMethod.Post, new { @id = "form1" }))
+
+@using (Html.BeginForm("FarmerPlotRegistrylist", "Farmers", FormMethod.Post, new { @id = "form1" }))
 {
     <div class="contents">
         <div class="atbd-page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-6">
                         <div class="card card-default card-md mb-4">
                             <div class="card-body">
                                 <ul class="atbd-breadcrumb nav">
@@ -24,14 +25,14 @@
 
                                     </li>
                                     <li class="atbd-breadcrumb__item">
-                                        <a href="#">Expense Management</a>
+                                        <a href="#">Farmer</a>
                                         <span class="breadcrumb__seperator">
                                             <span class="la la-slash"></span>
                                         </span>
                                     </li>
 
                                     <li class="atbd-breadcrumb__item">
-                                        <span>Account List</span>
+                                        <span>Farmer Plot Registry List</span>
                                     </li>
                                 </ul>
                             </div>
@@ -45,114 +46,108 @@
                 <div class="col-lg-12 mb-30">
                     <div class="card">
                         <div class="card-header">
-                            <h2>Account List</h2>
-                            <p class="text-danger mb-0 p-left-50">
-                                @TempData["AccountList"]
+                            <h2>Farmer Plot Registry List</h2>
+                            <p class="text-success mb-0 p-left-50">
+                                @TempData["plotregistrylist"]
                             </p>
-                            <div class="breadcrumb-action justify-content-between">
+                            <div class="breadcrumb-action justify-content-center flex-wrap">
                                 <div class="action-btn">
-                                    <a class="btn btn-primary btn-sm"  href="/Expense/AddAccount"> <i class="fa fa-plus-circle text-white"></i> Add-New</a>
+                                    <a class="btn btn-primary btn-sm" target="_blank" href="/Farmers/FarmerPlotRegistry"> <i class="fa fa-plus-circle text-white"></i> Add New</a>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-3 mb-3">
-                                    Account Holder
-                                    @Html.TextBoxFor(m => m.AcountHolder, new { @class = "form-control", @Placeholder = "Account Holder Name" })
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    From Date
-                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "true" })
-                                </div>
-                                <div class="col-md-3 mb-3">
-                                    To Date
-                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "true" })
+                                    <label for="inputEmail4" class="form-label">Farmer Name</label>
+                                    @Html.DropDownListFor(m => m.PK_Farmerid, new SelectList(ViewBag.FarmerloginId, "Value", "Text"), new { @class = "form-control select2" })
                                 </div>
 
                                 <div class="col-md-3 mb-3">
-                                    <input style="margin-top:24px;" class="btn btn-success" type="submit" value="Search" id="btnSearch" name="Search" />
+                                    <label for="inputPassword4" class="form-label">Customer Name</label>
+                                    @Html.DropDownListFor(m => m.CustomerId, new SelectList(ViewBag.CustomerLoginId, "Value", "Text"), new { @class = "form-control select2" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputPassword4" class="form-label">From Date</label>
+                                    @Html.TextBoxFor(m => m.FromDate, new { @class = "form-control", @Placeholder = "From Date", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="inputEmail4" class="form-label">To Date</label>
+                                    @Html.TextBoxFor(m => m.ToDate, new { @class = "form-control", @Placeholder = "To Date", @readonly = "true" })
+                                </div>
+
+                                <div class="col-md-6 col-lg-6 mb-3">
+                                    <input style="margin-top:34px;" class="btn btn-success" type="submit" value="Search" id="btnSearchCustomer" name="Search" />
                                 </div>
                             </div>
+
                             <div class="table-responsive">
                                 <table id="myTable" class="table table-bordered table-striped">
                                     <thead>
-                                        <tr class="userDatatable-header">
-                                            <th>Sr No.</th>
-                                            <th>Name</th>
-                                            <th>Account Number</th>
-                                            <th>IFSC Code</th>
-                                            <th>Bank Name</th>
-                                            <th>Branch Name</th>
-                                            <th>Credit Amount</th>
-                                            <th>Debit Amount</th>
-                                            <th>Balance</th>
+                                        <tr>
+                                            <th>S.No.</th>
+                                            <th>Plot Details</th>
+                                            <th>Customer Name</th>
+                                            <th>Farmer Name</th>
+                                            <th>Registry Date</th>
+                                            <th>Gata No.</th>
+                                            <th>Total Area (SQFT)</th>
+                                            <th>Plot Size (SQFT)</th>
+                                            <th>Remaining Area (SQFT)</th>
                                             <th>Status</th>
-                                            <th>View Ledger</th>
-                                            <th style="width: 97px;">Edit</th>
+                                            <th>Edit</th>
                                             <th>Delete</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @if (Model != null)
                                         {
-                                            if (Model.AccountList != null)
+                                            if (Model.FarmerPlotList != null)
                                             {
                                                 int i = 1;
-                                                foreach (var Item in Model.AccountList)
+                                                foreach (var Item in Model.FarmerPlotList)
                                                 {
                                                     <tr class="text-left">
                                                         <td>@i</td>
-                                                        <td>@Item.AcountHolder</td>
-                                                        <td>@Item.AccountNumber</td>
-                                                        <td>@Item.IFSCCode</td>
-                                                        <td>@Item.BankName</td>
-                                                        <td style="min-width:130px">@Item.BranchName</td>
-                                                        <td>@Item.CrAmount</td>
-                                                        <td>@Item.DrAmount</td>
-                                                        <td>@Item.BalanceAmount</td>
+                                                        <td style="min-width:200px">@Item.PlotNumber</td>
+                                                        <td>@Item.CustomerName</td>
+                                                        <td style="min-width:150px">@Item.FarmerName</td>
+                                                        <td>@Item.RegistryDate</td>
+                                                        <td>@Item.GataKhasaraN</td>
+                                                        <td>@Item.TotalBalance</td>
+                                                        <td>@Item.PlotSize</td>
+                                                        <td>@Item.RemainingArea</td>
+
                                                         <td>
-                                                            @if (Item.IsActive == "True")
+                                                            @if (Item.FStatus == "Active")
                                                             {
-                                                                <a class="badge badge-success" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
+                                                                <a class="badge badge-success" href="/Farmers/Plotactive?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return Inactive();">Active</a>
                                                             }
                                                             else
                                                             {
-                                                                <a class="badge badge-danger" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
+                                                                <a class="badge badge-danger" href="/Farmers/Plotactive?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" onclick="return Active();" data-original-title="Click to Active">Inactive</a>
                                                             }
                                                         </td>
                                                         <td>
-
-                                                            <a  href="/Expense/ExpenseLedger?bankid=@Item.Pk_BankId&BankName=@Item.BankName" class="btn btn-warning btn-sm">View</a>
+                                                            <a class="btn btn-primary" href="/Farmers/FarmerPlotRegistry?EncryptKey=@Item.EncryptKey" data-toggle="tooltip" title="">Edit</a>
                                                         </td>
                                                         <td>
-                                                            <a href="/Expense/AddAccount?id=@Item.EncryptKey" class="btn btn-info btn-sm edit">Edit</a>
+                                                            <a class="btn btn-danger delete" href="/Farmers/DeleteFarmerPlotRegistry?EncryptKey=@Item.EncryptKey" data-toggle="tooltip" name="btndelete" title="" onclick="confirm('Are You Sure You Want To Delete This Farmer Details')">Delete</a>
                                                         </td>
-                                                        <td><a href="/Expense/DeleteAccount?id=@Item.EncryptKey" class="btn btn-danger btn-sm delete" onclick="return confirm('Are you sure you want to delete this Account Details?');">Delete</a></td>
+
                                                     </tr>
                                                     i++;
                                                 }
                                             }
                                         }
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Sr No.</th>
-                                            <th>Name</th>
-                                            <th>Account Number</th>
-                                            <th>IFSC Code</th>
-                                            <th>Bank Name</th>
-                                            <th>Branch Name</th>
-                                            <th>Credit Amount</th>
-                                            <th>Debit Amount</th>
-                                            <th>Balance</th>
-                                            <th>Status</th>
-                                            <th>View Ledger</th>
-                                            <th style="width: 97px;">Edit</th>
-                                            <th>Delete</th>
-                                        </tr>
-                                    </tfoot>
                                 </table>
+                                <input type="hidden" id="UserType" value="@Session["UserType"]" />
+                                <input type="hidden" id="UserTypeName" value="@Session["UserTypeName"]" />
                             </div>
                         </div>
                     </div>
@@ -161,23 +156,74 @@
 
         </div>
     </div>
-    
 }
 
-<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-@*For DatePicker*@
-<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+
 <script>
     $(document).ready(function () {
+        $("#divload").css({ 'display': 'none' });
         var UserType = $('#UserType').val();
         var UserTypeName = $('#UserTypeName').val();
         if (UserType == 'Admin' && UserTypeName != 'Admin') {
             GetMenuDetails();
         }
+
     });
+
+
+    function GetMenuDetails() {
+        var URL = "/Farmers/FarmerPlotRegistrylist";
+        $.ajax({
+            type: "POST",
+            url: "/Master/GetMenuDetails",
+            data: { URL: URL },
+            dataType: "json",
+
+            success: function (data) {
+                var obj = jQuery.parseJSON(data);
+                console.log(data);
+                for (var i = 0; i < obj.length; i++) {
+                    debugger
+                    if (obj[i].FormDelete == true && obj[i].FormUpdate == false) {
+                        $(".delete").show();
+                        var table = $('#tableExport').DataTable();
+                        table.column(11).visible(true);
+                    }
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == true) {
+                        $(".delete").hide();
+                        var table = $('#tableExport').DataTable();
+                        table.column(11).visible(false);
+                    }
+                    else if (obj[i].FormDelete == true && obj[i].FormUpdate == true) {
+                        $(".delete").show();
+                        var table = $('#tableExport').DataTable();
+                        table.column(11).visible(true);
+                    }
+
+                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == false) {
+                        $(".delete").hide();
+                        var table = $('#tableExport').DataTable();
+                        table.column(11).visible(false);
+                    }
+
+                    else {
+                        $(".delete").hide();
+                        var table = $('#tableExport').DataTable();
+                        table.column(11).visible(false);
+                    }
+
+                }
+            },
+            error: function () {
+                alert("Error occured!!")
+            }
+        });
+    }
+
+
+
+
     $('#FromDate').datepicker({
         dateFormat: 'dd/mm/yy',
         changeYear: true,
@@ -189,62 +235,20 @@
         changeMonth: true,
 
     });
-    function GetMenuDetails() {
-        var URL = "/Expense/Accountlist";
-        $.ajax({
-            type: "POST",
-            url: "/Master/GetMenuDetails",
-            data: { URL: URL },
-            dataType: "json",
-
-            success: function (data) {
-                var obj = jQuery.parseJSON(data);
-
-                console.log(data);
-                for (var i = 0; i < obj.length; i++) {
-                    debugger
-                    if (obj[i].FormDelete == true && obj[i].FormUpdate == false) {
-                        $(".delete").show();
-                        $(".edit").hide();
-                        var table = $('#tableExport').DataTable();
-                        table.column(11).visible(false);
-                        table.column(12).visible(true);
-                    }
-                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == true) {
-                        $(".delete").hide();
-                        $(".edit").show();
-                        var table = $('#tableExport').DataTable();
-                        table.column(11).visible(true);
-                        table.column(12).visible(false);
-                    }
-                    else if (obj[i].FormDelete == true && obj[i].FormUpdate == true) {
-                        $(".delete").show();
-                        $(".edit").show();
-                        var table = $('#tableExport').DataTable();
-                        table.column(11).visible(true);
-                        table.column(12).visible(true);
-                    }
-                    else if (obj[i].FormDelete == false && obj[i].FormUpdate == false) {
-                        $(".delete").hide();
-                        $(".edit").hide();
-
-                        var table = $('#tableExport').DataTable();
-                        table.column(11).visible(false);
-                        table.column(12).visible(false);
-                    }
-                    else {
-                        $(".delete").hide();
-                        $(".edit").hide();
-                        var table = $('#tableExport').DataTable();
-                        table.column(11).visible(false);
-                        table.column(12).visible(false);
-                    }
-
-                }
-            },
-            error: function () {
-                alert("Error occured!!")
-            }
-        });
+    function Inactive() {
+        debugger
+        if (confirm("Are you sure you want to Inactive this plot registry ?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function Active() {
+        debugger
+        if (confirm("Are you sure you want to Active this plot registry ?")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 </script>

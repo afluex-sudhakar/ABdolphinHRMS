@@ -28,7 +28,7 @@ namespace ABdolphin.Controllers
                     DataSet ds = model.GetAccountlistById();
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {
-                        model.Amount = double.Parse(ds.Tables[0].Rows[0]["Amount"].ToString()).ToString("n2");
+                        model.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
                         model.AccountNumber = ds.Tables[0].Rows[0]["AcNumber"].ToString();
                         model.AcountHolder = ds.Tables[0].Rows[0]["AcHolderName"].ToString();
                         model.BankName = ds.Tables[0].Rows[0]["BankName"].ToString();

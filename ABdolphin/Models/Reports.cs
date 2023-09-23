@@ -12,6 +12,7 @@ namespace ABdolphin.Models
         public string LoginId { get; set; }
         public string UserName { get; set; }
         public string LoginIDD { get; set; }
+        public string Fk_CustomerId { get; set; }
 
 
         public DataSet GettingUserProfile()
@@ -19,6 +20,14 @@ namespace ABdolphin.Models
             SqlParameter[] para = {
                                         new SqlParameter("@LoginId", LoginId)};
             DataSet ds = Connection.ExecuteQuery("GetUserProfile", para);
+            return ds;
+        }
+
+        public DataSet GetCustomerListAutoSeach()
+        {
+            SqlParameter[] para = {
+                                        new SqlParameter("@LoginId", LoginId)};
+            DataSet ds = Connection.ExecuteQuery("GetCustomerListforAutoSearch", para);
             return ds;
         }
     }
