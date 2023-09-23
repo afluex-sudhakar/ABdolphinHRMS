@@ -453,6 +453,7 @@
     <Compile Include="Controllers\FarmersController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MasterController.cs" />
+    <Compile Include="Controllers\PlotController.cs" />
     <Compile Include="Filters\SimpleAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -495,7 +496,11 @@
     <Content Include="Views\Expense\CrExpense.cshtml" />
     <Content Include="Views\Expense\DrExpense.cshtml" />
     <Content Include="Views\Expense\AddExpense.cshtml" />
-    <Content Include="Views\Expense\ExpenseLedgerByName.cshtml" />
+    <Content Include="Views\Farmers\AddPayFarmers.cshtml" />
+    <Content Include="Views\Farmers\Farmerpaymentlist.cshtml" />
+    <Content Include="Views\Farmers\FarmerPlotRegistry.cshtml" />
+    <Content Include="Views\Farmers\FarmerPlotRegistrylist.cshtml" />
+    <Content Include="Views\Farmers\PaymetFarmers.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -505,9 +510,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\AssociateDashboard\" />
-    <Folder Include="Views\CustomerDashboard\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
