@@ -138,17 +138,8 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="inputEmail4" class="form-label">Registry Date</label>
-                            @*@Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control", @Placeholder = "Registry Date" })*@
-                            <div class="date-picker-list">
-                                <div class="atbd-date-picker">
-                                    <div class="form-group mb-0 form-group-calender">
-                                        <div class="position-relative">
-                                            @Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control form-control-default", id = "datepicker", @Placeholder = "Registry Date" })
-                                            <a href="#"><span data-feather="calendar"></span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control", @Placeholder = "Registry Date" })
+                           
                         </div>
                         @*<div class="col-md-3 mb-3">
                                 <label for="inputEmail4" class="form-label">CompanyName<span style="color:red">*</span></label>
@@ -179,10 +170,12 @@
 
 }
 
-
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <script>
     $(document).ready(function () {
         $("#divload").css({ 'display': 'none' });
@@ -320,7 +313,7 @@
         yearRange: "1900:2021"
     });
 
-    $('#datepicker').datepicker({
+    $('#RegistryDate').datepicker({
         dateFormat: 'dd/mm/yy',
         changeYear: true,
         changeMonth: true,
