@@ -114,11 +114,11 @@
                                                         <td>
                                                             @if (Item.IsActive == "True")
                                                             {
-                                                                <a class="badge badge-success" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
+                                                                <a class="btn btn-success btn-sm" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
                                                             }
                                                             else
                                                             {
-                                                                <a class="badge badge-danger" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
+                                                                <a class="btn btn-danger btn-sm" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
                                                             }
                                                         </td>
                                                         <td>

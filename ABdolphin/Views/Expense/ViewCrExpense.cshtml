@@ -73,10 +73,10 @@
 
                             <div class="row">
                                 
-                                <div class="col-md-3 mb-3">
+                                @*<div class="col-md-3 mb-3">
                                     Company Name
                                     @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2" })
-                                </div>
+                                </div>*@
                                 <div class="col-md-3 mb-3">
                                     Income Head
                                     @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2" })

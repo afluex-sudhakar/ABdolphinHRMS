@@ -138,8 +138,8 @@
                         </div>
                         <div class="col-md-3 mb-3">
                             <label for="inputEmail4" class="form-label">Registry Date</label>
-                            @*@Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control", @Placeholder = "Registry Date" })*@
-                            @Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control ", @Placeholder = "Registry Date" })
+                            @Html.TextBoxFor(m => m.RegistryDate, new { @class = "form-control", @Placeholder = "Registry Date" })
+                           
                         </div>
                         @*<div class="col-md-3 mb-3">
                                 <label for="inputEmail4" class="form-label">CompanyName<span style="color:red">*</span></label>
@@ -170,9 +170,7 @@
 
 }
 
-
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
 @*For DatePicker*@
@@ -324,6 +322,7 @@
 
 
     function getstatecity() {
+        debugger;
         $(".errortext").removeClass("errortext");
         $.ajax({
             url: "/Admin/GetStateCity",

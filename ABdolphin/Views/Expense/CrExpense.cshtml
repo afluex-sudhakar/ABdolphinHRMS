@@ -62,7 +62,7 @@
                                 <table id="myTable" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th width="110px">Company</th>
+                                            @*<th width="110px">Company</th>*@
                                             <th width="110px">Expense Head</th>
                                             <th width="110px">Expense Type</th>
                                             <th width="110px">Expense Category</th>
@@ -79,10 +79,10 @@
                                     </thead>
                                     <tbody >
                                         <tr  id="mainrow">
-                                            <td>
+                                            @*<td>
                                                 @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2", @style = "min-width:150px;" })
                                                 <span class="error">Company Name</span>
-                                            </td>
+                                            </td>*@
                                             <td>
                                                 @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2", @style = "min-width:150px;" })
                                                 <span class="error">Expense Head</span>
@@ -208,10 +208,10 @@
 
             //validation and add order items
             var isAllValid = true;
-            if ($('#Fk_CompanyId').val() == "0") {
-                isAllValid = false;
-                $('#Fk_CompanyId').siblings('span.error').css('visibility', 'visible');
-            }
+            //if ($('#Fk_CompanyId').val() == "0") {
+            //    isAllValid = false;
+            //    $('#Fk_CompanyId').siblings('span.error').css('visibility', 'visible');
+            //}
 
             if ($('#FK_ExpenseHead').val() == "0") {
                 isAllValid = false;
@@ -300,7 +300,7 @@
                 var date = $('#Date').val();
                 var datetime = date.concat(" ", time);
                 var $newRow = $('#mainrow').clone().removeAttr('id');
-                $('.Fk_CompanyId', $newRow).prop('disabled', true).val($('#Fk_CompanyId').val());
+                //$('.Fk_CompanyId', $newRow).prop('disabled', true).val($('#Fk_CompanyId').val());
                 $('.FK_ExpenseHead', $newRow).prop('disabled', true).val($('#FK_ExpenseHead').val());
                 $('.ExpenseType', $newRow).prop('disabled', true).val($('#ExpenseID').val());
                 $('.Fk_ExpenseCategoryId', $newRow).prop('disabled', true).val($('#Fk_ExpenseCategoryId').val());
@@ -316,13 +316,13 @@
                 $('#add', $newRow).addClass('remove').val('Remove').removeClass('btn-success').addClass('btn-danger');
 
                 //remove id attribute from new clone row
-                $('#Fk_CompanyId,#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,#TransactionID,#PaymentMode,#Check,#Amount,#FK_AccountHeadId,#Date,#Remarks,#add', $newRow).removeAttr('id');
+                                $('#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,#TransactionID,#PaymentMode,#Check,#Amount,#FK_AccountHeadId,#Date,#Remarks,#add', $newRow).removeAttr('id');
                 $('span.error', $newRow).remove();
                 //append clone row
                 $('#orderdetailsItems').append($newRow);
-
+    
                 //clear select data
-                $('#Fk_CompanyId,#FK_ExpenseHead,#ExpenseID,#ExpenseName,#TransactionID,#PaymentMode,#FK_AccountHeadId', 'Fk_ExpenseCategoryId').val('0');
+                $('#FK_ExpenseHead,#ExpenseID,#ExpenseName,#TransactionID,#PaymentMode,#FK_AccountHeadId', 'Fk_ExpenseCategoryId').val('0');
                 $('#Check,#Amount,#Date,#Remarks').val('');
                 $('#orderItemError').empty();
             }
@@ -345,7 +345,7 @@
                     $("#divload").css({ 'display': 'none' });
                 } else {
                     var orderItem = {
-                        Fk_CompanyId: $('select.Fk_CompanyId', this).val(),
+                        //Fk_CompanyId: $('select.Fk_CompanyId', this).val(),
                         FK_ExpenseHead: $('select.FK_ExpenseHead', this).val(),
                         ExpenseType: $('select.ExpenseType', this).val(),
                         Fk_ExpenseCategoryId: $('select.Fk_ExpenseCategoryId', this).val(),
@@ -393,7 +393,7 @@
                             //here we will clear the form
                             list = [];
                             $('#select2-ExpenseID-container').text('');
-                            $('#Fk_CompanyId,#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,#TransactionID,#PaymentMode,#FK_AccountHeadId', '#Fk_ExpenseCategoryId').val('0');
+                            $('#FK_ExpenseHead,#ExpenseID,#Fk_ExpenseCategoryId,#ExpenseName,#TransactionID,#PaymentMode,#FK_AccountHeadId', '#Fk_ExpenseCategoryId').val('0');
                             $('#Check,#Amount,#Date,#Remarks').val('');
                             $('#orderdetailsItems').empty();
                             $('#orderdetailsItems').hide();

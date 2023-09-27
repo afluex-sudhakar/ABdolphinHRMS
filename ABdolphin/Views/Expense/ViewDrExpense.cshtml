@@ -58,10 +58,10 @@
                         </div>
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-3 mb-3">
+                                @*<div class="col-md-3 mb-3">
                                     CompanyName
                                     @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2" })
-                                </div>
+                                </div>*@
                                 <div class="col-md-3 mb-3">
                                     Expense Head
                                     @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2" })
@@ -233,7 +233,7 @@
                                             <th>S No.</th>
                                             <th>Expense Type</th>
                                             <th style="display:none" class="editcompany"></th>
-                                            <th>Company Name</th>
+                                            @*<th>Company Name</th>*@
                                             <th style="display:none" class="editcompany"></th>
                                             <th>Expense Head Name</th>
                                             <th style="display:none" class="editcompany"></th>
@@ -262,9 +262,9 @@
                                                     <tr class="text-left">
                                                         <td>@i</td>
                                                         <td>@Item.ExpenseCategoryName</td>
-                                                        <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
+                                                        @*<td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">
                                                             @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "form-control company_" + @Item.Pk_ExpenseDetailsId })
-                                                        </td>
+                                                        </td>*@
                                                         <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.CompanyName</td>
                                                         <td class="tdcompany_@Item.Pk_ExpenseDetailsId">@Item.ExpenseHeadName</td>
                                                         <td class="ccompany_@Item.Pk_ExpenseDetailsId" style="display:none;min-width:110px;">

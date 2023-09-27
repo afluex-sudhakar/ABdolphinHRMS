@@ -111,15 +111,15 @@
                                                         <td>
                                                             @if (Item.IsActive == "True")
                                                             {
-                                                                <a class="badge badge-success" href="/Expense/ExpenseStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
+                                                                <a class="btn btn-success btn-sm" href="/Expense/ExpenseStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
                                                             }
                                                             else
                                                             {
-                                                                <a class="badge badge-danger" href="/Expense/ExpenseStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
+                                                                <a class="btn btn-danger btn-sm" href="/Expense/ExpenseStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
                                                             }
                                                         </td>
                                                         <td>
-                                                            <a target="_blank" href="/Expense/ExpenseLedgerByName?FId=@Item.ExpenseTypeId&&N=@Item.EncryptKey" class="btn btn-success btn-sm">View Ledger</a>
+                                                            <a target="_blank" href="/Expense/ExpenseLedgerByName?FId=@Item.ExpenseTypeId&&N=@Item.EncryptKey" class="btn btn-primary btn-sm">View Ledger</a>
                                                         </td>
                                                         <td>
                                                             <a href="/Expense/AddExpense?id=@Item.EncryptKey" class="btn btn-info btn-sm edit">Edit</a>
