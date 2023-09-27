@@ -1160,7 +1160,6 @@ namespace ABdolphin.Controllers
             }
             var id = Crypto.Encrypt(model.PK_Farmerid);
             return RedirectToAction("PaymetFarmers", new { fid = id });
-            //return RedirectToAction("AddPayFarmers", "Farmers");
         }
         
 
@@ -1319,41 +1318,41 @@ namespace ABdolphin.Controllers
             }
             ViewBag.ddlSite = ddlSite;
             #endregion
-            #region ddlSector
-            List<SelectListItem> ddlSector = new List<SelectListItem>();
-            DataSet dsSector = model.GetSectorList();
-
-            if (dsSector != null && dsSector.Tables.Count > 0)
-            {
-                foreach (DataRow r in dsSector.Tables[0].Rows)
-                {
-                    ddlSector.Add(new SelectListItem { Text = r["SectorName"].ToString(), Value = r["PK_SectorID"].ToString() });
-
-                }
-            }
-            ViewBag.ddlSector = ddlSector;
-            #endregion
-            #region ddlBlock
-            List<SelectListItem> ddlBlock = new List<SelectListItem>();
-            DataSet dsBlock = model.GetBlockList();
-
-            if (dsBlock != null && dsBlock.Tables.Count > 0)
-            {
-                foreach (DataRow r in dsBlock.Tables[0].Rows)
-                {
-                    ddlBlock.Add(new SelectListItem { Text = r["BlockName"].ToString(), Value = r["PK_BlockID"].ToString() });
-                }
-            }
-            ViewBag.ddlBlock = ddlBlock;
-            #endregion
-
+            //#region ddlSector
             //List<SelectListItem> ddlSector = new List<SelectListItem>();
-            //ddlSector.Add(new SelectListItem { Text = "Select Phase", Value = "0" });
-            //ViewBag.ddlSector = ddlSector;
+            //DataSet dsSector = model.GetSectorList();
 
+            //if (dsSector != null && dsSector.Tables.Count > 0)
+            //{
+            //    foreach (DataRow r in dsSector.Tables[0].Rows)
+            //    {
+            //        ddlSector.Add(new SelectListItem { Text = r["SectorName"].ToString(), Value = r["PK_SectorID"].ToString() });
+
+            //    }
+            //}
+            //ViewBag.ddlSector = ddlSector;
+            //#endregion
+            //#region ddlBlock
             //List<SelectListItem> ddlBlock = new List<SelectListItem>();
-            //ddlBlock.Add(new SelectListItem { Text = "Select Block", Value = "0" });
+            //DataSet dsBlock = model.GetBlockList();
+
+            //if (dsBlock != null && dsBlock.Tables.Count > 0)
+            //{
+            //    foreach (DataRow r in dsBlock.Tables[0].Rows)
+            //    {
+            //        ddlBlock.Add(new SelectListItem { Text = r["BlockName"].ToString(), Value = r["PK_BlockID"].ToString() });
+            //    }
+            //}
             //ViewBag.ddlBlock = ddlBlock;
+            //#endregion
+
+            List<SelectListItem> ddlSector = new List<SelectListItem>();
+            ddlSector.Add(new SelectListItem { Text = "Select Phase", Value = "0" });
+            ViewBag.ddlSector = ddlSector;
+
+            List<SelectListItem> ddlBlock = new List<SelectListItem>();
+            ddlBlock.Add(new SelectListItem { Text = "Select Block", Value = "0" });
+            ViewBag.ddlBlock = ddlBlock;
 
             List<SelectListItem> ddlRegistry = new List<SelectListItem>();
             ddlRegistry.Add(new SelectListItem { Text = "Select Registry", Value = "0" });

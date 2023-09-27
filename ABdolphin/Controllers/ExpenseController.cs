@@ -28,7 +28,7 @@ namespace ABdolphin.Controllers
                     DataSet ds = model.GetAccountlistById();
                     if (ds != null && ds.Tables.Count > 0 && ds.Tables[0].Rows.Count > 0)
                     {
-                        model.Amount = double.Parse(ds.Tables[0].Rows[0]["Amount"].ToString()).ToString("n2");
+                        model.Amount = ds.Tables[0].Rows[0]["Amount"].ToString();
                         model.AccountNumber = ds.Tables[0].Rows[0]["AcNumber"].ToString();
                         model.AcountHolder = ds.Tables[0].Rows[0]["AcHolderName"].ToString();
                         model.BankName = ds.Tables[0].Rows[0]["BankName"].ToString();
@@ -77,7 +77,7 @@ namespace ABdolphin.Controllers
 
                 TempData["MsgAccount"] = ex.Message;
             }
-            return View(model);
+            return RedirectToAction("AddAccount", "Expense");
         }
 
         [HttpPost]
@@ -106,7 +106,7 @@ namespace ABdolphin.Controllers
 
                 TempData["MsgAccount"] = ex.Message;
             }
-            return View(model);
+            return RedirectToAction("AddAccount", "Expense");
         }
 
         public ActionResult DeleteAccount(string id)
@@ -319,29 +319,29 @@ namespace ABdolphin.Controllers
                 ViewBag.BalanceAmount = double.Parse(ds.Tables[0].Compute("sum(Balance)", "").ToString()).ToString("n2");
 
             }
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -523,29 +523,29 @@ namespace ABdolphin.Controllers
             List<SelectListItem> EntryType = Common.EntryType();
             ViewBag.EntryType = EntryType;
             #endregion
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
 
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -989,32 +989,32 @@ namespace ABdolphin.Controllers
         public ActionResult ViewCrExpense(Expenses model)
         {
 
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
             List<SelectListItem> ddlexpensename = new List<SelectListItem>();
             ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
             ViewBag.ddlexpensename = ddlexpensename;
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -1464,28 +1464,28 @@ namespace ABdolphin.Controllers
                 model.BounceListItem = Bouncelst;
                 //ViewBag.TotalBouncePaid = double.Parse(ds.Tables[2].Compute("sum(CrAmount)", "").ToString()).ToString("n2");
             }
-            #region ddlcompany
-            Master obj1 = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            obj1.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            //List<SelectListItem> ddlexpensename = new List<SelectListItem>();
-            //ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
-            //ViewBag.ddlexpensename = ddlexpensename;
-            #endregion
+            //#region ddlcompany
+            //Master obj1 = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //obj1.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            ////List<SelectListItem> ddlexpensename = new List<SelectListItem>();
+            ////ddlexpensename.Add(new SelectListItem { Text = "Select Expense Name", Value = "0" });
+            ////ViewBag.ddlexpensename = ddlexpensename;
+            //#endregion
             #region GetExpenseName
             List<SelectListItem> ddlexpensename = new List<SelectListItem>();
             model.Result = "yes";
@@ -1722,26 +1722,26 @@ namespace ABdolphin.Controllers
         #region ViewDrExpense
         public ActionResult ViewDrExpense(Expenses model)
         {
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //master.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
             #region transactiontype
             int count = 0;
             List<SelectListItem> ddlTransactionType = new List<SelectListItem>();
@@ -1764,7 +1764,7 @@ namespace ABdolphin.Controllers
             #endregion
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -2115,26 +2115,26 @@ namespace ABdolphin.Controllers
                 model.BounceListItem = Bouncelst;
                 ViewBag.TotalBouncePaid = double.Parse(ds.Tables[2].Compute("sum(DrAmount)", "").ToString()).ToString("n2");
             }
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //model.Fk_EmployeeId = Session["Pk_AdminId"].ToString();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
             #region GetExpenseName
             List<SelectListItem> ddlexpensename = new List<SelectListItem>();
             model.Result = "yes";
@@ -2160,7 +2160,7 @@ namespace ABdolphin.Controllers
 
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -2218,29 +2218,29 @@ namespace ABdolphin.Controllers
 
         public ActionResult CrExpense(Expenses model)
         {
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
 
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)
@@ -2476,7 +2476,7 @@ namespace ABdolphin.Controllers
         public JsonResult save(Expenses order, string dataValue)
         {
             bool status = false;
-            string Fk_CompanyId = "";
+            //string Fk_CompanyId = "";
             string FK_ExpenseHead = "";
             string ExpenseType = "";
             string Fk_ExpenseCategoryId = "";
@@ -2496,7 +2496,7 @@ namespace ABdolphin.Controllers
             //System.Globalization.CultureInfo ci = System.Globalization.CultureInfo.CreateSpecificCulture("en-GB");
             DataTable CrExpenseDetails = new DataTable();
             order.ChequeStatus = "Cr";
-            CrExpenseDetails.Columns.Add("Fk_CompanyId");
+            //CrExpenseDetails.Columns.Add("Fk_CompanyId");
             CrExpenseDetails.Columns.Add("FK_ExpenseHead");
             CrExpenseDetails.Columns.Add("ExpenseType");
             CrExpenseDetails.Columns.Add("Fk_ExpenseCategoryId");
@@ -2515,7 +2515,7 @@ namespace ABdolphin.Controllers
             //foreach (DataRow row in dt.Rows)
             foreach (DataRow row in dt.Rows)
             {
-                Fk_CompanyId = row["Fk_CompanyId"].ToString();
+                //Fk_CompanyId = row["Fk_CompanyId"].ToString();
                 FK_ExpenseHead = row["FK_ExpenseHead"].ToString();
                 ExpenseType = row["ExpenseType"].ToString();
                 Fk_ExpenseCategoryId = row["Fk_ExpenseCategoryId"].ToString();
@@ -2528,7 +2528,7 @@ namespace ABdolphin.Controllers
                 Remarks = row["Remarks"].ToString();
                 FK_AccountHeadId = row["FK_AccountHeadId"].ToString();
                 rowsno = rowsno + 1;
-                CrExpenseDetails.Rows.Add(Fk_CompanyId, FK_ExpenseHead, ExpenseType, Fk_ExpenseCategoryId, ExpenseName, TransactionID, PaymentMode, Check, Amount, Date, Remarks, FK_AccountHeadId, rowsno);
+                CrExpenseDetails.Rows.Add(FK_ExpenseHead, ExpenseType, Fk_ExpenseCategoryId, ExpenseName, TransactionID, PaymentMode, Check, Amount, Date, Remarks, FK_AccountHeadId, rowsno);
             }
             order.dtExpenseDetails = CrExpenseDetails;
             order.AddedBy = Session["Pk_AdminId"].ToString();
@@ -2578,29 +2578,29 @@ namespace ABdolphin.Controllers
             ViewBag.ddlPaymentMode = ddlPaymentMode;
             #endregion
 
-            #region ddlcompany
-            int ccount = 0;
-            Master master = new Master();
-            List<SelectListItem> ddlcompany = new List<SelectListItem>();
-            DataSet dscompany = master.GetCompanyList();
-            if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
-            {
-                foreach (DataRow r in dscompany.Tables[0].Rows)
-                {
-                    if (ccount == 0)
-                    {
-                        ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
-                    }
-                    ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
-                    ccount = ccount + 1;
-                }
-            }
-            ViewBag.ddlcompany = ddlcompany;
-            #endregion
+            //#region ddlcompany
+            //int ccount = 0;
+            //Master master = new Master();
+            //List<SelectListItem> ddlcompany = new List<SelectListItem>();
+            //DataSet dscompany = master.GetCompanyList();
+            //if (dscompany != null && dscompany.Tables.Count > 0 && dscompany.Tables[0].Rows.Count > 0)
+            //{
+            //    foreach (DataRow r in dscompany.Tables[0].Rows)
+            //    {
+            //        if (ccount == 0)
+            //        {
+            //            ddlcompany.Add(new SelectListItem { Text = "Select Company", Value = "0" });
+            //        }
+            //        ddlcompany.Add(new SelectListItem { Text = r["CompanyName"].ToString(), Value = r["PK_CompanyID"].ToString() });
+            //        ccount = ccount + 1;
+            //    }
+            //}
+            //ViewBag.ddlcompany = ddlcompany;
+            //#endregion
 
             #region ddlExpenseHead
             int ccount12 = 0;
-            //Master master = new Master();
+            Master master = new Master();
             List<SelectListItem> ddlExpenseHead = new List<SelectListItem>();
             DataSet ds1 = master.GetExpenseHeadList();
             if (ds1 != null && ds1.Tables.Count > 0 && ds1.Tables[0].Rows.Count > 0)

@@ -199,9 +199,36 @@
     </div>
 }
 
-
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
+@*For DatePicker*@
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
+<script>
+    $('#FromDate').datepicker({
+    dateFormat: 'dd/mm/yy',
+    changeYear: true,
+    changeMonth: true,
+    });
+    $('#ToDate').datepicker({
+    dateFormat: 'dd/mm/yy',
+    changeYear: true,
+    changeMonth: true,
+
+    });
+    $('#EntryFromDate').datepicker({
+    dateFormat: 'dd/mm/yy',
+    changeYear: true,
+    changeMonth: true,
+    });
+    $('#EntryToDate').datepicker({
+    dateFormat: 'dd/mm/yy',
+    changeYear: true,
+    changeMonth: true,
+
+    });
+</script>
+  

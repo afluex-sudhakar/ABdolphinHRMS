@@ -150,7 +150,7 @@
                                                             <a data-toggle="tooltip" title="edit" href="/Farmers/UpdatePayment?FId=@Item.ID&&PId=@Item.EncryptKey" data-original-title="Edit"><i class="fas fa-pencil-alt"></i></a>
                                                         </td>
                                                         <td>
-                                                            <a href="#" onclick="OpenDeletePopUp('@Item.Fk_PaymentId','@Item.ID');" class="btn btn-sm btn-danger">delete</a>
+                                                            <a href="/Farmers/DeletePayment?FId=@Item.ID&&PId=@Item.EncryptKey" onclick="OpenDeletePopUp('@Item.Fk_PaymentId','@Item.ID');" class="btn btn-sm btn-danger">delete</a>
                                                         </td>
                                                     </tr>
 
@@ -548,12 +548,13 @@
     }
     function OpenDeletePopUp(PaymentId, userid) {
         debugger;
-        $("#deletemodal").modal('show');
+        //$("#deletemodal").modal('show');
         $("#Fk_PaymentId").val(PaymentId);
         $("#Fk_UserId").val(userid);
     }
     function Delete() {
         $(".errortext").removeClass("errortext");
+        debugger;
         var status = $("input[type='radio'][name='dstatus']:checked").val();
         var option = document.getElementsByName('dstatus');
         if (!(option[0].checked || option[1].checked)) {

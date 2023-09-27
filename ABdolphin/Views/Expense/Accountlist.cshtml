@@ -47,7 +47,7 @@
                         <div class="card-header">
                             <h2>Account List</h2>
                             <p class="text-danger mb-0 p-left-50">
-                                @TempData["ExpenseType"]
+                                @TempData["AccountList"]
                             </p>
                             <div class="breadcrumb-action justify-content-between">
                                 <div class="action-btn">
@@ -114,16 +114,16 @@
                                                         <td>
                                                             @if (Item.IsActive == "True")
                                                             {
-                                                                <a class="badge badge-success" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
+                                                                <a class="btn btn-success btn-sm" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Inactive" onclick="return confirm('Are you sure you want to inactive this record?');">Active</a>
                                                             }
                                                             else
                                                             {
-                                                                <a class="badge badge-danger" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
+                                                                <a class="btn btn-danger btn-sm" href="/Expense/AccountStatus?id=@Item.EncryptKey&&IsActive=@Item.IsActive" data-toggle="tooltip" title="" data-original-title="Click to Active" onclick="return confirm('Are you sure you want to active this record?');">Inactive</a>
                                                             }
                                                         </td>
                                                         <td>
 
-                                                            <a target="_blank" href="/Expense/ExpenseLedger?bankid=@Item.Pk_BankId&BankName=@Item.BankName" class="btn btn-warning btn-sm">View</a>
+                                                            <a  href="/Expense/ExpenseLedger?bankid=@Item.Pk_BankId&BankName=@Item.BankName" class="btn btn-warning btn-sm">View</a>
                                                         </td>
                                                         <td>
                                                             <a href="/Expense/AddAccount?id=@Item.EncryptKey" class="btn btn-info btn-sm edit">Edit</a>
@@ -165,8 +165,10 @@
 }
 
 <script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
-<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.12.0/themes/smoothness/jquery-ui.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+@*For DatePicker*@
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script>
     $(document).ready(function () {
         var UserType = $('#UserType').val();

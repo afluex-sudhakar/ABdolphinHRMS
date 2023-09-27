@@ -56,10 +56,10 @@
                             <h3>Account Ledger &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style="color:red;"> Bank Name : @ViewBag.BankName</span></h3>
                             <br />
                             <div class="row">
-                                <div class="col-md-3 mb-3">
+                                @*<div class="col-md-3 mb-3">
                                     Company Name
                                     @Html.DropDownListFor(m => m.Fk_CompanyId, new SelectList(ViewBag.ddlcompany, "Value", "Text"), new { @class = "Fk_CompanyId form-control select2" })
-                                </div>
+                                </div>*@
                                 <div class="col-md-3 mb-3">
                                     Expense Head
                                     @Html.DropDownListFor(m => m.FK_ExpenseHead, new SelectList(ViewBag.ddlExpenseHead, "Value", "Text"), new { @class = "FK_ExpenseHead form-control select2" })
@@ -200,6 +200,14 @@
 
     
 }
+<script src="~/files/bower_components/jquery/js/jquery.min.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
+@*For DatePicker*@
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 
 <script>
     $(document).ready(function ()
@@ -207,6 +215,30 @@
         debugger;
         $("#divload").css({ 'display': 'none' });
         $('#select2-ExpenseID-container').text('');
+      
+
+    });
+    $('#FromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+    });
+    $('#ToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
+    });
+    $('#EntryFromDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+    });
+    $('#EntryToDate').datepicker({
+        dateFormat: 'dd/mm/yy',
+        changeYear: true,
+        changeMonth: true,
+
     });
     function onExpeseTypeChange() {
         $("#divload").css({ 'display': '' });
